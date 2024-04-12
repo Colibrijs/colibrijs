@@ -1,0 +1,8 @@
+{
+  "name": "@colibrijs/core",
+  "private": true,
+  "type": "module",
+  "peerDependencies": {
+    "react": "^18"
+  }
+}
