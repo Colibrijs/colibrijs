@@ -49,13 +49,14 @@
     "import/no-default-export": "error",
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": ["./packages/**/*.stories.{ts,tsx}"],
+      "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.{ts,tsx}"],
       "peerDependencies": true
     }],
     "react/destructuring-assignment": ["error", "always", {
       "destructureInSignature": "always"
     }],
-    "react/jsx-boolean-value": "error"
+    "react/jsx-boolean-value": "error",
+    "react-hooks/exhaustive-deps": "error"
   },
   "overrides": [
     {
@@ -71,8 +72,9 @@
       }
     },
     {
-      "files": ["**/*.stories.{ts,tsx}"],
+      "files": ["**/*.stories.{ts,tsx}", "./jest.config.js"],
       "extends": ["plugin:storybook/recommended"],
+      "parserOptions": { "project": "tsconfig.test.json" },
       "plugins": ["storybook"],
       "rules": {
         "import/no-default-export": "off"

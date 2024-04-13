@@ -19,7 +19,7 @@ export default {
 export const Default: Story = {
   play: ({ canvasElement }) => {
     const story = within(canvasElement);
-    const label = story.getByTestId('editor__label');
+    const label = story.getByTestId('props-editor__label');
 
     expect(label).toHaveTextContent('Props:');
   },
