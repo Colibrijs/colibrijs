@@ -17,7 +17,7 @@ jobs:
       - name: Build storybook
         run: npm run storybook:build --workspace @colibrijs/core
       - name: Save storybook build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: storybook
           path: ./packages/core/storybook-static
@@ -45,7 +45,7 @@ jobs:
       - name: Test unit
         run: npm run test:unit
       - name: Download storybook
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: storybook
           path: ./packages/core/storybook-static/
