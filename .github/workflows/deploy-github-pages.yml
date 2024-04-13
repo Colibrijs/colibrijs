@@ -1,5 +1,12 @@
 name: Deploy github pages
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      pull-request-id:
+        description: Если параметр указан, к пулл реквесту добавится комментарий со ссылкой на сторибук
+        type: number
+        required: false
+        default: 0
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -36,7 +43,7 @@ jobs:
         run: |
           tar -xvf ./github-pages/artifact.tar --directory ./github-pages
           rm ./github-pages/artifact.tar
-      - name: Remove old storybook files for current branch
+      - name: Remove old files for current branch
         if: steps.download-github-pages.outcome == 'success'
         run: |
           rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
@@ -44,7 +51,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: storybook
-          path: ./github-pages/${{ steps.metadata.outputs.branch }}
+          path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
         with:
@@ -54,3 +61,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+      - name: Comment PR with storybook url
+        if: inputs.pull-request-id != 0
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            [Storybook](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/storybook/)
+          comment_tag: storybook-url
+          pr_number: ${{ inputs.pull-request-id }}

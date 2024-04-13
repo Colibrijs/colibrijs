@@ -60,4 +60,7 @@ jobs:
     permissions:
       contents: read
       pages: write
+      pull-requests: write
       id-token: write
+    with:
+      pull-request-id: ${{ github.event.number }}
