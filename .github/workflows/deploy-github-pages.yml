@@ -1,0 +1,56 @@
+name: Deploy github pages
+on: workflow_call
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy-github-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Download the github-pages artifact
+        id: download-github-pages
+        uses: dawidd6/action-download-artifact@v2
+        continue-on-error: true
+        with:
+          name: github-pages
+          path: ./github-pages
+      # actions/upload-pages-artifact puts all content from artifact into the tar archive. So,
+      # before we will work with files, we need to extract them.
+      - name: Extract github-pages archive
+        if: steps.download-github-pages.outcome == 'success'
+        run: |
+          tar -xvf ./github-pages/artifact.tar --directory ./github-pages
+          rm ./github-pages/artifact.tar
+      - name: Remove old storybook files for current branch
+        if: steps.download-github-pages.outcome == 'success'
+        run: |
+          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
+      - name: Download storybook build
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook
+          path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
+      - name: Upload new github-pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          name: github-pages
+          path: ./github-pages
+          retention-days: 3
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
