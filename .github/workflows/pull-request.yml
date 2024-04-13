@@ -63,4 +63,4 @@ jobs:
       pull-requests: write
       id-token: write
     with:
-      pull-request-id: ${{ github.event.number }}
+      pull-request-id: ${{ github.event.pull_request.number }}

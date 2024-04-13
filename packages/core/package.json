@@ -5,7 +5,7 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "storybook:build:serve": "npm run storybook:build && http-server storybook-static --port 6006 --silent",
+    "storybook:build:serve": "http-server storybook-static --port 6006 --silent",
     "storybook:test": "concurrently -k -s first -n 'build:serve,test:local' 'npm run storybook:build:serve' 'npm run storybook:test:local'",
     "storybook:test:local": "wait-on tcp:6006 && test-storybook"
   },
