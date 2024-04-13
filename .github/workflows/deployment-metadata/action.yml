@@ -1,0 +1,37 @@
+name: Get metadata about deployment
+
+outputs:
+  branch:
+    description: Name of published branch
+    value: ${{ steps.save-branch.outputs.branch }}
+  namespace:
+    description: Name of namespace
+    value: ${{ steps.save-namespace-release.outputs.namespace }}
+  release:
+    description: Name of release
+    value: ${{ steps.save-namespace-release.outputs.release }}
+
+runs:
+  using: composite
+  steps:
+    - name: Save the name of current branch
+      shell: bash
+      id: save-branch
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+    - name: Save release and namespace
+      id: save-namespace-release
+      shell: bash
+      run: |
+        echo "namespace=${{ env.NAMESPACE }}" >> $GITHUB_OUTPUT
+        echo "release=${{ env.RELEASE }}" >> $GITHUB_OUTPUT
+      env:
+        # For the main branch the namespace will be named as colibrijs. For other branches - "colibrijs-branchName"
+        NAMESPACE: ${{ format('colibrijs-{0}', steps.save-branch.outputs.branch) }}
+        # The 'colibrijs' for main branch and 'branchName' for other branches
+        RELEASE: ${{ steps.save-branch.outputs.branch == 'main' && 'colibrijs' || steps.save-branch.outputs.branch }}
+    - name: Log outputs
+      shell: bash
+      run: |
+        echo "Name of published branch: ${{ steps.save-branch.outputs.branch }}"
+        echo "Name of namespace: ${{ steps.save-namespace-release.outputs.namespace }}"
+        echo "Name of release: ${{ steps.save.namespace-release.outputs.release }}"

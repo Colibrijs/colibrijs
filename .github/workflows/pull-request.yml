@@ -51,3 +51,16 @@ jobs:
           path: ./packages/core/storybook-static/
       - name: Test interactions
         run: npm run test:interactions
+
+  storybook-deploy:
+    if: github.event.action != 'closed'
+    needs: storybook-build
+    uses: ./.github/workflows/deploy-github-pages.yml
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      pull-requests: write
+      id-token: write
+    with:
+      pull-request-id: ${{ github.event.pull_request.number }}
