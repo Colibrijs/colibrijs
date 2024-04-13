@@ -1,0 +1,53 @@
+name: Pull request
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  storybook-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Build storybook
+        run: npm run storybook:build --workspace @colibrijs/core
+      - name: Save storybook build
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook
+          path: ./packages/core/storybook-static
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Lint
+        run: npm run lint
+      - name: Lint CSS
+        run: npm run lint:css
+
+  test:
+    needs: storybook-build
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Test unit
+        run: npm run test:unit
+      - name: Download storybook
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook
+          path: ./packages/core/storybook-static/
+      - name: Test interactions
+        run: npm run test:interactions

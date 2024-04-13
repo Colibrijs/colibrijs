@@ -1,4 +1,4 @@
-import React, { type FC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import styles from './props-editor.css';
 
@@ -7,7 +7,7 @@ export interface Props {
   onChange: (schema: Record<string, string>) => void;
 }
 
-export const PropsEditor: FC<Props> = ({ schema, onChange }) => {
+export function PropsEditor({ schema, onChange }: Props) {
   const saveHandler = useCallback(() => {
     onChange(schema);
   }, [onChange, schema]);
@@ -27,4 +27,4 @@ export const PropsEditor: FC<Props> = ({ schema, onChange }) => {
       </button>
     </label>
   );
-};
+}
