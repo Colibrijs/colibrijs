@@ -1,4 +1,12 @@
-.root {
-  font-weight: 700;
-  background: #add8e6;
+.editor {
+  display: block;
+}
+
+.label {
+  display: block;
+}
+
+.textarea {
+  padding: 8px;
+  font: inherit;
 }

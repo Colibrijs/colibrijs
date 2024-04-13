@@ -8,9 +8,15 @@ export interface Props {
 
 export const PropsEditor: FC<Props> = ({ schema }) => {
   return (
-    <label className={styles.root}>
-      <span>Props:</span>
-      <textarea defaultValue={JSON.stringify(schema, null, 2)} />
+    <label className={styles.editor}>
+      <span className={styles.label} data-testid="editor__label">
+        Props:
+      </span>
+      <textarea
+        className={styles.textarea}
+        defaultValue={JSON.stringify(schema, null, 2)}
+        rows={4}
+      />
     </label>
   );
 };

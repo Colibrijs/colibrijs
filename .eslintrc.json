@@ -49,7 +49,7 @@
     "import/no-default-export": "error",
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": ["**/*.{stories,spec}.{ts,tsx}"],
+      "devDependencies": ["./packages/**/*.stories.{ts,tsx}"],
       "peerDependencies": true
     }],
     "react/destructuring-assignment": ["error", "always", {
@@ -68,6 +68,14 @@
       "extends": ["plugin:jest/all"],
       "rules": {
         "jest/valid-title": ["error", { "ignoreTypeOfDescribeName": true }]
+      }
+    },
+    {
+      "files": ["**/*.stories.{ts,tsx}"],
+      "extends": ["plugin:storybook/recommended"],
+      "plugins": ["storybook"],
+      "rules": {
+        "import/no-default-export": "off"
       }
     }
   ]
