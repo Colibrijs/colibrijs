@@ -1,0 +1,12 @@
+.editor {
+  display: block;
+}
+
+.label {
+  display: block;
+}
+
+.textarea {
+  padding: 8px;
+  font: inherit;
+}
