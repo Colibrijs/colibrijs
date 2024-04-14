@@ -8,7 +8,7 @@ on:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -43,8 +43,7 @@ jobs:
           rm ./github-pages/artifact.tar
       - name: Remove old files for current branch and archive
         if: steps.download-artifact.outcome == 'success'
-        run:
-          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
+        run: rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
         with:
