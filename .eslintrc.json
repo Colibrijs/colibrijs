@@ -54,7 +54,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.{ts,tsx}"],
+        "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.ts"],
         "peerDependencies": true
       }
     ],

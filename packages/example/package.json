@@ -2,7 +2,11 @@
   "name": "@colibrijs/example",
   "private": true,
   "main": "./components/example/index.ts",
+  "scripts": {
+    "build": "colibri build"
+  },
   "dependencies": {
+    "@colibrijs/cli": "1.0.0",
     "@colibrijs/types": "1.0.0",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.22.5"
