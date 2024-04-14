@@ -35,26 +35,36 @@
     "no-console": "error",
     "no-use-before-define": ["error", { "functions": false }],
     "eslint-comments/require-description": "error",
-    "import/order": ["error", {
-      "newlines-between": "always-and-inside-groups",
-      "groups": [
-        ["builtin", "external"],
-        ["parent", "sibling"]
-      ],
-      "alphabetize": {
-        "order": "asc",
-        "caseInsensitive": true
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always-and-inside-groups",
+        "groups": [
+          ["builtin", "external"],
+          ["parent", "sibling"]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
-    }],
+    ],
     "import/no-default-export": "error",
     "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.{ts,tsx}"],
-      "peerDependencies": true
-    }],
-    "react/destructuring-assignment": ["error", "always", {
-      "destructureInSignature": "always"
-    }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.{ts,tsx}"],
+        "peerDependencies": true
+      }
+    ],
+    "react/destructuring-assignment": [
+      "error",
+      "always",
+      {
+        "destructureInSignature": "always"
+      }
+    ],
     "react/jsx-boolean-value": "error",
     "react-hooks/exhaustive-deps": "error"
   },
