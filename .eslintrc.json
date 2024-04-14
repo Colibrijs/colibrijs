@@ -74,6 +74,12 @@
       "parserOptions": { "project": null }
     },
     {
+      "files": ["jest.config.js", "packages/example/components/*/index.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
       "files": ["**/*.spec.{ts,tsx}"],
       "plugins": ["jest"],
       "extends": ["plugin:jest/all"],
@@ -82,7 +88,7 @@
       }
     },
     {
-      "files": ["**/*.stories.{ts,tsx}", "./jest.config.js"],
+      "files": ["**/*.stories.{ts,tsx}"],
       "extends": ["plugin:storybook/recommended"],
       "parserOptions": { "project": "tsconfig.test.json" },
       "plugins": ["storybook"],
