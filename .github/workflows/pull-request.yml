@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
       - name: Prepare environment
         uses: ./.github/workflows/prepare-environment
       - name: Lint
@@ -34,6 +36,8 @@ jobs:
         run: npm run lint:css
       - name: Lint formatting
         run: npm run lint:formatting
+      - name: Validate commits in pull request
+        run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
   test:
     needs: storybook-build
