@@ -6,6 +6,6 @@ import { exampleProps, type Props } from './example.schema';
 
 export default {
   component: Example,
-  name: 'Example',
+  name: Example.displayName,
   schema: zodToJsonSchema(exampleProps) as JsonSchema<Props>,
 } satisfies MicrofrontendMeta<Props>;
