@@ -32,6 +32,8 @@ jobs:
         run: npm run lint
       - name: Lint CSS
         run: npm run lint:css
+      - name: Lint formatting
+        run: npm run lint:formatting
 
   test:
     needs: storybook-build
