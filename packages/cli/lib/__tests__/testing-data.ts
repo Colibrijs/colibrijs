@@ -7,6 +7,7 @@ export const defaultPackageJson: PackageJson = {
 
 export const defaultSettings: Settings = {
   packageJson: defaultPackageJson,
+  packageJsonPath: '/path/to/package/package.json',
   platform: 'client',
   regime: 'production',
   root: '/path/to/package/',

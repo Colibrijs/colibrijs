@@ -1,3 +1,4 @@
+import CopyPlugin from 'copy-webpack-plugin';
 import path from 'node:path';
 import type { Configuration } from 'webpack';
 
@@ -9,7 +10,6 @@ export function createConfiguration(settings: Settings): Configuration {
     entry: getEntryPoints(settings),
     name: settings.platform,
     mode: settings.regime === 'production' ? 'production' : 'development',
-    plugins: [createFederationPlugin(settings)],
     target: false,
 
     module: {
@@ -46,6 +46,13 @@ export function createConfiguration(settings: Settings): Configuration {
         type: 'commonjs-module',
       },
     },
+
+    plugins: [
+      createFederationPlugin(settings),
+      new CopyPlugin({
+        patterns: [{ from: settings.packageJsonPath, to: './package.json' }],
+      }),
+    ],
 
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js'],

@@ -2,15 +2,22 @@ import { cwd } from 'node:process';
 import { webpack } from 'webpack';
 import type { Compiler, Stats } from 'webpack';
 
-import { readPackageJson } from './lib/read-package-json';
+import { getPackageJsonPath, readPackageJson } from './lib';
 import type { Logger, RunnerOptions, Settings } from './types';
 import { createConfiguration } from './webpack.config';
 
 export async function run(options: RunnerOptions): Promise<void> {
   const logger: Logger = console;
   const root = cwd();
-  const packageJson = await readPackageJson(root);
-  const settings: Omit<Settings, 'platform'> = { packageJson, root, regime: options.regime };
+  const packageJsonPath = getPackageJsonPath(root);
+  const packageJson = await readPackageJson(packageJsonPath);
+
+  const settings: Omit<Settings, 'platform'> = {
+    packageJson,
+    packageJsonPath,
+    root,
+    regime: options.regime,
+  };
 
   const config = createConfiguration({ ...settings, platform: 'client' });
   const compiler = webpack(config);

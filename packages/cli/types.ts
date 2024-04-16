@@ -15,6 +15,7 @@ export interface PackageJson {
 
 export interface Settings {
   packageJson: PackageJson;
+  packageJsonPath: string;
   platform: Platform;
   regime: Regime;
   root: string;
