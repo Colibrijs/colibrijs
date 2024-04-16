@@ -20,7 +20,7 @@ export function getFederationPluginOptions(settings: Settings): FederationPlugin
     filename: `./${settings.packageJson.name}/remote.${settings.platform}.js`,
     name: packageName,
     exposes: {
-      [packageName]: settings.packageJson.main,
+      [`./${packageName}`]: settings.packageJson.main,
     },
     shared: {
       react: {
