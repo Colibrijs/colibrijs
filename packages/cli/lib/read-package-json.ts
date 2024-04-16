@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises';
-import path from 'node:path';
 import { object, string, ZodError, ZodType } from 'zod';
 
 import type { PackageJson } from '../types';
@@ -17,11 +16,10 @@ export const packageJsonSchema: ZodType<PackageJson> = object({
 
 /**
  * Возвращает содержимое package.json файла
- * @param root - абсолютный путь к папке, где нужно найти package.json
+ * @param packageJsonPath - абсолютный путь к package.json файлу
  */
-export async function readPackageJson(root: string): Promise<PackageJson> {
+export async function readPackageJson(packageJsonPath: string): Promise<PackageJson> {
   try {
-    const packageJsonPath = path.join(root, 'package.json');
     await fs.access(packageJsonPath, fs.constants.R_OK);
 
     const packageJsonContent = await fs.readFile(packageJsonPath, 'utf-8');

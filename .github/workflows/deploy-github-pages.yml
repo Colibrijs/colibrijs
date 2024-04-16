@@ -1,7 +1,16 @@
 name: Deploy github pages
+
 on:
   workflow_call:
     inputs:
+      example-artifact-name:
+        description: Имя артефакта из которого можно взять собранные компоненты example
+        type: string
+        required: true
+      storybook-artifact-name:
+        description: Имя артефакта из которого можно взять собранный сторибук
+        type: string
+        required: true
       pull-request-id:
         description: Если параметр указан, к пулл реквесту добавится комментарий со ссылкой на сторибук
         type: number
@@ -48,10 +57,15 @@ jobs:
         if: steps.download-github-pages.outcome == 'success'
         run: |
           rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
+      - name: Download example build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.example-artifact-name }}
+          path: ./github-pages/${{ steps.metadata.outputs.branch }}/example
       - name: Download storybook build
         uses: actions/download-artifact@v4
         with:
-          name: storybook
+          name: ${{ inputs.storybook-artifact-name }}
           path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
       - name: Upload new github-pages
         uses: actions/upload-pages-artifact@v2
@@ -68,5 +82,6 @@ jobs:
         with:
           message: |
             [Storybook](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/storybook/)
-          comment_tag: storybook-url
+            [Example](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/example/package.json)
+          comment_tag: links
           pr_number: ${{ inputs.pull-request-id }}

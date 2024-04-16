@@ -14,7 +14,7 @@ class NodeError extends Error {
 }
 
 describe(readPackageJson.name, () => {
-  it('считывает package.json из папки указанной первым параметром', async () => {
+  it('считывает package.json по пути указанном в первом параметре', async () => {
     expect.assertions(2);
 
     const accessSpy = jest.spyOn(fs, 'access').mockResolvedValue();
@@ -22,7 +22,7 @@ describe(readPackageJson.name, () => {
       .spyOn(fs, 'readFile')
       .mockResolvedValue(JSON.stringify(defaultPackageJson));
 
-    await readPackageJson('/path/to/package');
+    await readPackageJson('/path/to/package/package.json');
 
     expect(accessSpy).toHaveBeenCalledWith('/path/to/package/package.json', fs.constants.R_OK);
     expect(readFileSpy).toHaveBeenCalledWith('/path/to/package/package.json', 'utf-8');
@@ -43,7 +43,7 @@ describe(readPackageJson.name, () => {
 
     jest.spyOn(fs, 'access').mockRejectedValue(new NodeError('ENOENT'));
 
-    await expect(readPackageJson('/nonexistent-directory')).rejects.toThrow(
+    await expect(readPackageJson('/nonexistent-directory/package.json')).rejects.toThrow(
       'Нет файла package.json'
     );
   });
