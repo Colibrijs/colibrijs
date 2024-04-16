@@ -1,4 +1,5 @@
 name: Deploy github pages
+
 on:
   workflow_call:
     inputs:
@@ -81,5 +82,6 @@ jobs:
         with:
           message: |
             [Storybook](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/storybook/)
-          comment_tag: storybook-url
+            [Example](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/example/package.json)
+          comment_tag: links
           pr_number: ${{ inputs.pull-request-id }}
