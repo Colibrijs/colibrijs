@@ -8,19 +8,9 @@ on:
       - synchronize
 
 jobs:
-  storybook-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Prepare environment
-        uses: ./.github/workflows/prepare-environment
-      - name: Build storybook
-        run: npm run storybook:build --workspace @colibrijs/core
-      - name: Save storybook build
-        uses: actions/upload-artifact@v4
-        with:
-          name: storybook
-          path: ./packages/core/storybook-static
+  build:
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
 
   lint:
     runs-on: ubuntu-latest
@@ -40,7 +30,7 @@ jobs:
         run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
   test:
-    needs: storybook-build
+    needs: build
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.43.0-jammy
@@ -53,14 +43,13 @@ jobs:
       - name: Download storybook
         uses: actions/download-artifact@v4
         with:
-          name: storybook
+          name: ${{ needs.build.outputs.storybook-artifact-name }}
           path: ./packages/core/storybook-static/
       - name: Test interactions
         run: npm run test:interactions
 
-  storybook-deploy:
-    if: github.event.action != 'closed'
-    needs: storybook-build
+  deploy:
+    needs: build
     uses: ./.github/workflows/deploy-github-pages.yml
     secrets: inherit
     permissions:
@@ -70,3 +59,5 @@ jobs:
       id-token: write
     with:
       pull-request-id: ${{ github.event.pull_request.number }}
+      example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
+      storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
