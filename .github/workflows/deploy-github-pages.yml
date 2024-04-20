@@ -89,8 +89,8 @@ jobs:
       - name: Save artifacts urls
         id: save-artifact-urls
         run: |
-          echo "exampleUrl='${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/example/" >> $GITHUB_OUTPUT
-          echo "storybookUrl=${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/storybook/" >> $GITHUB_OUTPUT
+          echo "exampleUrl=${{ steps.deployment.outputs.page_url }}${{ steps.metadata.outputs.branch }}/example/" >> $GITHUB_OUTPUT
+          echo "storybookUrl=${{ steps.deployment.outputs.page_url }}${{ steps.metadata.outputs.branch }}/storybook/" >> $GITHUB_OUTPUT
       - name: Comment PR with storybook url
         if: inputs.pull-request-id != 0
         uses: thollander/actions-comment-pull-request@v2
