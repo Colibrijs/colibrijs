@@ -8,7 +8,7 @@ import type { Settings } from './types';
 
 export function createConfiguration(settings: Settings): Configuration {
   return {
-    entry: getEntryPoints(settings),
+    entry: getEntryPoints(),
     name: settings.platform,
     mode: settings.regime === 'production' ? 'production' : 'development',
     target: false,

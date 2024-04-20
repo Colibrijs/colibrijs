@@ -15,6 +15,6 @@
     "react": "^18"
   },
   "exports": {
-    "./Example/": "./components/example/index.ts"
+    "./Example": "./components/example/index.ts"
   }
 }
