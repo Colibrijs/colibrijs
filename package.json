@@ -16,8 +16,6 @@
     "lint:css": "stylelint packages/**/*.css",
     "lint:formatting": "prettier **/*.{md,yml,json}",
     "test:unit": "jest",
-    "test:interactions": "npm run storybook:test -w @colibrijs/core",
-    "test:interactions:local": "npm run storybook:test:local -w @colibrijs/core",
     "postinstall": "husky install",
     "pre-commit": "lint-staged"
   },

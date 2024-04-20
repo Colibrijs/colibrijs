@@ -29,25 +29,6 @@ jobs:
       - name: Validate commits in pull request
         run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.43.0-jammy
-    steps:
-      - uses: actions/checkout@v4
-      - name: Prepare environment
-        uses: ./.github/workflows/prepare-environment
-      - name: Test unit
-        run: npm run test:unit
-      - name: Download storybook
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build.outputs.storybook-artifact-name }}
-          path: ./packages/core/storybook-static/
-      - name: Test interactions
-        run: npm run test:interactions
-
   deploy:
     needs: build
     uses: ./.github/workflows/deploy-github-pages.yml
@@ -61,3 +42,22 @@ jobs:
       pull-request-id: ${{ github.event.pull_request.number }}
       example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
       storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
+
+  test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Test unit
+        run: npm run test:unit
+      - name: Wait storybook
+        run: |
+          npm exec wait-storybook -- \
+            --url ${{ needs.deploy.outputs.storybook-url }} \
+            --commit-sha ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+      - name: Test interactions
+        run: npm run test:interactions -w @colibrijs/core -- --url ${{ needs.deploy.outputs.storybook-url }}
