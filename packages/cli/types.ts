@@ -1,8 +1,7 @@
 /** Режим в котором может запускаться сборщик. Пока что поддерживается только production */
 export type Regime = 'production';
 
-/** Платформа для которой нужно собрать микрофронты. Пока что поддерживается только client */
-export type Platform = 'client';
+export type Platform = 'client' | 'server';
 
 export interface RunnerOptions {
   regime: Regime;
