@@ -5,7 +5,7 @@ import type { MicrofrontendMeta, Story } from './microfrontend.stories';
 
 export default {
   ...MicrofrontendStoryMeta,
-  title: 'Microfrontend/tests/callbacks',
+  title: 'Microfrontend/tests/remote',
 } satisfies MicrofrontendMeta;
 
 export const Example: Story = {

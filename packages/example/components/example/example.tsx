@@ -6,7 +6,7 @@ export function Example({ title, text }: Props) {
   return (
     <article data-testid="example">
       <h1 data-testid="example__title">{title}</h1>
-      {Boolean(text) && <p data-textid="example__text">{text}</p>}
+      {Boolean(text) && <p data-testid="example__text">{text}</p>}
     </article>
   );
 }
