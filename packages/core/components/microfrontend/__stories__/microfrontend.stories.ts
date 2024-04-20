@@ -13,7 +13,7 @@ export default {
     id: '1',
     componentName: '_colibrijs__example',
     libraryName: '_colibrijs__example',
-    src: 'https://colibrijs.github.io/colibrijs/issue-16/example/@colibrijs/example',
+    src: `${process.env.EXAMPLE_URL}@colibrijs/example`,
     props: {
       title: 'Удалённый компонент',
       text: 'Но тем не менее, рендерюсь здесь',

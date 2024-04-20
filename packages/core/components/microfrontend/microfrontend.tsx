@@ -1,6 +1,6 @@
 import type { MicrofrontendMeta } from '@colibrijs/types';
 import { importRemote } from '@module-federation/utilities';
-import React, { lazy, useMemo, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import type { ComponentType, PropsWithRef } from 'react';
 
 export interface Props<P> {
@@ -21,20 +21,14 @@ export interface Props<P> {
 }
 
 export function Microfrontend<P>({ componentName, libraryName, props, src }: Props<P>) {
-  const loadingPromise = useMemo(() => {
-    return importRemote<{ default: MicrofrontendMeta<P> }>({
+  const Component = lazy<ComponentType<P>>(() =>
+    importRemote<MicrofrontendMeta<P>>({
       url: src,
       scope: libraryName,
       module: componentName,
       remoteEntryFileName: 'remote.client.js',
-    });
-  }, [src, libraryName, componentName]);
-
-  const Component = lazy<ComponentType<P>>(async () => {
-    const meta = await loadingPromise;
-
-    return { default: meta.default.component };
-  });
+    })
+  );
 
   return (
     <Suspense>
