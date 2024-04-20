@@ -1,7 +1,6 @@
 {
   "name": "@colibrijs/example",
   "private": true,
-  "main": "./components/example/index.ts",
   "version": "1.0.0",
   "scripts": {
     "build": "colibri build"
@@ -14,5 +13,8 @@
   },
   "peerDependencies": {
     "react": "^18"
+  },
+  "exports": {
+    "./Example/": "./components/example/index.ts"
   }
 }

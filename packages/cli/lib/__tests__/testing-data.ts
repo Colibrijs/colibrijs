@@ -2,7 +2,6 @@ import type { PackageJson, Settings } from '../../types';
 
 export const defaultPackageJson: PackageJson = {
   name: '@colibrijs/example',
-  main: './entrypoint.js',
   exports: {
     './Example/': './components/example/index.ts',
   },

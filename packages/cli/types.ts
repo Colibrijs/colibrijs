@@ -10,7 +10,6 @@ export interface RunnerOptions {
 
 export interface PackageJson {
   name: string;
-  main: string;
   exports: Record<string, string>;
 }
 

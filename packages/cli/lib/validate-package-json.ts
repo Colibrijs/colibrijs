@@ -7,10 +7,6 @@ export const packageJsonSchema: ZodType<PackageJson> = object({
     required_error: 'Укажите имя библиотеки в package.json',
     invalid_type_error: 'Поле "name" в package.json должно быть строкой',
   }),
-  main: string({
-    required_error: 'Поле "main" в package.json не указано',
-    invalid_type_error: 'Поле "main" в package.json должно быть строкой',
-  }),
   exports: record(string(), string(), {
     required_error: 'Поле "exports" в package.json не указано',
     invalid_type_error:

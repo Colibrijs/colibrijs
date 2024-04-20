@@ -7,7 +7,6 @@ import { validatePackageJson } from '../validate-package-json';
 describe(validatePackageJson.name, () => {
   it.each([
     { field: 'name', message: 'Укажите имя библиотеки в package.json' },
-    { field: 'main', message: 'Поле "main" в package.json не указано' },
     { field: 'exports', message: 'Поле "exports" в package.json не указано' },
   ])('выбрасывает TypeError если поле "$field" отсутствует в package.json', (testCase) => {
     expect.assertions(1);
@@ -23,7 +22,6 @@ describe(validatePackageJson.name, () => {
 
   it.each([
     { field: 'name', message: 'Поле "name" в package.json должно быть строкой' },
-    { field: 'main', message: 'Поле "main" в package.json должно быть строкой' },
     {
       field: 'exports',
       message:
