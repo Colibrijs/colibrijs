@@ -23,4 +23,10 @@ export default {
   docs: {
     autodocs: 'tag',
   },
+  previewHead: (head) => {
+    if (!process.env.COMMIT_SHA) return head;
+
+    const commitShaMeta = `<meta name="commit-sha" content="${process.env.COMMIT_SHA}">`;
+    return `${head}${commitShaMeta}`;
+  },
 } satisfies StorybookConfig;
