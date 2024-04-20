@@ -1,6 +1,6 @@
 import { container } from 'webpack';
 
-import { encodePackageName } from './encode-package-name';
+import { encodePackageName } from '../lib/encode-package-name';
 import type { Settings } from '../types';
 
 type FederationPluginConstructorOptions = ConstructorParameters<
@@ -19,9 +19,7 @@ export function getFederationPluginOptions(settings: Settings): FederationPlugin
   const options: FederationPluginConstructorOptions = {
     filename: `./${settings.packageJson.name}/remote.${settings.platform}.js`,
     name: packageName,
-    exposes: {
-      [`./${packageName}`]: settings.packageJson.main,
-    },
+    exposes: settings.packageJson.exports,
     shared: {
       react: {
         requiredVersion: '^18',

@@ -2,12 +2,13 @@ import CopyPlugin from 'copy-webpack-plugin';
 import path from 'node:path';
 import type { Configuration } from 'webpack';
 
-import { createFederationPlugin, encodePackageName, getEntryPoints } from './lib';
+import { createFederationPlugin } from './config/create-federation-plugin';
+import { encodePackageName, getEntryPoints } from './lib';
 import type { Settings } from './types';
 
 export function createConfiguration(settings: Settings): Configuration {
   return {
-    entry: getEntryPoints(settings),
+    entry: getEntryPoints(),
     name: settings.platform,
     mode: settings.regime === 'production' ? 'production' : 'development',
     target: false,

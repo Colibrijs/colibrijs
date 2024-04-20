@@ -21,14 +21,14 @@ export interface Props<P> {
 }
 
 export function Microfrontend<P>({ componentName, libraryName, props, src }: Props<P>) {
-  const Component = lazy<ComponentType<P>>(() =>
-    importRemote<MicrofrontendMeta<P>>({
+  const Component = lazy<ComponentType<P>>(() => {
+    return importRemote<MicrofrontendMeta<P>>({
       url: src,
       scope: libraryName,
       module: componentName,
       remoteEntryFileName: 'remote.client.js',
-    })
-  );
+    });
+  });
 
   return (
     <Suspense>

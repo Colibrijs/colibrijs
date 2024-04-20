@@ -12,7 +12,7 @@ export const Example: Story = {
   name: 'Загружает и рендерит удалённый компонент с пропсами, указанными в поле props',
   args: {
     id: '1',
-    componentName: '_colibrijs__example',
+    componentName: 'Example',
     libraryName: '_colibrijs__example',
     src: `${process.env.EXAMPLE_URL}@colibrijs/example`,
     props: {

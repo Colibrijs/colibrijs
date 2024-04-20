@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { defaultPackageJson, defaultSettings } from './testing-data';
+import { defaultPackageJson, defaultSettings } from '../../lib/__tests__/testing-data';
+import { encodePackageName } from '../../lib/encode-package-name';
 import type { PackageJson, Settings } from '../../types';
 import { getFederationPluginOptions } from '../create-federation-plugin';
-import { encodePackageName } from '../encode-package-name';
 
 describe(getFederationPluginOptions.name, () => {
   it('в поле "name" возвращает закодированное имя пакета (packageJson.name)', () => {
@@ -15,20 +15,20 @@ describe(getFederationPluginOptions.name, () => {
     expect(options.name).toBe(encodePackageName('@colibrijs/example'));
   });
 
-  it('exposes является объектом, где закодированное имя пакета соответствует значению package.json main', () => {
+  it('exposes является объектом, который полностью соответствует exports в package.json', () => {
     expect.assertions(1);
 
     const packageJson: PackageJson = {
       ...defaultPackageJson,
-      name: '@colibrijs/example',
-      main: 'index.js',
+      exports: {
+        './ComponentA/': './components/component-a/index.ts',
+        './ComponentB/': './components/component-b/index.ts',
+      },
     };
 
     const options = getFederationPluginOptions({ ...defaultSettings, packageJson });
 
-    expect(options.exposes).toStrictEqual({
-      [`./${encodePackageName('@colibrijs/example')}`]: 'index.js',
-    });
+    expect(options.exposes).toStrictEqual(packageJson.exports);
   });
 
   it('filename соответствует шаблону "./#{package.name}/remote.#{platform}.js', () => {

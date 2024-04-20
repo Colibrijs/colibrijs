@@ -2,7 +2,8 @@ import { describe, expect, it, jest } from '@jest/globals';
 import fs from 'fs/promises';
 
 import { defaultPackageJson } from './testing-data';
-import { packageJsonSchema, readPackageJson } from '../read-package-json';
+import { readPackageJson } from '../read-package-json';
+import * as validatePackageJsonModule from '../validate-package-json';
 
 class NodeError extends Error {
   readonly code: string;
@@ -31,11 +32,12 @@ describe(readPackageJson.name, () => {
   it('возвращает результат парсинга package.json', async () => {
     expect.assertions(1);
 
+    const packageJsonRaw = JSON.stringify(defaultPackageJson);
     jest.spyOn(fs, 'access').mockResolvedValue();
-    jest.spyOn(fs, 'readFile').mockResolvedValue(JSON.stringify(defaultPackageJson));
+    jest.spyOn(fs, 'readFile').mockResolvedValue(packageJsonRaw);
 
     const packageJson = await readPackageJson('/path/to/package');
-    expect(packageJson).toStrictEqual(packageJsonSchema.parse(defaultPackageJson));
+    expect(packageJson).toStrictEqual(JSON.parse(packageJsonRaw));
   });
 
   it('выбрасывает ошибку, если package.json файл не существует', async () => {
@@ -70,44 +72,16 @@ describe(readPackageJson.name, () => {
     );
   });
 
-  it.each([
-    { field: 'name', message: 'Укажите имя библиотеки в package.json' },
-    { field: 'main', message: 'Поле "main" в package.json не указано' },
-  ])('выбрасывает TypeError если поле "$field" отсутствует в package.json', async (testCase) => {
+  it('выбрасывает ошибку, если validatePackageJson выбросило ошибку', async () => {
     expect.assertions(1);
 
+    const error = new TypeError('some shit happend');
     jest.spyOn(fs, 'access').mockResolvedValue();
-    jest.spyOn(fs, 'readFile').mockResolvedValue(
-      JSON.stringify({
-        ...defaultPackageJson,
-        [testCase.field]: undefined,
-      })
-    );
+    jest.spyOn(fs, 'readFile').mockResolvedValue(JSON.stringify(defaultPackageJson));
+    jest.spyOn(validatePackageJsonModule, 'validatePackageJson').mockImplementation(() => {
+      throw error;
+    });
 
-    await expect(readPackageJson('/path/to/package')).rejects.toThrow(
-      new TypeError(testCase.message)
-    );
+    await expect(() => readPackageJson('/path/to/package')).rejects.toThrow(error);
   });
-
-  it.each([
-    { field: 'name', wrong: true, message: 'Поле "name" в package.json должно быть строкой' },
-    { field: 'main', wrong: true, message: 'Поле "main" в package.json должно быть строкой' },
-  ])(
-    'выбрасывает TypeError если поле "$field" имеет некорректный тип package.json',
-    async (testCase) => {
-      expect.assertions(1);
-
-      jest.spyOn(fs, 'access').mockResolvedValue();
-      jest.spyOn(fs, 'readFile').mockResolvedValue(
-        JSON.stringify({
-          ...defaultPackageJson,
-          [testCase.field]: testCase.wrong,
-        })
-      );
-
-      await expect(readPackageJson('/path/to/package')).rejects.toThrow(
-        new TypeError(testCase.message)
-      );
-    }
-  );
 });
