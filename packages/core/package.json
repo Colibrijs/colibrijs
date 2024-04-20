@@ -8,8 +8,12 @@
     "test:interactions": "test-storybook",
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook"
   },
+  "dependencies": {
+    "@module-federation/utilities": "^3.0.11"
+  },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@colibrijs/example": "^1.0.0",
     "@colibrijs/wait-storybook": "^1.0.0",
     "@storybook/addon-essentials": "^8.0.8",
     "@storybook/addon-interactions": "^8.0.8",

@@ -9,3 +9,5 @@ export default {
   name: Example.displayName,
   schema: zodToJsonSchema(exampleProps) as JsonSchema<Props>,
 } satisfies MicrofrontendMeta<Props>;
+
+export type { Props as ExampleProps };
