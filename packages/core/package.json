@@ -9,7 +9,7 @@
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook"
   },
   "dependencies": {
-    "@module-federation/utilities": "^3.0.11"
+    "@module-federation/enhanced": "^0.1.8"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
