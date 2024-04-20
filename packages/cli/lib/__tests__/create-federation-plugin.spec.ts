@@ -27,7 +27,7 @@ describe(getFederationPluginOptions.name, () => {
     const options = getFederationPluginOptions({ ...defaultSettings, packageJson });
 
     expect(options.exposes).toStrictEqual({
-      [encodePackageName('@colibrijs/example')]: 'index.js',
+      [`./${encodePackageName('@colibrijs/example')}`]: 'index.js',
     });
   });
 

@@ -6,9 +6,7 @@ export type JsonSchema<P> = string; // eslint-disable-line @typescript-eslint/no
 
 export interface MicrofrontendMeta<P> {
   /** Реализация компонента */
-  component: ComponentType<P>;
-  /** Название */
-  name: string;
+  default: ComponentType<P>;
   /** Схема пропсов компонента */
   schema: JsonSchema<P>;
 }

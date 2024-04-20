@@ -16,6 +16,9 @@ export default {
       },
     },
   ],
+  env: {
+    EXAMPLE_URL: process.env.EXAMPLE_URL || 'https://colibrijs.github.io/colibrijs/main/example/',
+  },
   framework: {
     name: '@storybook/react-webpack5',
     options: {},

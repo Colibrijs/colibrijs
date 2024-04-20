@@ -1,11 +1,10 @@
-import type { JsonSchema, MicrofrontendMeta } from '@colibrijs/types';
+import type { JsonSchema } from '@colibrijs/types';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import { Example } from './example';
 import { exampleProps, type Props } from './example.schema';
 
-export default {
-  component: Example,
-  name: Example.displayName,
-  schema: zodToJsonSchema(exampleProps) as JsonSchema<Props>,
-} satisfies MicrofrontendMeta<Props>;
+export { Example as default } from './example';
+
+export const schema = JSON.stringify(zodToJsonSchema(exampleProps), null, 2) as JsonSchema<Props>;
+
+export type { Props as ExampleProps };

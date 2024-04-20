@@ -4,9 +4,9 @@ import type { Props } from './example.schema';
 
 export function Example({ title, text }: Props) {
   return (
-    <article>
-      <h1>{title}</h1>
-      {Boolean(text) && <p>{text}</p>}
+    <article data-testid="example">
+      <h1 data-testid="example__title">{title}</h1>
+      {Boolean(text) && <p data-testid="example__text">{text}</p>}
     </article>
   );
 }
