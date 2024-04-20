@@ -25,4 +25,4 @@ program
 
     return waitStorybook({ ...options, logger, pingInterval, timeout });
   })
-  .parse();
+  .parse(process.argv);

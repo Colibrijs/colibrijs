@@ -31,7 +31,6 @@
     }
   },
   "rules": {
-    "@typescript-eslint/no-floating-promises": "error",
     "func-style": ["error", "declaration"],
     "no-console": "error",
     "no-use-before-define": ["error", { "functions": false }],

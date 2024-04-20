@@ -16,6 +16,13 @@ on:
         type: number
         required: false
         default: 0
+    outputs:
+      example-url:
+        description: Ссылка по которой доступны компоненты example
+        value: ${{ jobs.deploy-github-pages.outputs.exampleUrl }}
+      storybook-url:
+        description: Ссылка по которой доступен сторибук
+        value: ${{ jobs.deploy-github-pages.outputs.storybookUrl }}
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -28,6 +35,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      exampleUrl: ${{ steps.save-artifact-urls.outputs.exampleUrl }}
+      storybookUrl: ${{ steps.save-artifact-urls.outputs.storybookUrl }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -76,12 +86,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+      - name: Save artifacts urls
+        id: save-artifact-urls
+        run: |
+          echo "exampleUrl='${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/example/" >> $GITHUB_OUTPUT
+          echo "storybookUrl=${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/storybook/" >> $GITHUB_OUTPUT
       - name: Comment PR with storybook url
         if: inputs.pull-request-id != 0
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            [Storybook](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/storybook/)
-            [Example](${{ steps.deployment.outputs.page_url }}/${{ steps.metadata.outputs.branch }}/example/package.json)
+            [Storybook](${{ steps.save-artifact-urls.outputs.storybookUrl }})
+            [Example](${{ steps.save-artifact-urls.outputs.exampleUrl }}/package.json)
           comment_tag: links
           pr_number: ${{ inputs.pull-request-id }}

@@ -20,6 +20,8 @@ jobs:
         run: npm run build --workspace @colibrijs/example
       - name: Build storybook
         run: npm run storybook:build --workspace @colibrijs/core
+        env:
+          COMMIT_SHA: ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
       - name: Save storybook build
         uses: actions/upload-artifact@v4
         with:
