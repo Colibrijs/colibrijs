@@ -1,18 +1,7 @@
 import fs from 'node:fs/promises';
-import { object, string, ZodError, ZodType } from 'zod';
 
+import { validatePackageJson } from './validate-package-json';
 import type { PackageJson } from '../types';
-
-export const packageJsonSchema: ZodType<PackageJson> = object({
-  name: string({
-    required_error: 'Укажите имя библиотеки в package.json',
-    invalid_type_error: 'Поле "name" в package.json должно быть строкой',
-  }),
-  main: string({
-    required_error: 'Поле "main" в package.json не указано',
-    invalid_type_error: 'Поле "main" в package.json должно быть строкой',
-  }),
-});
 
 /**
  * Возвращает содержимое package.json файла
@@ -25,18 +14,19 @@ export async function readPackageJson(packageJsonPath: string): Promise<PackageJ
     const packageJsonContent = await fs.readFile(packageJsonPath, 'utf-8');
     const packageJson = JSON.parse(packageJsonContent);
 
-    return packageJsonSchema.parse(packageJson);
+    validatePackageJson(packageJson);
+    return packageJson;
   } catch (error) {
     if (error instanceof SyntaxError) {
       throw new Error('Некорректный синтаксис в package.json');
     }
 
-    if (error instanceof ZodError) {
-      throw new TypeError(error.issues.map((issue) => issue.message).join('. '));
-    }
-
     if (isErrorWithCode(error) && error.code === 'ENOENT') {
       throw new Error('Нет файла package.json');
+    }
+
+    if (error instanceof TypeError) {
+      throw error;
     }
 
     throw new Error('Не могу считать package.json');
