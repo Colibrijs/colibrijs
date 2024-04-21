@@ -12,14 +12,14 @@ export type Story = StoryObj<typeof PropsEditor>;
 const styles = { maxWidth: '450px' };
 
 export default {
-  component: PropsEditor,
+  component: Default,
   title: 'PropsEditor',
   args: {
     onChange: fn(),
     schema: JSON.stringify(schema, null, 2),
     value: {
-      name: 'Vityavale',
-      surname: 'Radomoy',
+      name: '',
+      surname: '',
     },
   },
   decorators: [

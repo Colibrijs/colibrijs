@@ -34,8 +34,16 @@ export function PropsEditor<T extends Record<string, string>>({
   return (
     <Form layout="vertical">
       {propertiesNames.map((propName) => (
-        <Form.Item key={propName} label={propName}>
-          <Input value={value[propName]} onChange={getChangeHandler(propName)} />
+        <Form.Item
+          key={propName}
+          label={<span data-testid="props-editor__label">{propName}</span>}
+          data-testid="props-editor__item"
+        >
+          <Input
+            value={value[propName]}
+            data-testid="props-editor__input"
+            onChange={getChangeHandler(propName)}
+          />
         </Form.Item>
       ))}
     </Form>
