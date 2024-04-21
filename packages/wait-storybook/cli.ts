@@ -19,7 +19,7 @@ program
   .option('--ping-interval <number>', 'Интервал запросов к сторибуку в секундах', '10')
   .option('--timeout <number>', 'Таймаут ожидания в секундах', '300')
   .action((options: CliOptions) => {
-    const pingInterval = options.commitSha ? parseInt(options.commitSha) : 10;
+    const pingInterval = options.pingInterval ? parseInt(options.pingInterval) : 10;
     const timeout = options.timeout ? parseInt(options.timeout) : 300;
     const logger: Logger = console;
 
