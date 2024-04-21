@@ -2,6 +2,7 @@
   "name": "@colibrijs/core",
   "private": true,
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
@@ -9,7 +10,7 @@
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook"
   },
   "dependencies": {
-    "@module-federation/enhanced": "^0.1.8"
+    "@module-federation/utilities": "^3.0.13"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

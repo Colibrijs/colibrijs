@@ -1,4 +1,6 @@
-import { init, loadRemote } from '@module-federation/enhanced/runtime';
+import { importRemote as importRemoteCsr } from '@module-federation/utilities';
+
+import { importRemoteSsr } from './import-remote-ssr';
 
 export interface ImportRemoteOptions {
   /** Название компонента */
@@ -14,19 +16,20 @@ export interface ImportRemoteOptions {
   ssr: boolean;
 }
 
-const host = init({
-  name: '@colibrijs/core',
-  remotes: [],
-});
-
 export function importRemote<T>(options: ImportRemoteOptions): Promise<T> {
-  const moduleName = `${options.libraryName}/${options.componentName}`;
-  const alreadyregistered = host.options.remotes.some((remote) => remote.name === moduleName);
-
-  if (!alreadyregistered) {
-    const entry = `${options.src}/remote.client.js`;
-    host.registerRemotes([{ name: moduleName, entry }]);
+  if (options.ssr) {
+    return importRemoteSsr({
+      url: options.src,
+      scope: options.libraryName,
+      module: options.componentName,
+      remoteEntryFileName: 'remote.server.js',
+    });
   }
 
-  return loadRemote(moduleName) as Promise<T>;
+  return importRemoteCsr<T>({
+    url: options.src,
+    scope: options.libraryName,
+    module: options.componentName,
+    remoteEntryFileName: 'remote.client.js',
+  });
 }
