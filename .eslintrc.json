@@ -54,7 +54,12 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.ts"],
+        "devDependencies": [
+          "playwright.config.ts",
+          "./packages/**/*.stories.{ts,tsx}",
+          "./packages/**/*.test.ts",
+          "./packages/**/*.spec.ts"
+        ],
         "peerDependencies": true
       }
     ],
@@ -74,7 +79,12 @@
       "parserOptions": { "project": null }
     },
     {
-      "files": ["jest.config.js", "packages/example/components/*/index.ts"],
+      "files": [
+        "jest.config.js",
+        "playwright.config.ts",
+        "packages/example/components/*/index.ts",
+        "packages/admin/pages/**/*.tsx"
+      ],
       "rules": {
         "import/no-default-export": "off"
       }

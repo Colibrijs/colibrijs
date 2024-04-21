@@ -2,5 +2,7 @@ node_modules
 
 *storybook.log
 .DS_Store
+playwright-report
+packages/admin/.next/
 packages/core/storybook-static/
 packages/example/dist/

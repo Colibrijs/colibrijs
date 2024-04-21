@@ -9,6 +9,7 @@
     "allowJs": false /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
     "declaration": false,
     "sourceMap": false,
+    "noEmit": true,
     "noEmitOnError": true,
     "newLine": "lf",
     "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
@@ -40,5 +41,5 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["typings.d.ts", "jest.config.js", "./packages/**/*"]
+  "include": ["typings.d.ts", "jest.config.js", "./packages/**/*", "playwright.config.ts"]
 }
