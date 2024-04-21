@@ -57,3 +57,7 @@ jobs:
             --commit-sha ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
       - name: Test interactions
         run: npm run test:interactions -w @colibrijs/core -- --url ${{ needs.deploy.outputs.storybook-url }}
+      - name: Test e2e
+        run: npm run test:e2e
+        env:
+          EXAMPLE_URL: ${{ needs.deploy.outputs.example-url }}

@@ -9,7 +9,6 @@
     "allowJs": false /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
     "declaration": false,
     "sourceMap": false,
-    "noEmit": true,
     "noEmitOnError": true,
     "newLine": "lf",
     "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
