@@ -1,30 +1,43 @@
-import React, { useCallback } from 'react';
+import type { JsonSchema } from '@colibrijs/types';
+import { Form, Input } from 'antd';
+import React, { useCallback, type ChangeEvent } from 'react';
 
-import styles from './props-editor.css';
+import { getPropertiesNames } from './utils/get-properties-names';
 
-export interface Props {
-  schema: Record<string, string>;
-  onChange: (schema: Record<string, string>) => void;
+export interface Props<T> {
+  /** JSON схема, которая описывает каким должен быть объект */
+  schema: JsonSchema<T>;
+
+  /** Объект со значением по умолчанию */
+  value: T;
+
+  /** Функция, которая будет вызвана, когда пропсы поменяются */
+  onChange: (value: T) => void;
 }
 
-export function PropsEditor({ schema, onChange }: Props) {
-  const saveHandler = useCallback(() => {
-    onChange(schema);
-  }, [onChange, schema]);
+export function PropsEditor<T extends Record<string, string>>({
+  schema,
+  onChange,
+  value,
+}: Props<T>) {
+  const propertiesNames = getPropertiesNames(schema);
+
+  const getChangeHandler = useCallback(
+    <K extends keyof T>(key: K) =>
+      (event: ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value;
+        onChange({ ...value, [key]: newValue });
+      },
+    [onChange, value]
+  );
 
   return (
-    <label className={styles.editor}>
-      <span className={styles.label} data-testid="props-editor__label">
-        Props:
-      </span>
-      <textarea
-        className={styles.textarea}
-        defaultValue={JSON.stringify(schema, null, 2)}
-        rows={4}
-      />
-      <button type="button" onClick={saveHandler} data-testid="props-editor__button">
-        Save
-      </button>
-    </label>
+    <Form layout="vertical">
+      {propertiesNames.map((propName) => (
+        <Form.Item key={propName} label={propName}>
+          <Input value={value[propName]} onChange={getChangeHandler(propName)} />
+        </Form.Item>
+      ))}
+    </Form>
   );
 }
