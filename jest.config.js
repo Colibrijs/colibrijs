@@ -3,6 +3,6 @@ export default {
   preset: 'ts-jest',
   testMatch: [`<rootDir>/packages/**/*.spec.{ts,tsx}`],
   transform: {
-    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }],
+    '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.test.json', isolatedModules: true }],
   },
 };
