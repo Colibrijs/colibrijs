@@ -57,3 +57,31 @@ jobs:
             --commit-sha ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
       - name: Test interactions
         run: npm run test:interactions -w @colibrijs/core -- --url ${{ needs.deploy.outputs.storybook-url }}
+      - name: Test e2e
+        run: npm run test:e2e
+        env:
+          EXAMPLE_URL: ${{ needs.deploy.outputs.example-url }}
+      - name: Save playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: ./playwright-report
+
+  deploy-playwright-report:
+    runs-on: ubuntu-latest
+    needs: test
+    environment:
+      name: playwright-report-${{ github.head_ref }}
+      url: ${{ steps.upload-playwright-report.outputs.url }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Put playwright report to github pages
+        id: upload-playwright-report
+        uses: ./.github/workflows/put-artifact-to-github-pages
+        with:
+          artifact-name: playwright-report
+          token: ${{ secrets.GITHUB_TOKEN }}

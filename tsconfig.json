@@ -40,5 +40,5 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["typings.d.ts", "jest.config.js", "./packages/**/*"]
+  "include": ["typings.d.ts", "jest.config.js", "./packages/**/*", "playwright.config.ts"]
 }

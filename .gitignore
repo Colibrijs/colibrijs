@@ -2,5 +2,12 @@ node_modules
 
 *storybook.log
 .DS_Store
+packages/application/.next/
 packages/core/storybook-static/
 packages/example/dist/
+
+# Playwright
+test-results
+playwright-report
+blob-report
+playwright/.cache
