@@ -10,6 +10,7 @@
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook"
   },
   "dependencies": {
+    "@colibrijs/module-utils": "^1.0.0",
     "@module-federation/utilities": "^3.0.13"
   },
   "devDependencies": {

@@ -1,0 +1,8 @@
+{
+  "name": "@colibrijs/module-utils",
+  "description": "Вспомогательные утилиты для работы с модулями",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0"
+  }
+}

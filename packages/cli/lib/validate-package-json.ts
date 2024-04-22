@@ -6,6 +6,8 @@ export const packageJsonSchema: ZodType<PackageJson> = object({
   name: string({
     required_error: 'Укажите имя библиотеки в package.json',
     invalid_type_error: 'Поле "name" в package.json должно быть строкой',
+  }).refine((name) => !name.includes('_'), {
+    message: 'Значение поля "name" в package.json не должно содержать подчёркиваний',
   }),
   exports: record(string(), string(), {
     required_error: 'Поле "exports" в package.json не указано',

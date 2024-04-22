@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { encodePackageName } from '../encode-package-name';
+import { encodePackageName } from './encode-package-name';
 
 describe(encodePackageName.name, () => {
   it('заменяет "@" на подчёркивание', () => {

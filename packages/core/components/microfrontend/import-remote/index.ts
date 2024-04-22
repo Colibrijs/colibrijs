@@ -1,3 +1,3 @@
-export type { ImportRemoteOptions } from './import-remote';
-
+export { getBaseUrl } from './get-base-url';
 export { importRemote } from './import-remote';
+export type { ImportRemoteOptions } from './types';
