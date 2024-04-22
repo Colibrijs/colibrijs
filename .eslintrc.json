@@ -83,7 +83,7 @@
         "jest.config.js",
         "playwright.config.ts",
         "packages/example/components/*/index.ts",
-        "packages/admin/pages/**/*.tsx"
+        "packages/application/pages/**/*.tsx"
       ],
       "rules": {
         "import/no-default-export": "off"

@@ -2,7 +2,7 @@ node_modules
 
 *storybook.log
 .DS_Store
-packages/admin/.next/
+packages/application/.next/
 packages/core/storybook-static/
 packages/example/dist/
 

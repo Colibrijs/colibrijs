@@ -16,11 +16,11 @@ const nextConfig = {
       new UniversalFederationPlugin(
         {
           isServer: context.isServer,
-          library: { name: 'admin', type: 'commonjs-module' },
+          library: { name: 'application', type: 'commonjs-module' },
           remotes: {
             fake: 'promise new Promise((resolve) => {resolve({get:()=>Promise.resolve(()=>{}),init:()=>{}})})',
           },
-          name: 'admin',
+          name: 'application',
           shared: {
             react: {
               eager: true,
