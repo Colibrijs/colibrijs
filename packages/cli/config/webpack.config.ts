@@ -16,7 +16,7 @@ export function createConfiguration(settings: Settings): Configuration {
     target: false,
 
     module: {
-      rules: getRules(settings),
+      rules: getRules(),
     },
 
     optimization: {

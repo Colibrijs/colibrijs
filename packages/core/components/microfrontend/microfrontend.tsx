@@ -35,9 +35,11 @@ export function Microfrontend<P>(props: Props<P>) {
   });
 
   return (
-    <Suspense>
+    <>
       <link rel="stylesheet" href={cssUrl} />
-      <Component {...componentProps} />
-    </Suspense>
+      <Suspense>
+        <Component {...componentProps} />
+      </Suspense>
+    </>
   );
 }

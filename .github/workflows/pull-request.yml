@@ -73,6 +73,9 @@ jobs:
     environment:
       name: playwright-report-${{ github.head_ref }}
       url: ${{ steps.upload-playwright-report.outputs.url }}
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: false
     permissions:
       contents: write
     steps:

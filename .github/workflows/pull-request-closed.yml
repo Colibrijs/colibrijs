@@ -5,18 +5,15 @@ on:
     types:
       - closed
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
-
 jobs:
   remove-github-pages:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     permissions:
       contents: write
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v3
       - name: Save metadata about deployment
