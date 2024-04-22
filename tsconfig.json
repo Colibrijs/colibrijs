@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     "target": "ES2022" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "jsx": "react" /* Specify what JSX code is generated. */,
