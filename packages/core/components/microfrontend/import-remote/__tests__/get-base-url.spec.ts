@@ -12,6 +12,21 @@ describe(getBaseUrl.name, () => {
       ...defaultImportRemoteOptions,
       componentName: 'Example',
       libraryName: '@colibrijs/example',
+      src: 'https://colibrijs.github.io/colibrijs/main/example',
+    };
+
+    expect(getBaseUrl(options)).toBe(
+      'https://colibrijs.github.io/colibrijs/main/example/@colibrijs/example/Example'
+    );
+  });
+
+  it('если в конце src есть слеш, это не приводит к тому, что в результате появляется два слеша', () => {
+    expect.assertions(1);
+
+    const options: ImportRemoteOptions = {
+      ...defaultImportRemoteOptions,
+      componentName: 'Example',
+      libraryName: '@colibrijs/example',
       src: 'https://colibrijs.github.io/colibrijs/main/example/',
     };
 
