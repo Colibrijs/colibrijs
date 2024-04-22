@@ -21,8 +21,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev:application',
-    url: 'http://localhost:3000',
-    reuseExistingServer: false,
+    command: 'npm run build -w @colibrijs/application && npm run start:application:prod',
+    port: 3000,
+    reuseExistingServer: true,
   },
 });
