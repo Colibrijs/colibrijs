@@ -94,6 +94,7 @@
       "plugins": ["jest"],
       "extends": ["plugin:jest/all"],
       "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
         "jest/valid-title": ["error", { "ignoreTypeOfDescribeName": true }]
       }
     },
@@ -103,6 +104,7 @@
       "parserOptions": { "project": "tsconfig.test.json" },
       "plugins": ["storybook"],
       "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
         "import/no-default-export": "off"
       }
     }

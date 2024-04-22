@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@colibrijs/module-utils": "^1.0.0",
-    "@module-federation/utilities": "^3.0.13"
+    "@colibrijs/types": "^1.0.0",
+    "@module-federation/utilities": "^3.0.13",
+    "antd": "^5.16.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

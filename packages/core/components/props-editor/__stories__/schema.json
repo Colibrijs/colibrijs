@@ -1,0 +1,15 @@
+{
+  "title": "scheme",
+  "description": "Props scheme",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Your name",
+      "type": "string"
+    },
+    "surname": {
+      "description": "Your surname",
+      "type": "string"
+    }
+  }
+}
