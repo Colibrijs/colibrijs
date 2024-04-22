@@ -1,17 +1,34 @@
 import { NodeFederationPlugin } from '@module-federation/node';
+import path from 'node:path';
 
 import { encodePackageName } from '../../lib';
 import type { Settings } from '../../types';
 
 type FederationPluginOptions = ConstructorParameters<typeof NodeFederationPlugin>[0];
 
-/** Получает package.json и возвращает параметры для ModuleFederationPlugin */
-export function getFederationPluginOptions(settings: Settings): FederationPluginOptions {
+/**
+ * Получает package.json и возвращает параметры для ModuleFederationPlugin
+ * @param settings - общие настройки сборщика
+ * @param exportName - имя экспорта для которого нужно сделать модуль
+ * @returns настройки для module federation плагина
+ */
+export function getFederationPluginOptions(
+  settings: Settings,
+  exportName: string
+): FederationPluginOptions {
   const packageName = encodePackageName(settings.packageJson.name);
+  const dirname = path.join(`./${settings.packageJson.name}`, exportName);
+  const filename = path.join(dirname, `./remote.${settings.platform}.js`);
+  const modulePath = settings.packageJson.exports[exportName];
+
+  if (typeof modulePath !== 'string') {
+    throw new Error(`"${modulePath}" должен быть в package.json exports`);
+  }
+
   const options: FederationPluginOptions = {
-    filename: `./${settings.packageJson.name}/remote.${settings.platform}.js`,
+    filename: `./${filename}`,
     name: packageName,
-    exposes: settings.packageJson.exports,
+    exposes: { './microfrontend/': modulePath },
     shared: {
       react: {
         requiredVersion: '^18',
