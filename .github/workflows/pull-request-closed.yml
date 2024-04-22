@@ -12,43 +12,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  storybook-remove:
+  remove-github-pages:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      contents: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+      - uses: actions/checkout@v3
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
-      - name: Download the github-pages artifact
-        id: download-artifact
-        uses: dawidd6/action-download-artifact@v2
-        continue-on-error: true
-        with:
-          name: github-pages
-          path: ./github-pages
-          workflow: main.yml
-      # actions/upload-pages-artifact puts all content from artifact into the tar archive. So,
-      # before we will work with files, we need to extract them.
-      - name: Extract github-pages archive
-        if: steps.download-artifact.outcome == 'success'
+      - name: Remove assets from github-pages relates to branch
         run: |
-          tar -xvf ./github-pages/artifact.tar
-          rm ./github-pages/artifact.tar
-      - name: Remove old files for current branch and archive
-        if: steps.download-artifact.outcome == 'success'
-        run: rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
-      - name: Upload new github-pages
-        uses: actions/upload-pages-artifact@v2
-        with:
-          name: github-pages
-          path: ./github-pages
-          retention-days: 3
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git config --global user.email "support+actions@github.com"
+          git config --global user.name "github-actions-bot"
+          git fetch origin github-pages
+          git checkout github-pages
+          git rm -rf ${{ steps.metadata.outputs.branch }}
+          git commit -a -n -m "chore: remove ${{ steps.metadata.outputs.branch }}"
+          git push origin github-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

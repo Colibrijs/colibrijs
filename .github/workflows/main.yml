@@ -15,10 +15,7 @@ jobs:
     uses: ./.github/workflows/deploy-github-pages.yml
     secrets: inherit
     permissions:
-      contents: read
-      pages: write
-      pull-requests: write
-      id-token: write
+      contents: write
     with:
       example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
       storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
