@@ -30,6 +30,22 @@ export function createConfiguration(settings: Settings): Configuration {
           exclude: /node_modules/,
           use: 'ts-loader',
         },
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  localIdentName: '[path][name]__[local]',
+                },
+              },
+            },
+            'postcss-loader',
+          ],
+        },
       ],
     },
 
