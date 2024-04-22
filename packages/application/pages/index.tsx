@@ -13,9 +13,9 @@ export default function PageIndex() {
   return (
     <Microfrontend
       id="1"
-      src={`${process.env.EXAMPLE_URL}@colibrijs/example/Example`}
-      libraryName="_colibrijs__example"
-      componentName="./Example"
+      src={String(process.env.EXAMPLE_URL)}
+      libraryName="@colibrijs/example"
+      componentName="Example"
       props={exampleProps}
       ssr={typeof window === 'undefined'}
     />

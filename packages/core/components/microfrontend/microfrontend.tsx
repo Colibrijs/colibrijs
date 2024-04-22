@@ -1,8 +1,8 @@
 import type { MicrofrontendMeta } from '@colibrijs/types';
-import React, { lazy, useLayoutEffect, useState, useCallback, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import type { ComponentType, PropsWithRef } from 'react';
 
-import { importRemote, type ImportRemoteOptions } from './import-remote';
+import { getBaseUrl, importRemote, type ImportRemoteOptions } from './import-remote';
 
 export interface Props<P> {
   /** id элемента */
@@ -24,29 +24,22 @@ export interface Props<P> {
   ssr: ImportRemoteOptions['ssr'];
 }
 
-export function Microfrontend<P>({ componentName, libraryName, props, src, ssr }: Props<P>) {
-  // Изначально cssLoaded = true. Если сделать false и выключить javascript, компонент не отрисуется
-  // Но, useLayoutEffect выполнится только на стороне клиента и только если javascript включен.
-  // Эта настройка нужна, чтобы на стороне клиента, компонент рендерился только после загрузки css.
-  const [cssLoaded, setCssLoaded] = useState(true);
-  useLayoutEffect(() => setCssLoaded(false), []);
+export function Microfrontend<P>(props: Props<P>) {
+  // Здесь пропсы нужно перепрокидывать в другие функции. Неудобно пересобирать
+  // eslint-disable-next-line react/destructuring-assignment -- выше описал
+  const { componentName, libraryName, props: componentProps, src, ssr } = props;
+  const cssUrl = `${getBaseUrl(props)}/component.css`;
 
   const Component = lazy<ComponentType<P>>(() => {
     return importRemote<MicrofrontendMeta<P>>({ componentName, libraryName, src, ssr });
   });
 
-  const loadCssHandler = useCallback(() => {
-    setCssLoaded(true);
-  }, []);
-
   return (
     <>
-      <link rel="stylesheet" href={`${src}/component.css`} onLoad={loadCssHandler} />
-      {cssLoaded && (
-        <Suspense>
-          <Component {...props} />
-        </Suspense>
-      )}
+      <link rel="stylesheet" href={cssUrl} />
+      <Suspense>
+        <Component {...componentProps} />
+      </Suspense>
     </>
   );
 }

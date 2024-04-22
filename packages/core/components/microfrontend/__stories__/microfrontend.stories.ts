@@ -15,8 +15,8 @@ export default {
   title: 'Microfrontend',
   args: {
     componentName: 'Example',
-    libraryName: '_colibrijs__example',
-    src: `${process.env.EXAMPLE_URL}@colibrijs/example/Example`,
+    libraryName: '@colibrijs/example',
+    src: String(process.env.EXAMPLE_URL),
     props: {
       title: 'Удалённый компонент',
       text: 'Но тем не менее, рендерюсь здесь',

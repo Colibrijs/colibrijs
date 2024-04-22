@@ -1,10 +1,10 @@
+import { encodePackageName } from '@colibrijs/module-utils';
 import path from 'node:path';
 import type { Configuration } from 'webpack';
 
 import { getEntryPoints } from './entry';
 import { getRules } from './loaders';
 import { getPlugins } from './plugins';
-import { encodePackageName } from '../lib';
 import type { Settings } from '../types';
 
 export function createConfiguration(settings: Settings): Configuration {
@@ -16,7 +16,7 @@ export function createConfiguration(settings: Settings): Configuration {
     target: false,
 
     module: {
-      rules: getRules(settings),
+      rules: getRules(),
     },
 
     optimization: {

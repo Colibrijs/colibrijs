@@ -39,4 +39,17 @@ describe(validatePackageJson.name, () => {
 
     expect(() => validatePackageJson(packageJson)).toThrow(new TypeError(testCase.message));
   });
+
+  it('выбрасывает TypeError, если значение поля "name" содержит подчёркивание', () => {
+    expect.assertions(1);
+
+    const packageJson: Partial<PackageJson> = {
+      ...defaultPackageJson,
+      name: 'colibrijs_example',
+    };
+
+    expect(() => validatePackageJson(packageJson)).toThrow(
+      new TypeError('Значение поля "name" в package.json не должно содержать подчёркиваний')
+    );
+  });
 });

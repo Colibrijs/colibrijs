@@ -1,7 +1,7 @@
+import { encodePackageName } from '@colibrijs/module-utils';
 import { NodeFederationPlugin } from '@module-federation/node';
 import path from 'node:path';
 
-import { encodePackageName } from '../../lib';
 import type { Settings } from '../../types';
 
 type FederationPluginOptions = ConstructorParameters<typeof NodeFederationPlugin>[0];

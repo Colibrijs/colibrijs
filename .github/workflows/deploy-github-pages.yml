@@ -19,14 +19,11 @@ on:
         description: Ссылка по которой доступен сторибук
         value: ${{ jobs.deploy-storybook.outputs.url }}
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
-
 jobs:
   deploy-example:
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: false
     environment:
       name: example-${{ github.head_ref }}
       url: ${{ steps.upload-example.outputs.url }}package.json
@@ -43,6 +40,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy-storybook:
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: false
     environment:
       name: storybook-${{ github.head_ref }}
       url: ${{ steps.upload-storybook.outputs.url }}

@@ -1,34 +1,25 @@
+import { encodePackageName } from '@colibrijs/module-utils';
 import { importRemote as importRemoteCsr } from '@module-federation/utilities';
 
+import { getBaseUrl } from './get-base-url';
 import { importRemoteSsr } from './import-remote-ssr';
-
-export interface ImportRemoteOptions {
-  /** Название компонента */
-  componentName: string;
-
-  /** Название библиотеки к которой относится компонент */
-  libraryName: string;
-
-  /** Источник, откуда компонент можно подгрузить данные о компоненте (MicrofrontendMeta) */
-  src: string;
-
-  /** Если true, компонент рендерится на стороне сервера. Иначе на стороне клиента */
-  ssr: boolean;
-}
+import type { ImportRemoteOptions } from './types';
 
 export function importRemote<T>(options: ImportRemoteOptions): Promise<T> {
+  const fullUrl = getBaseUrl(options);
+
   if (options.ssr) {
     return importRemoteSsr({
-      url: options.src,
-      scope: options.libraryName,
+      url: fullUrl,
+      scope: encodePackageName(options.libraryName),
       module: './component/',
       remoteEntryFileName: 'remote.server.js',
     });
   }
 
   return importRemoteCsr<T>({
-    url: options.src,
-    scope: options.libraryName,
+    url: fullUrl,
+    scope: encodePackageName(options.libraryName),
     module: './component/',
     remoteEntryFileName: 'remote.client.js',
   });
