@@ -1,7 +1,7 @@
 import { NodeFederationPlugin } from '@module-federation/node';
 
-import { encodePackageName } from '../lib';
-import type { Settings } from '../types';
+import { encodePackageName } from '../../lib';
+import type { Settings } from '../../types';
 
 type FederationPluginOptions = ConstructorParameters<typeof NodeFederationPlugin>[0];
 

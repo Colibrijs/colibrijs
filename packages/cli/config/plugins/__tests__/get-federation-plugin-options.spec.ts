@@ -1,8 +1,8 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { defaultPackageJson, defaultSettings } from '../../lib/__tests__/testing-data';
-import { encodePackageName } from '../../lib/encode-package-name';
-import type { PackageJson, Settings } from '../../types';
+import { defaultPackageJson, defaultSettings } from '../../../lib/__tests__/testing-data';
+import { encodePackageName } from '../../../lib/encode-package-name';
+import type { PackageJson, Settings } from '../../../types';
 import { getFederationPluginOptions } from '../get-federation-plugin-options';
 
 describe(getFederationPluginOptions.name, () => {

@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 import { NodeFederationPlugin } from '@module-federation/node';
 import { container } from 'webpack';
 
-import { defaultSettings } from '../../lib/__tests__/testing-data';
+import { defaultSettings } from '../../../lib/__tests__/testing-data';
 import { createFederationPlugin } from '../create-federation-plugin';
 
 describe(createFederationPlugin.name, () => {
