@@ -1,8 +1,8 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'node:path';
 import type { Configuration } from 'webpack';
 
 import { getEntryPoints } from './entry';
+import { getRules } from './loaders';
 import { getPlugins } from './plugins';
 import { encodePackageName } from '../lib';
 import type { Settings } from '../types';
@@ -16,39 +16,7 @@ export function createConfiguration(settings: Settings): Configuration {
     target: false,
 
     module: {
-      rules: [
-        {
-          test: /\.(?:js|jsx)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: [['@babel/preset-env', { targets: 'defaults' }], ['@babel/preset-react']],
-            },
-          },
-        },
-        {
-          test: /\.(?:ts|tsx)$/,
-          exclude: /node_modules/,
-          use: 'ts-loader',
-        },
-        {
-          test: /\.css$/,
-          exclude: /node_modules/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                modules: {
-                  localIdentName: '[path][name]__[local]',
-                },
-              },
-            },
-            'postcss-loader',
-          ],
-        },
-      ],
+      rules: getRules(settings),
     },
 
     optimization: {
