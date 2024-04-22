@@ -1,3 +1,4 @@
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'node:path';
 import type { Configuration } from 'webpack';
 
@@ -35,7 +36,7 @@ export function createConfiguration(settings: Settings): Configuration {
           test: /\.css$/,
           exclude: /node_modules/,
           use: [
-            'style-loader',
+            MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: {
