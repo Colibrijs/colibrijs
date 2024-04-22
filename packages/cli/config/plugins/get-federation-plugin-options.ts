@@ -28,7 +28,7 @@ export function getFederationPluginOptions(
   const options: FederationPluginOptions = {
     filename: `./${filename}`,
     name: packageName,
-    exposes: { './microfrontend/': modulePath },
+    exposes: { './component/': modulePath },
     shared: {
       react: {
         requiredVersion: '^18',

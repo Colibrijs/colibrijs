@@ -32,7 +32,7 @@ describe(getFederationPluginOptions.name, () => {
     );
 
     expect(options.exposes).toStrictEqual({
-      './microfrontend/': './components/component-a/index.ts',
+      './component/': './components/component-a/index.ts',
     });
   });
 
