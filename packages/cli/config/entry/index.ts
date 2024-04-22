@@ -1,0 +1,1 @@
+export { getEntryPoints } from './entry';

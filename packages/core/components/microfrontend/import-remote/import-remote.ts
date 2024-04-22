@@ -21,7 +21,7 @@ export function importRemote<T>(options: ImportRemoteOptions): Promise<T> {
     return importRemoteSsr({
       url: options.src,
       scope: options.libraryName,
-      module: options.componentName,
+      module: './component/',
       remoteEntryFileName: 'remote.server.js',
     });
   }
@@ -29,7 +29,7 @@ export function importRemote<T>(options: ImportRemoteOptions): Promise<T> {
   return importRemoteCsr<T>({
     url: options.src,
     scope: options.libraryName,
-    module: options.componentName,
+    module: './component/',
     remoteEntryFileName: 'remote.client.js',
   });
 }

@@ -13,7 +13,7 @@ export default function PageIndex() {
   return (
     <Microfrontend
       id="1"
-      src={`${process.env.EXAMPLE_URL}@colibrijs/example/`}
+      src={`${process.env.EXAMPLE_URL}@colibrijs/example/Example`}
       libraryName="_colibrijs__example"
       componentName="./Example"
       props={exampleProps}

@@ -1,12 +1,19 @@
 import React from 'react';
 
+import styles from './example.css';
 import type { Props } from './example.schema';
 
 export function Example({ title, text }: Props) {
   return (
-    <article data-testid="example">
-      <h1 data-testid="example__title">{title}</h1>
-      {Boolean(text) && <p data-testid="example__text">{text}</p>}
+    <article data-testid="example" className={styles.root}>
+      <h1 data-testid="example__title" className={styles.title}>
+        {title}
+      </h1>
+      {Boolean(text) && (
+        <p data-testid="example__text" className={styles.text}>
+          {text}
+        </p>
+      )}
     </article>
   );
 }

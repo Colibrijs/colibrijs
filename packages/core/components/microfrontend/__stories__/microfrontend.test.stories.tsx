@@ -14,7 +14,7 @@ export const Example: Story = {
     id: '1',
     componentName: 'Example',
     libraryName: '_colibrijs__example',
-    src: `${process.env.EXAMPLE_URL}@colibrijs/example`,
+    src: `${process.env.EXAMPLE_URL}@colibrijs/example/Example`,
     props: {
       title: 'Удалённый компонент',
       text: 'Но тем не менее, рендерюсь здесь',

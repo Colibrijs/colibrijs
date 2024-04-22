@@ -2,9 +2,9 @@ import { cwd } from 'node:process';
 import { webpack } from 'webpack';
 import type { MultiCompiler, MultiStats } from 'webpack';
 
+import { createConfiguration } from './config/webpack.config';
 import { getPackageJsonPath, readPackageJson } from './lib';
 import type { Logger, RunnerOptions, Settings } from './types';
-import { createConfiguration } from './webpack.config';
 
 export async function run(options: RunnerOptions): Promise<void> {
   const logger: Logger = console;
