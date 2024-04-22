@@ -11,18 +11,13 @@ on:
         description: Имя артефакта из которого можно взять собранный сторибук
         type: string
         required: true
-      pull-request-id:
-        description: Если параметр указан, к пулл реквесту добавится комментарий со ссылкой на сторибук
-        type: number
-        required: false
-        default: 0
     outputs:
       example-url:
         description: Ссылка по которой доступны компоненты example
-        value: ${{ jobs.deploy-github-pages.outputs.exampleUrl }}
+        value: ${{ jobs.deploy-example.outputs.url }}
       storybook-url:
         description: Ссылка по которой доступен сторибук
-        value: ${{ jobs.deploy-github-pages.outputs.storybookUrl }}
+        value: ${{ jobs.deploy-storybook.outputs.url }}
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -31,72 +26,34 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy-github-pages:
+  deploy-example:
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: example-${{ github.head_ref }}
+      url: ${{ steps.upload-example.outputs.url }}
     outputs:
-      exampleUrl: ${{ steps.save-artifact-urls.outputs.exampleUrl }}
-      storybookUrl: ${{ steps.save-artifact-urls.outputs.storybookUrl }}
+      url: ${{ steps.upload-example.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Prepare environment
-        uses: ./.github/workflows/prepare-environment
-      - name: Save metadata about deployment
-        uses: ./.github/workflows/deployment-metadata
-        id: metadata
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Download the github-pages artifact
-        id: download-github-pages
-        uses: dawidd6/action-download-artifact@v2
-        continue-on-error: true
+      - name: Put storybook to github pages
+        id: upload-example
+        uses: ./.github/workflows/put-artifact-to-github-pages
         with:
-          name: github-pages
-          workflow: main.yml
-          path: ./github-pages
-      # actions/upload-pages-artifact puts all content from artifact into the tar archive. So,
-      # before we will work with files, we need to extract them.
-      - name: Extract github-pages archive
-        if: steps.download-github-pages.outcome == 'success'
-        run: |
-          tar -xvf ./github-pages/artifact.tar --directory ./github-pages
-          rm ./github-pages/artifact.tar
-      - name: Remove old files for current branch
-        if: steps.download-github-pages.outcome == 'success'
-        run: |
-          rm -rf ./github-pages/${{ steps.metadata.outputs.branch }}
-      - name: Download example build
-        uses: actions/download-artifact@v4
+          artifact-name: ${{ inputs.example-artifact-name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-storybook:
+    environment:
+      name: storybook-${{ github.head_ref }}
+      url: ${{ steps.upload-storybook.outputs.url }}
+    outputs:
+      url: ${{ steps.upload-storybook.outputs.url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Put storybook to github pages
+        id: upload-storybook
+        uses: ./.github/workflows/put-artifact-to-github-pages
         with:
-          name: ${{ inputs.example-artifact-name }}
-          path: ./github-pages/${{ steps.metadata.outputs.branch }}/example
-      - name: Download storybook build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ inputs.storybook-artifact-name }}
-          path: ./github-pages/${{ steps.metadata.outputs.branch }}/storybook
-      - name: Upload new github-pages
-        uses: actions/upload-pages-artifact@v2
-        with:
-          name: github-pages
-          path: ./github-pages
-          retention-days: 3
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
-      - name: Save artifacts urls
-        id: save-artifact-urls
-        run: |
-          echo "exampleUrl=${{ steps.deployment.outputs.page_url }}${{ steps.metadata.outputs.branch }}/example/" >> $GITHUB_OUTPUT
-          echo "storybookUrl=${{ steps.deployment.outputs.page_url }}${{ steps.metadata.outputs.branch }}/storybook/" >> $GITHUB_OUTPUT
-      - name: Comment PR with storybook url
-        if: inputs.pull-request-id != 0
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            [Storybook](${{ steps.save-artifact-urls.outputs.storybookUrl }})
-            [Example](${{ steps.save-artifact-urls.outputs.exampleUrl }}/package.json)
-          comment_tag: links
-          pr_number: ${{ inputs.pull-request-id }}
+          artifact-name: ${{ inputs.storybook-artifact-name }}
+          token: ${{ secrets.GITHUB_TOKEN }}

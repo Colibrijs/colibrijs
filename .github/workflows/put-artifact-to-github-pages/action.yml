@@ -1,0 +1,47 @@
+name: Put artifact to github pages
+inputs:
+  artifact-name:
+    description: Имя артифакта, который нужно опубликовать
+    type: string
+    required: true
+  token:
+    description: Токен, позволяющий пушить в ветки $GITHUB_TOKEN
+    type: string
+    required: true
+outputs:
+  url:
+    description: Ссылка на страницу, где можно посмотреть результат
+    value: ${{ steps.save-url.outputs.url }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: Prepare environment
+      uses: ./.github/workflows/prepare-environment
+    - name: Save metadata about deployment
+      uses: ./.github/workflows/deployment-metadata
+      id: metadata
+    - name: Download artifact
+      id: download-artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ./github-pages/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }}
+    - name: Upload new github-pages
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        npx gh-pages \
+          --branch github-pages \
+          --dest ./${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }} \
+          --dist ./github-pages/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }} \
+          --nojekyll \
+          --remove ./${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }} \
+          --user "github-actions-bot <support+actions@github.com>"
+    - name: Save URL
+      id: save-url
+      shell: bash
+      run: |
+        echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }}" >> $GITHUB_OUTPUT
