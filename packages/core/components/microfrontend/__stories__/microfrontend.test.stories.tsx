@@ -8,18 +8,8 @@ export default {
   title: 'Microfrontend/tests/remote',
 } satisfies MicrofrontendMeta;
 
-export const Example: Story = {
+export const RenderProps: Story = {
   name: 'Загружает и рендерит удалённый компонент с пропсами, указанными в поле props',
-  args: {
-    id: '1',
-    componentName: 'Example',
-    libraryName: '_colibrijs__example',
-    src: `${process.env.EXAMPLE_URL}@colibrijs/example/Example`,
-    props: {
-      title: 'Удалённый компонент',
-      text: 'Но тем не менее, рендерюсь здесь',
-    },
-  },
   play: async ({ args, canvasElement }) => {
     const story = within(canvasElement);
     const title = await story.findByTestId('example__title');
@@ -31,5 +21,18 @@ export const Example: Story = {
 
     expect(title).toHaveTextContent(args.props.title);
     expect(text).toHaveTextContent(args.props.text);
+  },
+};
+
+export const Styles: Story = {
+  name: 'Компоненты рендерятся со стилями, указанными в css',
+  play: async ({ canvasElement, step }) => {
+    const story = within(canvasElement);
+    const text = await story.findByTestId('example__text');
+
+    await step('Проверяю, что элемент отрендерился со стилями, указанными в css', () => {
+      /** @see {@link https://github.com/colibrijs/colibrijs/blob/main/packages/example/components/example/example.css} */
+      expect(text).toHaveStyle({ color: 'rgb(51, 51, 51)' });
+    });
   },
 };

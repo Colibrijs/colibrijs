@@ -29,7 +29,7 @@ jobs:
   deploy-example:
     environment:
       name: example-${{ github.head_ref }}
-      url: ${{ steps.upload-example.outputs.url }}
+      url: ${{ steps.upload-example.outputs.url }}package.json
     outputs:
       url: ${{ steps.upload-example.outputs.url }}
     runs-on: ubuntu-latest

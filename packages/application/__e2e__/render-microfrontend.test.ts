@@ -26,4 +26,23 @@ test.describe('Рендеринг Microfrontend на стороне сервер
       'проверяю что элемент-текст содержит ту строку, которая была передана в пропсах'
     ).toHaveText('Но тем не менее, рендерюсь здесь');
   });
+
+  test('Компонент рендерится на стороне сервера сразу со стилями', async ({ browser }) => {
+    const context =
+      await test.step('отключаю javascript, чтобы проверить именно серверный рендеринг', () =>
+        browser.newContext({ javaScriptEnabled: false }));
+
+    const page = await test.step('открываю новую страницу с отключенным js', () =>
+      context.newPage());
+
+    page.goto('/');
+
+    const text = await test.step('получаю текст микрофронта', () =>
+      page.getByTestId('example__text'));
+
+    await expect(text, 'проверяю текст содержит стили, заданные в его css').toHaveCSS(
+      'color',
+      'rgb(51, 51, 51)'
+    );
+  });
 });
