@@ -13,7 +13,7 @@
     "dev:core": "npm run storybook -w @colibrijs/core",
     "lint": "eslint packages",
     "lint:commit": "commitlint --edit ${1} --strict",
-    "lint:css": "stylelint packages/**/*.css",
+    "lint:css": "stylelint packages/**/*.css --allow-empty-input",
     "lint:formatting": "prettier **/*.{md,yml,json}",
     "test:unit": "jest",
     "postinstall": "husky install",
