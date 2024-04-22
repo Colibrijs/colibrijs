@@ -1,0 +1,6 @@
+node_modules
+
+*storybook.log
+.DS_Store
+packages/core/storybook-static/
+packages/example/dist/

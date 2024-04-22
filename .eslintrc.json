@@ -1,0 +1,100 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react-perf/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/strict",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:eslint-comments/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "extraFileExtensions": [".json"],
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": { "version": "detect" },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "rules": {
+    "func-style": ["error", "declaration"],
+    "no-console": "error",
+    "no-use-before-define": ["error", { "functions": false }],
+    "eslint-comments/require-description": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always-and-inside-groups",
+        "groups": [
+          ["builtin", "external"],
+          ["parent", "sibling"]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/no-default-export": "error",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["./packages/**/*.stories.{ts,tsx}", "./packages/**/*.spec.ts"],
+        "peerDependencies": true
+      }
+    ],
+    "react/destructuring-assignment": [
+      "error",
+      "always",
+      {
+        "destructureInSignature": "always"
+      }
+    ],
+    "react/jsx-boolean-value": "error",
+    "react-hooks/exhaustive-deps": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/package.json"],
+      "parserOptions": { "project": null }
+    },
+    {
+      "files": ["jest.config.js", "packages/example/components/*/index.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
+      "files": ["**/*.spec.{ts,tsx}"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/all"],
+      "rules": {
+        "jest/valid-title": ["error", { "ignoreTypeOfDescribeName": true }]
+      }
+    },
+    {
+      "files": ["**/*.stories.{ts,tsx}"],
+      "extends": ["plugin:storybook/recommended"],
+      "parserOptions": { "project": "tsconfig.test.json" },
+      "plugins": ["storybook"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
+  ]
+}
