@@ -8,6 +8,9 @@ on:
       storybook-artifact-name:
         description: Название артифакта с собранным storybook
         value: storybook
+      swagger-artifact-name:
+        description: Название артифакта с собранным swagger
+        value: swagger
 
 jobs:
   build:
@@ -19,10 +22,17 @@ jobs:
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
+      # -- Example --
       - name: Build example
-        run: npm run build --workspace @colibrijs/example
+        run: npm run build -w @colibrijs/example
+      - name: Save example build
+        uses: actions/upload-artifact@v4
+        with:
+          name: example
+          path: ./packages/example/dist
+      # -- Storybook --
       - name: Build storybook
-        run: npm run storybook:build --workspace @colibrijs/core
+        run: npm run storybook:build -w @colibrijs/core
         env:
           # Для ветки main - https://colibrijs.github.io/colibrijs/main/example/
           EXAMPLE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/example/
@@ -32,8 +42,11 @@ jobs:
         with:
           name: storybook
           path: ./packages/core/storybook-static
-      - name: Save example build
+      # -- Swagger --
+      - name: Build swagger
+        run: npm run generate-swagger -w @colibrijs/api
+      - name: Save swagger build
         uses: actions/upload-artifact@v4
         with:
-          name: example
-          path: ./packages/example/dist
+          name: swagger
+          path: ./packages/api/redoc-static.html

@@ -38,6 +38,7 @@ jobs:
     with:
       example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
       storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
+      swagger-artifact-name: ${{ needs.build.outputs.swagger-artifact-name }}
 
   test:
     needs: deploy
@@ -72,7 +73,7 @@ jobs:
     needs: test
     environment:
       name: playwright-report-${{ github.head_ref }}
-      url: ${{ steps.upload-playwright-report.outputs.url }}
+      url: ${{ steps.resolve-playwright-report-url.outputs.url }}
     concurrency:
       group: 'pages'
       cancel-in-progress: false
@@ -82,9 +83,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare environment
         uses: ./.github/workflows/prepare-environment
-      - name: Put playwright report to github pages
-        id: upload-playwright-report
-        uses: ./.github/workflows/put-artifact-to-github-pages
+      - name: Deploy artifacts to github pages
+        uses: ./.github/workflows/deploy-artifacts-to-github-pages
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve playwright-report url
+        id: resolve-playwright-report-url
+        uses: ./.github/workflows/resolve-github-pages-url
         with:
           artifact-name: playwright-report
-          token: ${{ secrets.GITHUB_TOKEN }}

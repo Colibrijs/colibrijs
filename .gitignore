@@ -3,6 +3,8 @@ node_modules
 *storybook.log
 .DS_Store
 packages/api/dist/
+packages/api/openapi.json
+packages/api/redoc-static.html
 packages/application/.next/
 packages/core/storybook-static/
 packages/example/dist/

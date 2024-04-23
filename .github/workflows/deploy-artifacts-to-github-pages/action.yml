@@ -1,17 +1,10 @@
-name: Put artifact to github pages
+name: Deploy github pages
+description: Джоба отправляет все ранее созданные артефакты на github pages
 inputs:
-  artifact-name:
-    description: Имя артифакта, который нужно опубликовать
-    type: string
-    required: true
   token:
     description: Токен, позволяющий пушить в ветки $GITHUB_TOKEN
     type: string
     required: true
-outputs:
-  url:
-    description: Ссылка на страницу, где можно посмотреть результат
-    value: ${{ steps.save-url.outputs.url }}
 runs:
   using: composite
   steps:
@@ -25,8 +18,7 @@ runs:
       id: download-artifact
       uses: actions/download-artifact@v4
       with:
-        name: ${{ inputs.artifact-name }}
-        path: ./github-pages/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }}
+        path: ./github-pages/${{ steps.metadata.outputs.branch }}
     - name: Upload new github-pages
       shell: bash
       env:
@@ -36,12 +28,7 @@ runs:
         npx gh-pages \
           --branch github-pages \
           --dest ./${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }} \
-          --dist ./github-pages/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }} \
+          --dist ./github-pages/${{ steps.metadata.outputs.branch }} \
           --nojekyll \
           --remove ./${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }} \
           --user "github-actions-bot <support+actions@github.com>"
-    - name: Save URL
-      id: save-url
-      shell: bash
-      run: |
-        echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }}/" >> $GITHUB_OUTPUT
