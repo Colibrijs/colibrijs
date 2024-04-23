@@ -1,0 +1,22 @@
+name: Resolve github pages URL
+inputs:
+  artifact-name:
+    description: Имя артифакта, url которого нужно вычислить
+    type: string
+    required: true
+outputs:
+  url:
+    description: Ссылка на github pages, где опубликован артифакт
+    value: ${{ steps.save-url.outputs.url }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: Save metadata about deployment
+      uses: ./.github/workflows/deployment-metadata
+      id: metadata
+    - name: Resolve github pages URL
+      id: save-url
+      shell: bash
+      run: |
+        echo "url=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/${{ inputs.artifact-name }}/" >> $GITHUB_OUTPUT

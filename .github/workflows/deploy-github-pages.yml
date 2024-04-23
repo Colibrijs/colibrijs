@@ -18,68 +18,71 @@ on:
     outputs:
       example-url:
         description: Ссылка по которой доступны компоненты example
-        value: ${{ jobs.deploy-example.outputs.url }}
+        value: ${{ jobs.example.outputs.url }}
       storybook-url:
         description: Ссылка по которой доступен сторибук
-        value: ${{ jobs.deploy-storybook.outputs.url }}
+        value: ${{ jobs.storybook.outputs.url }}
       swagger-url:
         description: Ссылка по которой доступен swagger
-        value: ${{ jobs.deploy-swagger.outputs.url }}
+        value: ${{ jobs.swagger.outputs.url }}
 
 jobs:
-  deploy-example:
+  deploy-github-pages:
     concurrency:
       group: 'pages'
       cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy artifacts to github pages
+        uses: ./.github/workflows/deploy-artifacts-to-github-pages
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  example:
+    needs: deploy-github-pages
     environment:
       name: example-${{ github.head_ref }}
-      url: ${{ steps.upload-example.outputs.url }}package.json
+      url: ${{ steps.resolve-example-url.outputs.url }}package.json
     outputs:
-      url: ${{ steps.upload-example.outputs.url }}
+      url: ${{ steps.resolve-example-url.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Put example to github pages
-        id: upload-example
-        uses: ./.github/workflows/put-artifact-to-github-pages
+      - name: Resolve example url
+        id: resolve-example-url
+        uses: ./.github/workflows/resolve-github-pages-url
         with:
           artifact-name: ${{ inputs.example-artifact-name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-storybook:
-    concurrency:
-      group: 'pages'
-      cancel-in-progress: false
+  storybook:
+    needs: deploy-github-pages
     environment:
       name: storybook-${{ github.head_ref }}
-      url: ${{ steps.upload-storybook.outputs.url }}
+      url: ${{ steps.resolve-storybook-url.outputs.url }}
     outputs:
-      url: ${{ steps.upload-storybook.outputs.url }}
+      url: ${{ steps.resolve-storybook-url.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Put storybook to github pages
-        id: upload-storybook
-        uses: ./.github/workflows/put-artifact-to-github-pages
+      - name: Resolve storybook url
+        id: resolve-storybook-url
+        uses: ./.github/workflows/resolve-github-pages-url
         with:
           artifact-name: ${{ inputs.storybook-artifact-name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-swagger:
-    concurrency:
-      group: 'pages'
-      cancel-in-progress: false
+  swagger:
+    needs: deploy-github-pages
     environment:
       name: swagger-${{ github.head_ref }}
-      url: ${{ steps.upload-swagger.outputs.url }}
+      url: ${{ steps.resolve-swagger-url.outputs.url }}redoc-static.html
     outputs:
-      url: ${{ steps.upload-swagger.outputs.url }}
+      url: ${{ steps.resolve-swagger-url.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Put swagger to github pages
-        id: upload-swagger
-        uses: ./.github/workflows/put-artifact-to-github-pages
+      - name: Resolve swagger url
+        id: resolve-swagger-url
+        uses: ./.github/workflows/resolve-github-pages-url
         with:
           artifact-name: ${{ inputs.swagger-artifact-name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
