@@ -1,0 +1,1 @@
+(self.webpackChunk_colibrijs_core=self.webpackChunk_colibrijs_core||[]).push([[821],{"./components/microfrontend/import-remote/fake.ts":()=>{}}]);
