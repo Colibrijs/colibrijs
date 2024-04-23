@@ -4,18 +4,26 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "build": "yarn tsc -p ./tsconfig.build.json",
     "dev": "nest start --watch -p ./tsconfig.json",
-    "start": "node ./dist/main.js"
+    "generate-swagger": "npm run generate-swagger-json && redocly build-docs openapi.json",
+    "generate-swagger-json": "cross-env JUST_GENERATE_SWAGGER=true npm start",
+    "start": "ts-node ./main.ts -p ./tsconfig.build.json"
   },
   "dependencies": {
     "@fastify/static": "^7.0.3",
     "@nestjs/cli": "^10.3.2",
     "@nestjs/common": "^10.3.8",
+    "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.3.8",
     "@nestjs/platform-fastify": "^10.3.8",
     "@nestjs/schematics": "^10.1.1",
+    "@nestjs/swagger": "^7.3.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "ts-node": "*"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^1.11.0",
+    "cross-env": "^7.0.3"
   }
 }
