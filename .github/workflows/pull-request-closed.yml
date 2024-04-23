@@ -1,4 +1,4 @@
-name: Pull request
+name: Pull request closed
 
 on:
   pull_request:
@@ -8,9 +8,7 @@ on:
 jobs:
   remove-github-pages:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    permissions:
-      contents: write
+    permissions: write-all
     concurrency:
       group: 'pages'
       cancel-in-progress: false
@@ -19,7 +17,7 @@ jobs:
       - name: Save metadata about deployment
         uses: ./.github/workflows/deployment-metadata
         id: metadata
-      - name: Remove assets from github-pages relates to branch
+      - name: Remove assets relates to the pull request from github-pages
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git config --global user.email "support+actions@github.com"
@@ -31,3 +29,29 @@ jobs:
           git push origin github-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get GitHub App token
+        uses: navikt/github-app-token-generator@v1
+        id: get-token
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      - name: Remove storybook environment
+        uses: strumwolf/delete-deployment-environment@v2.2.3
+        with:
+          token: ${{ steps.get-token.outputs.token }}
+          environment: storybook-${{ github.head_ref }}
+      - name: Remove example environment
+        uses: strumwolf/delete-deployment-environment@v2.2.3
+        with:
+          token: ${{ steps.get-token.outputs.token }}
+          environment: example-${{ github.head_ref }}
+      - name: Remove swagger environment
+        uses: strumwolf/delete-deployment-environment@v2.2.3
+        with:
+          token: ${{ steps.get-token.outputs.token }}
+          environment: swagger-${{ github.head_ref }}
+      - name: Remove playwright report environment
+        uses: strumwolf/delete-deployment-environment@v2.2.3
+        with:
+          token: ${{ steps.get-token.outputs.token }}
+          environment: playwright-report-${{ github.head_ref }}
