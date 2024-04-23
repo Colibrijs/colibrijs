@@ -49,4 +49,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: swagger
-          path: ./packages/api/redoc-static.html
+          path: |
+            ./packages/api/redoc-static.html
+            ./packages/api/openapi.json
