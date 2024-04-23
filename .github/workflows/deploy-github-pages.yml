@@ -11,6 +11,10 @@ on:
         description: Имя артефакта из которого можно взять собранный сторибук
         type: string
         required: true
+      swagger-artifact-name:
+        description: Имя артефакта из которого можно взять собранный swagger
+        type: string
+        required: true
     outputs:
       example-url:
         description: Ссылка по которой доступны компоненты example
@@ -18,6 +22,9 @@ on:
       storybook-url:
         description: Ссылка по которой доступен сторибук
         value: ${{ jobs.deploy-storybook.outputs.url }}
+      swagger-url:
+        description: Ссылка по которой доступен swagger
+        value: ${{ jobs.deploy-swagger.outputs.url }}
 
 jobs:
   deploy-example:
@@ -32,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Put storybook to github pages
+      - name: Put example to github pages
         id: upload-example
         uses: ./.github/workflows/put-artifact-to-github-pages
         with:
@@ -56,4 +63,23 @@ jobs:
         uses: ./.github/workflows/put-artifact-to-github-pages
         with:
           artifact-name: ${{ inputs.storybook-artifact-name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-swagger:
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: false
+    environment:
+      name: swagger-${{ github.head_ref }}
+      url: ${{ steps.upload-swagger.outputs.url }}
+    outputs:
+      url: ${{ steps.upload-swagger.outputs.url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Put swagger to github pages
+        id: upload-swagger
+        uses: ./.github/workflows/put-artifact-to-github-pages
+        with:
+          artifact-name: ${{ inputs.swagger-artifact-name }}
           token: ${{ secrets.GITHUB_TOKEN }}

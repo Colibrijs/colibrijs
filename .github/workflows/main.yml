@@ -19,3 +19,4 @@ jobs:
     with:
       example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
       storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
+      swagger-artifact-name: ${{ needs.build.outputs.swagger-artifact-name }}
