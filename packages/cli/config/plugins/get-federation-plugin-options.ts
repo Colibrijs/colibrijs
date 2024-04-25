@@ -2,6 +2,8 @@ import { encodePackageName } from '@colibrijs/module-utils';
 import { NodeFederationPlugin } from '@module-federation/node';
 import path from 'node:path';
 
+import { getExportOutputDirectory } from '../../lib';
+
 import type { Settings } from '../../types';
 
 type FederationPluginOptions = ConstructorParameters<typeof NodeFederationPlugin>[0];
@@ -17,7 +19,7 @@ export function getFederationPluginOptions(
   exportName: string
 ): FederationPluginOptions {
   const packageName = encodePackageName(settings.packageJson.name);
-  const dirname = path.join(`./${settings.packageJson.name}`, exportName);
+  const dirname = getExportOutputDirectory(exportName, settings.packageJson);
   const filename = path.join(dirname, `./remote.${settings.platform}.js`);
   const modulePath = settings.packageJson.exports[exportName];
 

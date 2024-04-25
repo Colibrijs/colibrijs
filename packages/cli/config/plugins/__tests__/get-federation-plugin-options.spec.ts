@@ -1,6 +1,7 @@
 import { encodePackageName } from '@colibrijs/module-utils';
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it, jest } from '@jest/globals';
 
+import * as lib from '../../../lib';
 import { defaultPackageJson, defaultSettings } from '../../../lib/__tests__/testing-data';
 import type { PackageJson, Settings } from '../../../types';
 import { getFederationPluginOptions } from '../get-federation-plugin-options';
@@ -36,8 +37,10 @@ describe(getFederationPluginOptions.name, () => {
     });
   });
 
-  it('filename соответствует шаблону "./#{package.name}/#{exportName}/remote.#{platform}.js', () => {
+  it('filename соответствует шаблону "./#{package-directory}/remote.#{platform}.js', () => {
     expect.assertions(1);
+
+    jest.spyOn(lib, 'getExportOutputDirectory').mockReturnValueOnce('./package-directory/');
 
     const packageJson: PackageJson = {
       ...defaultPackageJson,
@@ -50,7 +53,7 @@ describe(getFederationPluginOptions.name, () => {
     const settings: Settings = { ...defaultSettings, packageJson, platform: 'client' };
     const options = getFederationPluginOptions(settings, './ComponentA/');
 
-    expect(options.filename).toBe('./@colibrijs/example/ComponentA/remote.client.js');
+    expect(options.filename).toBe('./package-directory/remote.client.js');
   });
 
   it('если settings.platform = "client", имя файла равно "remote.client.js"', () => {
