@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/components": {
+      "get": {
+        "operationId": "ComponentsController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComponentDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "components"
+        ]
+      },
+      "post": {
+        "operationId": "ComponentsController_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentConstructorOptions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "components"
+        ]
+      }
+    },
+    "/elements": {
+      "get": {
+        "operationId": "ElementsController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ElementDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Colibrijs API",
+    "description": "",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ComponentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "componentName": {
+            "type": "string"
+          },
+          "libraryName": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "componentName",
+          "libraryName",
+          "src"
+        ]
+      },
+      "ComponentConstructorOptions": {
+        "type": "object",
+        "properties": {
+          "componentName": {
+            "type": "string"
+          },
+          "libraryName": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "componentName",
+          "libraryName",
+          "src"
+        ]
+      },
+      "ElementDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "props": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "props"
+        ]
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "OpenAPI schema",
+    "url": "./openapi.json"
+  }
+}
