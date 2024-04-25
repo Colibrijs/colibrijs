@@ -1,19 +1,24 @@
 import type { IApiClient } from './api-client';
 import { MockedComponentsEndpoint } from './endpoints/components/mocked';
 
-class MockedApiClient implements IApiClient {
+type DeepPartialApiClient = Partial<{
+  [Endpoint in keyof IApiClient]: Partial<{
+    [Method in keyof IApiClient[Endpoint]]: IApiClient[Endpoint][Method];
+  }>;
+}>;
+
+export class MockedApiClient implements IApiClient {
   components = new MockedComponentsEndpoint();
 
-  overrideResponse<Endpoint extends keyof IApiClient, Method extends keyof IApiClient[Endpoint]>(
-    endpoint: Endpoint,
-    method: Method,
-    mock: IApiClient[Endpoint][Method]
-  ) {
-    // @ts-expect-error ts не верит что можно вот так переопределить метод эндпоинта
-    this[endpoint][method] = mock;
+  override(deepPartialApiClient: DeepPartialApiClient) {
+    const endpoints = Object.entries(deepPartialApiClient);
+
+    endpoints.forEach(([endpoint, methods]) => {
+      // @ts-expect-error ts не верит, что так можно было
+      this[endpoint as keyof IApiClient] = {
+        ...this[endpoint as keyof IApiClient],
+        ...methods,
+      };
+    });
   }
 }
-
-export const mockedApiClient = new MockedApiClient();
-
-export type { MockedApiClient };

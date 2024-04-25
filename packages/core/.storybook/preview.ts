@@ -1,5 +1,10 @@
-/** @type { import('@storybook/react').Preview } */
-const preview = {
+import type { Preview } from '@storybook/react';
+
+import { withMockedApi } from '../hooks/use-api/mocked';
+
+export default {
+  decorators: [withMockedApi()],
+
   parameters: {
     controls: {
       matchers: {
@@ -8,6 +13,4 @@ const preview = {
       },
     },
   },
-};
-
-export default preview;
+} satisfies Preview;
