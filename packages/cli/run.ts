@@ -4,6 +4,7 @@ import type { MultiCompiler, MultiStats } from 'webpack';
 
 import { createConfiguration } from './config/webpack.config';
 import { getPackageJsonPath, readPackageJson } from './lib';
+import { buildSchemas } from './lib/build-schemas';
 import type { Logger, RunnerOptions, Settings } from './types';
 
 export async function run(options: RunnerOptions): Promise<void> {
@@ -23,8 +24,11 @@ export async function run(options: RunnerOptions): Promise<void> {
   const server = createConfiguration({ ...settings, platform: 'server' });
   const compiler = webpack([client, server]);
   const stats = await runCompiler(compiler);
-
   logger.log(stats.toString({ colors: true }));
+
+  logger.log('Собираю схемы компонентов');
+  await buildSchemas({ ...settings, platform: 'server' });
+  logger.log('Схемы компонентов собраны');
 }
 
 function runCompiler(compiler: MultiCompiler): Promise<MultiStats> {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './example.css';
-import type { Props } from './example.schema';
+import type { Props } from './schema';
 
 export function Example({ title, text }: Props) {
   return (

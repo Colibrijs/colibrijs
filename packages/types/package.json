@@ -1,8 +1,5 @@
 {
   "name": "@colibrijs/types",
   "main": "types.ts",
-  "version": "1.0.0",
-  "dependencies": {
-    "@types/react": "*"
-  }
+  "version": "1.0.0"
 }

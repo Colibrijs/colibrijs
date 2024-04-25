@@ -1,4 +1,3 @@
-import type { MicrofrontendMeta } from '@colibrijs/types';
 import React, { lazy, Suspense } from 'react';
 import type { ComponentType, PropsWithRef } from 'react';
 
@@ -17,7 +16,7 @@ export interface Props<P> {
   /** Пропсы, с которыми нужно отрендерить компонент */
   props: JSX.IntrinsicAttributes & PropsWithRef<P>;
 
-  /** Источник, откуда компонент можно подгрузить данные о компоненте (MicrofrontendMeta) */
+  /** Источник, откуда можно подгрузить компонент */
   src: ImportRemoteOptions['src'];
 
   /** Если true, компонент рендерится на стороне сервера. Иначе на стороне клиента */
@@ -31,7 +30,7 @@ export function Microfrontend<P>(props: Props<P>) {
   const cssUrl = `${getBaseUrl(props)}/component.css`;
 
   const Component = lazy<ComponentType<P>>(() => {
-    return importRemote<MicrofrontendMeta<P>>({ componentName, libraryName, src, ssr });
+    return importRemote<{ default: ComponentType<P> }>({ componentName, libraryName, src, ssr });
   });
 
   return (
