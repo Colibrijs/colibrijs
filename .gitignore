@@ -12,6 +12,9 @@ packages/api/redoc-static.html
 # Application
 packages/application/.next/
 
+# Admin
+packages/admin/.next/
+
 # Core
 packages/core/storybook-static/
 

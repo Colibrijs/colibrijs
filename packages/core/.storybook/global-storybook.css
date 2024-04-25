@@ -1,0 +1,6 @@
+body {
+  /* stylelint-disable-next-line declaration-no-important -- срочно нужно переопределить стили сторибука */
+  margin: 0 !important;
+  /* stylelint-disable-next-line declaration-no-important -- срочно нужно переопределить стили сторибука */
+  padding: 0 !important;
+}

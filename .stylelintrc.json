@@ -1,3 +1,11 @@
 {
-  "extends": ["stylelint-config-htmlacademy", "stylelint-order-htmlacademy"]
+  "extends": ["stylelint-config-htmlacademy", "stylelint-order-htmlacademy"],
+  "rules": {
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
+  }
 }
