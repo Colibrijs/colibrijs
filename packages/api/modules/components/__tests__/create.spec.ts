@@ -1,7 +1,7 @@
+import { exampleComponent, exampleComponentConstructorOptions } from '@colibrijs/mocks/components';
 import { describe, expect, it } from '@jest/globals';
 
 import { createMockedComponentsRepository } from './mocked-components-repository';
-import { defaultConstructorOptions, defaultComponent } from './testing-data';
 import { ComponentsService } from '../components.service';
 
 describe(ComponentsService, () => {
@@ -10,15 +10,15 @@ describe(ComponentsService, () => {
       expect.assertions(2);
 
       const mockedRepository = createMockedComponentsRepository({
-        create: defaultComponent,
-        save: defaultComponent,
+        create: exampleComponent,
+        save: exampleComponent,
       });
 
       const componentsService = new ComponentsService(mockedRepository);
-      await componentsService.create(defaultConstructorOptions);
+      await componentsService.create(exampleComponentConstructorOptions);
 
-      expect(mockedRepository.create).toHaveBeenCalledWith(defaultConstructorOptions);
-      expect(mockedRepository.save).toHaveBeenCalledWith(defaultComponent);
+      expect(mockedRepository.create).toHaveBeenCalledWith(exampleComponentConstructorOptions);
+      expect(mockedRepository.save).toHaveBeenCalledWith(exampleComponent);
     });
   });
 });

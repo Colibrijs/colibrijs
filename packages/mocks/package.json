@@ -1,0 +1,9 @@
+{
+  "name": "@colibrijs/mocks",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Моки для разных сущностей colibrijs",
+  "dependencies": {
+    "@colibrijs/types": "1.0.0"
+  }
+}

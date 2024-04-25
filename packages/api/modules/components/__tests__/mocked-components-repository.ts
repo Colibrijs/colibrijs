@@ -1,6 +1,6 @@
+import { exampleComponent } from '@colibrijs/mocks/components';
 import { jest } from '@jest/globals';
 
-import { defaultComponent } from './testing-data';
 import type { IComponentsRepository } from '../components.types';
 
 type RepositoryReturnTypes = {
@@ -15,13 +15,13 @@ export function createMockedComponentsRepository(
   const repository = {
     create: jest
       .fn<IComponentsRepository['create']>()
-      .mockReturnValue(partialMock?.create ?? defaultComponent),
+      .mockReturnValue(partialMock?.create ?? exampleComponent),
     find: jest
       .fn<IComponentsRepository['find']>()
-      .mockResolvedValue(partialMock?.find ?? [defaultComponent]),
+      .mockResolvedValue(partialMock?.find ?? [exampleComponent]),
     save: jest
       .fn<IComponentsRepository['save']>()
-      .mockResolvedValue(partialMock?.save ?? defaultComponent),
+      .mockResolvedValue(partialMock?.save ?? exampleComponent),
   };
 
   // @ts-expect-error не может совладать с перегруженными функциями

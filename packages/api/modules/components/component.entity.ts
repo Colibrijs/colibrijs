@@ -1,8 +1,9 @@
+import type { IComponent, IComponentConstructorOptions } from '@colibrijs/types';
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'components' })
-export class ComponentDTO {
+export class ComponentDTO implements IComponent {
   @PrimaryGeneratedColumn('uuid')
   @ApiProperty()
   id!: string;
@@ -20,4 +21,6 @@ export class ComponentDTO {
   src!: string;
 }
 
-export class ComponentConstructorOptions extends OmitType(ComponentDTO, ['id']) {}
+export class ComponentConstructorOptions
+  extends OmitType(ComponentDTO, ['id'])
+  implements IComponentConstructorOptions {}
