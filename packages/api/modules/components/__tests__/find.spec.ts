@@ -1,7 +1,7 @@
+import { exampleComponent } from '@colibrijs/mocks/components';
 import { describe, expect, it } from '@jest/globals';
 
 import { createMockedComponentsRepository } from './mocked-components-repository';
-import { defaultComponent } from './testing-data';
 import { ComponentDTO } from '../component.entity';
 import { ComponentsService } from '../components.service';
 
@@ -11,8 +11,8 @@ describe(ComponentsService, () => {
       expect.assertions(1);
 
       const findExpectedResult: ComponentDTO[] = [
-        { ...defaultComponent, id: '1' },
-        { ...defaultComponent, id: '2' },
+        { ...exampleComponent, id: '1' },
+        { ...exampleComponent, id: '2' },
       ];
 
       const mockedRepository = createMockedComponentsRepository({ find: findExpectedResult });

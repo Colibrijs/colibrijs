@@ -1,0 +1,12 @@
+{
+  "name": "@colibrijs/api-client",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Апи-клиент для взаимодействия с colibrijs api",
+  "main": "./api-client.ts",
+  "dependencies": {
+    "@colibrijs/mocks": "1.0.0",
+    "@colibrijs/types": "1.0.0",
+    "axios": "^1.6.8"
+  }
+}
