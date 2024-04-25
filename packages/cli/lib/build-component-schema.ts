@@ -1,4 +1,3 @@
-import type { MicrofrontendMeta } from '@colibrijs/types';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -15,7 +14,7 @@ export async function buildComponentSchema(moduleName: string, settings: Setting
   const fullComponentPath = path.resolve(settings.root, modulePath);
   const inputSchemaPath = path.resolve(path.dirname(fullComponentPath), './schema');
 
-  const { schema }: MicrofrontendMeta<unknown> = await import(inputSchemaPath);
+  const { schema }: { schema: string } = await import(inputSchemaPath);
   const moduleDirectory = getExportOutputDirectory(moduleName, settings.packageJson);
   const outputSchemaPath = path.join(settings.root, './dist/', moduleDirectory, './schema.json');
 
