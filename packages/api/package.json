@@ -4,9 +4,14 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "dev": "nest start --watch -p ./tsconfig.json",
+    "dev": "npm run migrations:run && nest start --watch -p ./tsconfig.json",
     "generate-swagger": "npm run generate-swagger-json && redocly build-docs openapi.json",
     "generate-swagger-json": "cross-env JUST_GENERATE_SWAGGER=true npm start",
+    "migration:create": "typeorm-ts-node-commonjs migration:create",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate --dataSource ./data-source.ts",
+    "migrations:run": "typeorm-ts-node-commonjs migration:run --dataSource ./data-source.ts --transaction none",
+    "migrations:revert": "typeorm-ts-node-commonjs migration:revert --dataSource ./data-source.ts --transaction none",
+    "prestart": "npm run migrations:run",
     "start": "ts-node ./main.ts -p ./tsconfig.build.json"
   },
   "dependencies": {
@@ -18,11 +23,17 @@
     "@nestjs/platform-fastify": "^10.3.8",
     "@nestjs/schematics": "^10.1.1",
     "@nestjs/swagger": "^7.3.1",
+    "@nestjs/typeorm": "^10.0.2",
+    "dotenv": "^16.4.5",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "ts-node": "*"
+    "sqlite3": "^5.1.7",
+    "ts-node": "*",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@nestjs/testing": "^10.3.8",
     "@redocly/cli": "^1.11.0",
     "cross-env": "^7.0.3"
   }
