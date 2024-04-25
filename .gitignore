@@ -2,11 +2,20 @@ node_modules
 
 *storybook.log
 .DS_Store
+
+# Api
+packages/api/database/
 packages/api/dist/
 packages/api/openapi.json
 packages/api/redoc-static.html
+
+# Application
 packages/application/.next/
+
+# Core
 packages/core/storybook-static/
+
+# Example
 packages/example/dist/
 
 # Playwright
