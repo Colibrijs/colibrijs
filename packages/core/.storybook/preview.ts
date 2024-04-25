@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react';
 
+import '../global.css';
+import './global-storybook.css';
 import { withMockedApi } from '../hooks/use-api/mocked';
 
 export default {

@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "dev:api": "npm run dev -w @colibrijs/api",
+    "dev:admin": "npm run dev -w @colibrijs/admin",
     "dev:application": "npm run dev -w @colibrijs/application",
     "dev:core": "npm run storybook -w @colibrijs/core",
     "lint": "eslint packages",

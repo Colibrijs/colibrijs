@@ -1,7 +1,7 @@
 import { ConfigProvider, Layout, theme } from 'antd';
 import React, { useMemo, type PropsWithChildren } from 'react';
 
-import styles from './layout.styles.css';
+import styles from './layout.module.css';
 
 export const SIDEBAR_WIDTH = 350;
 
