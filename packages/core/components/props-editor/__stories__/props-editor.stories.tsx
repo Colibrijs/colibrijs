@@ -4,12 +4,11 @@ import { fn } from '@storybook/test';
 import React, { useState, useCallback } from 'react';
 
 import schema from './schema.json';
+import { SidebarDecorator } from '../../layout/sidebar-decorator';
 import { PropsEditor, type Props } from '../props-editor';
 
 export type PropsEditorMeta = Meta<typeof PropsEditor>;
 export type Story = StoryObj<typeof PropsEditor>;
-
-const styles = { maxWidth: '450px' };
 
 export default {
   component: Default,
@@ -22,13 +21,7 @@ export default {
       surname: '',
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={styles}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [SidebarDecorator],
 } satisfies PropsEditorMeta;
 
 export function Default<T extends Record<string, string>>({ value, schema, onChange }: Props<T>) {
