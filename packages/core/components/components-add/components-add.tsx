@@ -1,7 +1,7 @@
 import type { IComponentConstructorOptions } from '@colibrijs/types';
 import { useMutation } from '@tanstack/react-query';
 import { Alert, Button, Divider, Form, Input, type FormRule } from 'antd';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useApi } from '../../hooks/use-api';
 
@@ -13,11 +13,13 @@ export function ComponentsAdd({ defaultValues }: Props) {
   const api = useApi();
   const [form] = Form.useForm<IComponentConstructorOptions>();
 
-  form.setFieldsValue({
-    componentName: defaultValues?.componentName ?? '',
-    libraryName: defaultValues?.libraryName ?? '',
-    src: defaultValues?.src ?? '',
-  });
+  useEffect(() => {
+    form.setFieldsValue({
+      componentName: defaultValues?.componentName ?? '',
+      libraryName: defaultValues?.libraryName ?? '',
+      src: defaultValues?.src ?? '',
+    });
+  }, [form, defaultValues]);
 
   const {
     error,
