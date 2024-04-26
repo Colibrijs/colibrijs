@@ -11,4 +11,8 @@ export class MockedComponentsEndpoint implements IComponentsEndpoint {
   post(): Promise<IComponent> {
     return Promise.resolve(exampleComponent);
   }
+
+  delete(): Promise<IComponent> {
+    return Promise.resolve(exampleComponent);
+  }
 }
