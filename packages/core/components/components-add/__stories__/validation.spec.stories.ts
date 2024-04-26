@@ -112,7 +112,7 @@ export const SrcTypeUrl: Story = {
       expect(error).toBeNull();
     });
 
-    await step('Заполяю поле "Ссылка на сборку"', async () => {
+    await step('Заполняю поле "Ссылка на сборку"', async () => {
       const src = story.getByTestId('components-add__src-input');
       await userEvent.type(src, 'просто текст');
     });

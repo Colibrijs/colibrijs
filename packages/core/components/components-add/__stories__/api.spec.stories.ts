@@ -24,17 +24,17 @@ export const RequestParameters: Story = {
   play: async ({ args, canvasElement, step }) => {
     const story = within(canvasElement);
 
-    await step('Заполяю поле "Название компонента"', async () => {
+    await step('Заполняю поле "Название компонента"', async () => {
       const componentName = story.getByTestId('components-add__component-name-input');
       await userEvent.type(componentName, exampleComponentConstructorOptions.componentName);
     });
 
-    await step('Заполяю поле "Название библиотеки"', async () => {
+    await step('Заполняю поле "Название библиотеки"', async () => {
       const libraryName = story.getByTestId('components-add__library-name-input');
       await userEvent.type(libraryName, exampleComponentConstructorOptions.libraryName);
     });
 
-    await step('Заполяю поле "Ссылка на сборку"', async () => {
+    await step('Заполняю поле "Ссылка на сборку"', async () => {
       const src = story.getByTestId('components-add__src-input');
       await userEvent.type(src, exampleComponentConstructorOptions.src);
     });
