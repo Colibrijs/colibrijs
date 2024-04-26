@@ -10,7 +10,7 @@ type RepositoryReturnTypes = {
 type PartialMock = jest.MockedObject<Partial<RepositoryReturnTypes>>;
 
 export function createMockedComponentsRepository(
-  partialMock?: PartialMock
+  partialMock: PartialMock = {}
 ): jest.MockedObject<IComponentsRepository> {
   const repository = {
     create: jest
@@ -21,10 +21,10 @@ export function createMockedComponentsRepository(
       .mockResolvedValue(partialMock?.find ?? [exampleComponent]),
     findOneBy: jest
       .fn<IComponentsRepository['findOneBy']>()
-      .mockRejectedValue(partialMock?.findOneBy ?? exampleComponent),
+      .mockResolvedValue('findOneBy' in partialMock ? partialMock.findOneBy : exampleComponent),
     remove: jest
       .fn<IComponentsRepository['remove']>()
-      .mockRejectedValue(partialMock?.remove ?? exampleComponent),
+      .mockResolvedValue(partialMock?.remove ?? exampleComponent),
     save: jest
       .fn<IComponentsRepository['save']>()
       .mockResolvedValue(partialMock?.save ?? exampleComponent),

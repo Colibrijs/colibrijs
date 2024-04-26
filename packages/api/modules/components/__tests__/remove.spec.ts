@@ -22,11 +22,10 @@ describe(ComponentsService, () => {
     });
 
     it('выбрасывает ошибку, если компонент с указанным id не найден', async () => {
-      expect.assertions(2);
+      expect.assertions(1);
 
       const mockedRepository = createMockedComponentsRepository({ findOneBy: null });
       const componentsService = new ComponentsService(mockedRepository);
-      await componentsService.remove('some-unknown-id');
 
       await expect(() => componentsService.remove('some-unknown-id')).rejects.toThrow(
         new Error(`Компонент с id "some-unknown-id" не найден`)
