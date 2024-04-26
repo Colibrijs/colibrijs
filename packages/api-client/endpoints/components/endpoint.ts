@@ -12,6 +12,10 @@ export class ComponentsEndpoint {
   post(constructorOptions: IComponentConstructorOptions): Promise<IComponent> {
     return this.httpClient.post('/components', constructorOptions);
   }
+
+  delete(componentId: string): Promise<IComponent> {
+    return this.httpClient.delete(`/components/${componentId}`);
+  }
 }
 
 // Странно очень, что приватное поле класса попадает в тип

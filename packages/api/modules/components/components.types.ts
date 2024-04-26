@@ -1,13 +1,17 @@
+import type { IComponent, IComponentConstructorOptions } from '@colibrijs/types';
+
 import type { InjectionToken } from '@nestjs/common';
 import type { Repository } from 'typeorm';
 
-import type { ComponentConstructorOptions, ComponentDTO } from './component.entity';
-
-export type IComponentsRepository = Pick<Repository<ComponentDTO>, 'create' | 'save' | 'find'>;
+export type IComponentsRepository = Pick<
+  Repository<IComponent>,
+  'create' | 'find' | 'findOneBy' | 'remove' | 'save'
+>;
 
 export interface IComponentsService {
-  create(options: ComponentConstructorOptions): Promise<ComponentDTO>;
-  find(): Promise<ComponentDTO[]>;
+  create(options: IComponentConstructorOptions): Promise<IComponent>;
+  find(): Promise<IComponent[]>;
+  remove(componentId: string): Promise<IComponent>;
 }
 
 export const ComponentsServiceToken: InjectionToken<IComponentsService> =

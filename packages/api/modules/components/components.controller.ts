@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { ComponentDTO, ComponentConstructorOptions } from './component.entity';
@@ -22,5 +22,11 @@ export class ComponentsController {
   @ApiCreatedResponse({ type: ComponentDTO })
   post(@Body() options: ComponentConstructorOptions): Promise<ComponentDTO> {
     return this.componentsService.create(options);
+  }
+
+  @Delete(':componentId')
+  @ApiOkResponse({ type: ComponentDTO })
+  delete(@Param(':componentId') componentId: string): Promise<ComponentDTO> {
+    return this.componentsService.remove(componentId);
   }
 }

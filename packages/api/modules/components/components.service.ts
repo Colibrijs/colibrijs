@@ -21,4 +21,14 @@ export class ComponentsService implements IComponentsService {
   find(): Promise<ComponentDTO[]> {
     return this.components.find();
   }
+
+  async remove(componentId: string): Promise<ComponentDTO> {
+    const component = await this.components.findOneBy({ id: componentId });
+
+    if (!component) {
+      throw new Error(`Компонент с id "${componentId}" не найден`);
+    }
+
+    return this.components.remove(component);
+  }
 }
