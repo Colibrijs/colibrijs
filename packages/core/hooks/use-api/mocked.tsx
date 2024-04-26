@@ -1,13 +1,11 @@
 import { MockedApiClient } from '@colibrijs/api-client/mocked';
 import type { Decorator, StoryContext } from '@storybook/react';
 
-import React, { type ComponentType, type ComponentProps } from 'react';
+import React, { type ComponentType } from 'react';
 
 import { ApiContext } from './use-api';
 
-export type WithMockedApi<C extends ComponentType> = ComponentType<
-  ComponentProps<C> & { apiClient: MockedApiClient }
->;
+export type WithMockedApi<P> = ComponentType<P & { apiClient: MockedApiClient }>;
 
 type PrepareApiClient = (apiClient: MockedApiClient) => void;
 
