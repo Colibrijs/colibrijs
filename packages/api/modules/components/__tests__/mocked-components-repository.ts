@@ -19,6 +19,12 @@ export function createMockedComponentsRepository(
     find: jest
       .fn<IComponentsRepository['find']>()
       .mockResolvedValue(partialMock?.find ?? [exampleComponent]),
+    findOneBy: jest
+      .fn<IComponentsRepository['findOneBy']>()
+      .mockRejectedValue(partialMock?.findOneBy ?? exampleComponent),
+    remove: jest
+      .fn<IComponentsRepository['remove']>()
+      .mockRejectedValue(partialMock?.remove ?? exampleComponent),
     save: jest
       .fn<IComponentsRepository['save']>()
       .mockResolvedValue(partialMock?.save ?? exampleComponent),
