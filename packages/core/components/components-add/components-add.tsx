@@ -1,10 +1,9 @@
 import type { IComponentConstructorOptions } from '@colibrijs/types';
+import { useMutation } from '@tanstack/react-query';
 import { Alert, Button, Divider, Form, Input, type FormRule } from 'antd';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { useApi } from '../../hooks/use-api';
-
-type Status = 'idle' | 'loading' | 'error';
 
 export interface Props {
   defaultValues?: Partial<IComponentConstructorOptions>;
@@ -13,8 +12,6 @@ export interface Props {
 export function ComponentsAdd({ defaultValues }: Props) {
   const api = useApi();
   const [form] = Form.useForm<IComponentConstructorOptions>();
-  const [error, setError] = useState<Error | null>(null);
-  const [status, setStatus] = useState<Status>('idle');
 
   form.setFieldsValue({
     componentName: defaultValues?.componentName ?? '',
@@ -22,27 +19,13 @@ export function ComponentsAdd({ defaultValues }: Props) {
     src: defaultValues?.src ?? '',
   });
 
-  const changeHandler = useCallback(() => {
-    setError(null);
-  }, []);
-
-  const finishHandler = useCallback(
-    (values: IComponentConstructorOptions) => {
-      if (status === 'loading') return;
-
-      setStatus('loading');
-      api.components
-        .post(values)
-        .then(() => {
-          setStatus('idle');
-        })
-        .catch((error) => {
-          setError(error);
-          setStatus('error');
-        });
-    },
-    [api, status]
-  );
+  const {
+    error,
+    isPending,
+    mutateAsync: addComponent,
+  } = useMutation({
+    mutationFn: (options: IComponentConstructorOptions) => api.components.post(options),
+  });
 
   const rules = useMemo(
     (): Record<keyof IComponentConstructorOptions, FormRule[]> => ({
@@ -57,7 +40,7 @@ export function ComponentsAdd({ defaultValues }: Props) {
   );
 
   return (
-    <Form layout="vertical" form={form} onChange={changeHandler} onFinish={finishHandler}>
+    <Form layout="vertical" form={form} onFinish={addComponent}>
       {error && (
         <>
           <Alert message={error.message} type="error" data-testid="components-add__error" />
@@ -93,7 +76,13 @@ export function ComponentsAdd({ defaultValues }: Props) {
       >
         <Input type="url" data-testid="components-add__src-input" />
       </Form.Item>
-      <Button htmlType="submit" type="primary" data-testid="components-add__submit">
+
+      <Button
+        htmlType="submit"
+        loading={isPending}
+        type="primary"
+        data-testid="components-add__submit"
+      >
         Добавить
       </Button>
     </Form>
