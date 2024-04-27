@@ -1,6 +1,89 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/pages": {
+      "get": {
+        "operationId": "PagesController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PageDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      },
+      "post": {
+        "operationId": "PagesController_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageConstructorOptions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      }
+    },
+    "/pages/{pageId}": {
+      "delete": {
+        "operationId": "PagesController_delete",
+        "parameters": [
+          {
+            "name": ":pageId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      }
+    },
     "/components": {
       "get": {
         "operationId": "ComponentsController_get",
@@ -119,6 +202,32 @@
   "servers": [],
   "components": {
     "schemas": {
+      "PageDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "route"
+        ]
+      },
+      "PageConstructorOptions": {
+        "type": "object",
+        "properties": {
+          "route": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "route"
+        ]
+      },
       "ComponentDTO": {
         "type": "object",
         "properties": {
