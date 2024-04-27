@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import type { ComponentProps } from 'react';
 
-import { withMockedApi } from '../../../hooks/use-api/mocked';
+import { withMockedApi, type WithMockedApi } from '../../../hooks/use-api/mocked';
 import { ComponentsList } from '../components-list';
 
-type Story = StoryObj<typeof ComponentsList>;
+export type ComponentsListMeta = Meta<WithMockedApi<ComponentProps<typeof ComponentsList>>>;
+export type Story = StoryObj<WithMockedApi<ComponentProps<typeof ComponentsList>>>;
 
 export default {
   component: ComponentsList,
   title: 'ComponentsList',
-} satisfies Meta<typeof ComponentsList>;
+} satisfies ComponentsListMeta;
 
 export const Default: Story = {};
 
