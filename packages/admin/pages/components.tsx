@@ -1,6 +1,10 @@
-import { Layout } from '@colibrijs/core';
+import { ComponentsList, Layout } from '@colibrijs/core';
 import React from 'react';
 
 export default function PageComponents() {
-  return <Layout>Компоненты</Layout>;
+  return (
+    <Layout>
+      <ComponentsList />
+    </Layout>
+  );
 }
