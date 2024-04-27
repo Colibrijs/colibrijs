@@ -1,12 +1,12 @@
 import type { IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Table, type TableColumnsType, Typography } from 'antd';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
 
+import { getComponentSchemaUrl } from './get-component-schema-url';
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 import { ComponentsAdd } from '../components-add';
 import { ComponentsRemove } from '../components-remove';
-import { getBaseUrl } from '../microfrontend';
 
 export function ComponentsList() {
   const api = useApi();
@@ -16,16 +16,19 @@ export function ComponentsList() {
     queryKey: [COMPONENTS_KEY],
   });
 
-  const getComponentSchemaUrl = useCallback((component: IComponent) => {
-    const baseUrl = getBaseUrl({ ...component, ssr: false });
-
-    return `${baseUrl}/schema.json`;
-  }, []);
+  const getRowClassName = useCallback((component: IComponent) => component.id, []);
+  const setRowAttributes = useCallback(
+    (component: IComponent): HTMLAttributes<HTMLTableRowElement> => ({
+      // @ts-expect-error не верит что tr можно задать атрибут с именем data-testid
+      'data-testid': `components-list__${component.id}`,
+    }),
+    []
+  );
 
   const columns = useMemo(
     (): TableColumnsType<IComponent> => [
-      { title: 'Библиотека', dataIndex: 'libraryName', key: 'libraryName' },
       { title: 'Компонент', dataIndex: 'componentName', key: 'componentName' },
+      { title: 'Библиотека', dataIndex: 'libraryName', key: 'libraryName' },
       {
         title: 'Ссылка',
         dataIndex: 'src',
@@ -41,7 +44,7 @@ export function ComponentsList() {
         render: (_, component) => <ComponentsRemove component={component} />,
       },
     ],
-    [getComponentSchemaUrl]
+    []
   );
 
   const Footer = useCallback(() => {
@@ -54,7 +57,9 @@ export function ComponentsList() {
       dataSource={components}
       loading={isLoading}
       pagination={false}
+      rowKey={getRowClassName}
       footer={Footer}
+      onRow={setRowAttributes}
     />
   );
 }
