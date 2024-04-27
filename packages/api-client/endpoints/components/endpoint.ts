@@ -5,16 +5,19 @@ import type { HttpClient } from '../../types';
 export class ComponentsEndpoint {
   constructor(private readonly httpClient: HttpClient) {}
 
-  get(): Promise<IComponent[]> {
-    return this.httpClient.get('/components');
+  async get(): Promise<IComponent[]> {
+    const response = await this.httpClient.get('/components');
+    return response.data;
   }
 
-  post(constructorOptions: IComponentConstructorOptions): Promise<IComponent> {
-    return this.httpClient.post('/components', constructorOptions);
+  async post(constructorOptions: IComponentConstructorOptions): Promise<IComponent> {
+    const response = await this.httpClient.post('/components', constructorOptions);
+    return response.data;
   }
 
-  delete(componentId: string): Promise<IComponent> {
-    return this.httpClient.delete(`/components/${componentId}`);
+  async delete(componentId: string): Promise<IComponent> {
+    const response = await this.httpClient.delete(`/components/${componentId}`);
+    return response.data;
   }
 }
 
