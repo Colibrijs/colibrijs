@@ -1,13 +1,26 @@
 import type { IComponent } from '@colibrijs/types';
-import { Table, type TableColumnsType } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Table, type TableColumnsType, Typography } from 'antd';
+import React, { useCallback, useMemo } from 'react';
 
-import { useApi } from '../../hooks/use-api';
+import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
+import { ComponentsAdd } from '../components-add';
+import { ComponentsRemove } from '../components-remove';
+import { getBaseUrl } from '../microfrontend';
 
 export function ComponentsList() {
   const api = useApi();
-  const [components, setComponents] = useState<IComponent[]>([]);
-  const [componentsLoading, setComponentsLoading] = useState(false);
+
+  const { data: components, isLoading } = useQuery({
+    queryFn: () => api.components.get(),
+    queryKey: [COMPONENTS_KEY],
+  });
+
+  const getComponentSchemaUrl = useCallback((component: IComponent) => {
+    const baseUrl = getBaseUrl({ ...component, ssr: false });
+
+    return `${baseUrl}/schema.json`;
+  }, []);
 
   const columns = useMemo(
     (): TableColumnsType<IComponent> => [
@@ -17,23 +30,31 @@ export function ComponentsList() {
         title: 'Ссылка',
         dataIndex: 'src',
         key: 'src',
-        render: (src: string) => (
-          <a href={src} target="_blank" rel="noreferrer">
-            {src}
-          </a>
+        render: (_, component) => (
+          <Typography.Link href={getComponentSchemaUrl(component)} target="_blank" rel="noreferrer">
+            {getComponentSchemaUrl(component)}
+          </Typography.Link>
         ),
       },
+      {
+        key: 'actions',
+        render: (_, component) => <ComponentsRemove component={component} />,
+      },
     ],
-    []
+    [getComponentSchemaUrl]
   );
 
-  useEffect(() => {
-    setComponentsLoading(true);
-    api.components
-      .get()
-      .then((loadedComponents) => setComponents(loadedComponents))
-      .finally(() => setComponentsLoading(false));
-  }, [api]);
+  const Footer = useCallback(() => {
+    return <ComponentsAdd />;
+  }, []);
 
-  return <Table columns={columns} dataSource={components} loading={componentsLoading} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={components}
+      loading={isLoading}
+      pagination={false}
+      footer={Footer}
+    />
+  );
 }

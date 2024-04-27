@@ -1,9 +1,9 @@
 import type { IComponentConstructorOptions } from '@colibrijs/types';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert, Button, Divider, Form, Input, type FormRule } from 'antd';
 import React, { useEffect, useMemo } from 'react';
 
-import { useApi } from '../../hooks/use-api';
+import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 
 export interface Props {
   defaultValues?: Partial<IComponentConstructorOptions>;
@@ -11,6 +11,7 @@ export interface Props {
 
 export function ComponentsAdd({ defaultValues }: Props) {
   const api = useApi();
+  const queryClient = useQueryClient();
   const [form] = Form.useForm<IComponentConstructorOptions>();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export function ComponentsAdd({ defaultValues }: Props) {
     mutateAsync: addComponent,
   } = useMutation({
     mutationFn: (options: IComponentConstructorOptions) => api.components.post(options),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [COMPONENTS_KEY] }),
   });
 
   const rules = useMemo(
