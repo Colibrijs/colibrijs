@@ -2,6 +2,7 @@ node_modules
 
 *storybook.log
 .DS_Store
+tsconfig.tsbuildinfo
 
 # Api
 packages/api/database/

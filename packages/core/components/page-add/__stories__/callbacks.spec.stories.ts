@@ -19,7 +19,7 @@ export const RouteRequired: Story = {
   play: async ({ args, canvasElement, step }) => {
     step('Предусловие: изначально все поля заполнены', () => {});
 
-    const pageAdd = new PageAddTO({ canvasElement, step });
+    const pageAdd = new PageAddTO({ rootElement: canvasElement, step });
     await pageAdd.submit();
 
     await step('Убеждаюсь, что callback onReady вызвался', () => {
