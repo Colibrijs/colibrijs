@@ -23,7 +23,7 @@ export const RequestParameters: Story = {
     }),
   ],
   play: async ({ args, canvasElement, step }) => {
-    const pageAdd = new PageAddTO({ canvasElement, step });
+    const pageAdd = new PageAddTO({ rootElement: canvasElement, step });
 
     await pageAdd.fillRoute(examplePageConstructorOptions.route);
     await pageAdd.submit();
@@ -50,7 +50,7 @@ export const RequestError: Story = {
   ],
   play: async ({ canvasElement, step }) => {
     await step('Предусловие: поля формы заполнены моковыми значениями', () => {});
-    const pageAdd = new PageAddTO({ canvasElement, step });
+    const pageAdd = new PageAddTO({ rootElement: canvasElement, step });
 
     await step('Проверяю, что изначально ошибки нет', async () => {
       const error = await pageAdd.getError({ strict: false });

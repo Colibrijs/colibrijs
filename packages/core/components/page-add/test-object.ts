@@ -1,12 +1,11 @@
-import type { StoryObj } from '@storybook/react';
 import { userEvent, type queries, within } from '@storybook/test';
 
-type PlayFunctionContext = Parameters<NonNullable<StoryObj['play']>>[0];
-type StepFn = PlayFunctionContext['step'];
+type StepImplementation = () => void | Promise<void>;
+type StepFn = (text: string, fn: StepImplementation) => void | Promise<void>;
 type TestElement = ReturnType<typeof within<typeof queries>>;
 
 interface Options {
-  canvasElement: PlayFunctionContext['canvasElement'];
+  rootElement: HTMLElement;
   step: StepFn;
   /** @default 'page-add' */
   testId?: string;
@@ -18,13 +17,13 @@ interface SearchElementOptions {
 }
 
 export class PageAddTO {
-  private readonly canvasElement: PlayFunctionContext['canvasElement'];
-  private readonly step: PlayFunctionContext['step'];
+  private readonly rootElement: HTMLElement;
+  private readonly step: StepFn;
   private readonly testId: string;
   private _root: null | TestElement = null;
 
   constructor(options: Options) {
-    this.canvasElement = options.canvasElement;
+    this.rootElement = options.rootElement;
     this.step = options.step;
     this.testId = options.testId ?? 'page-add';
   }
@@ -32,7 +31,7 @@ export class PageAddTO {
   private get root(): TestElement {
     if (this._root) return this._root;
 
-    const story = within(this.canvasElement);
+    const story = within(this.rootElement);
     this._root = within(story.getByTestId(this.testId));
     return this._root;
   }

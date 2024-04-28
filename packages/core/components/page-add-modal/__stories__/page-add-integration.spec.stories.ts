@@ -17,7 +17,7 @@ export const IntegrationPageAdd: Story = {
   play: async ({ args, step }) => {
     const pageAddModal = new PageAddModalTO({ step });
     const modalContent = await pageAddModal.waitForContent();
-    const pageAdd = new PageAddTO({ canvasElement: modalContent, step });
+    const pageAdd = new PageAddTO({ rootElement: modalContent, step });
 
     await pageAdd.fillRoute(examplePageConstructorOptions.route);
     await pageAdd.submit();

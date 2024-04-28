@@ -1,0 +1,4 @@
+.root [role="tree"] {
+  /* stylelint-disable-next-line declaration-no-important -- а по-другому там никак. Сильно специфичный стиль */
+  background: transparent !important;
+}

@@ -17,7 +17,7 @@ export const RouteRequired: Story = {
   },
   play: async ({ canvasElement, step }) => {
     step('Предусловие: изначально все поля, кроме route заполнены', () => {});
-    const pageAdd = new PageAddTO({ canvasElement, step });
+    const pageAdd = new PageAddTO({ rootElement: canvasElement, step });
 
     await step('Убеждаюсь, что изначально элемента с ошибкой не видно', async () => {
       const error = await pageAdd.getRouteError({ strict: false });
