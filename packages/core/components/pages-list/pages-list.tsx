@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import type { IPage } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
-import { Button, ConfigProvider, Flex, Tree, theme, Typography } from 'antd';
+import { Button, ConfigProvider, Flex, Tooltip, Tree, theme, Typography } from 'antd';
 import type { TreeDataNode } from 'antd';
 import React, { useCallback, useMemo, useState, type ReactNode } from 'react';
 
@@ -44,7 +44,9 @@ export function PagesList() {
       <Typography.Title level={3}>
         <Flex align="center" justify="space-between">
           <span>Страницы</span>
-          <Button icon={<PlusOutlined />} onClick={startAdding} data-testid="pages-list__add" />
+          <Tooltip title="Добавить страницу">
+            <Button icon={<PlusOutlined />} onClick={startAdding} data-testid="pages-list__add" />
+          </Tooltip>
         </Flex>
       </Typography.Title>
       <ConfigProvider theme={lightTheme}>
