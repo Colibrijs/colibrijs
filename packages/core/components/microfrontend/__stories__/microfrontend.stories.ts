@@ -1,3 +1,4 @@
+import { exampleComponent } from '@colibrijs/mocks/components';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Microfrontend } from '../microfrontend';
@@ -14,9 +15,7 @@ export default {
   component: Microfrontend,
   title: 'Microfrontend',
   args: {
-    componentName: 'Example',
-    libraryName: '@colibrijs/example',
-    src: String(process.env.EXAMPLE_URL),
+    component: exampleComponent,
     props: {
       title: 'Удалённый компонент',
       text: 'Но тем не менее, рендерюсь здесь',
