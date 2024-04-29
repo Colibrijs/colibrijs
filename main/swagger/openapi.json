@@ -239,23 +239,31 @@
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "route": {
             "type": "string"
           }
         },
         "required": [
           "id",
+          "name",
           "route"
         ]
       },
       "PageConstructorOptions": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string"
+          },
           "route": {
             "type": "string"
           }
         },
         "required": [
+          "name",
           "route"
         ]
       },
