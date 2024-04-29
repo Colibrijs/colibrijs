@@ -26,7 +26,7 @@ export class ComponentsController {
 
   @Delete(':componentId')
   @ApiOkResponse({ type: ComponentDTO })
-  delete(@Param(':componentId') componentId: string): Promise<ComponentDTO> {
+  delete(@Param('componentId') componentId: string): Promise<ComponentDTO> {
     return this.componentsService.remove(componentId);
   }
 }

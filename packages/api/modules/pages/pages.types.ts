@@ -11,6 +11,7 @@ export type IPagesRepository = Pick<
 export interface IPagesService {
   create(options: IPageConstructorOptions): Promise<IPage>;
   find(): Promise<IPage[]>;
+  findById(pageId: string): Promise<IPage>;
   remove(componentId: string): Promise<IPage>;
 }
 

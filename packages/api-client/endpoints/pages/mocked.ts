@@ -8,6 +8,10 @@ export class MockedPagesEndpoint implements IPagesEndpoint {
     return Promise.resolve(manyPages);
   }
 
+  getById(): Promise<IPage> {
+    return Promise.resolve(examplePage);
+  }
+
   post(): Promise<IPage> {
     return Promise.resolve(examplePage);
   }

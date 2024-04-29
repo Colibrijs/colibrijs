@@ -10,6 +10,11 @@ export class PagesEndpoint {
     return response.data;
   }
 
+  async getById(pageId: string): Promise<IPage> {
+    const response = await this.httpClient.get(`/pages/${pageId}`);
+    return response.data;
+  }
+
   async post(options: IPageConstructorOptions): Promise<IPage> {
     const response = await this.httpClient.post('/pages', options);
     return response.data;
