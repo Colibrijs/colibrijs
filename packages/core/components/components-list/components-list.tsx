@@ -5,7 +5,7 @@ import { Table, type TableColumnsType, Typography } from 'antd';
 import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
 
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
-import { ComponentsAdd } from '../components-add';
+import { ComponentAdd } from '../component-add';
 import { ComponentsRemove } from '../components-remove';
 
 export function ComponentsList() {
@@ -48,7 +48,7 @@ export function ComponentsList() {
   );
 
   const Footer = useCallback(() => {
-    return <ComponentsAdd />;
+    return <ComponentAdd />;
   }, []);
 
   return (
