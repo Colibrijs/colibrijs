@@ -1,15 +1,15 @@
 import { exampleComponent } from '@colibrijs/mocks/components';
 import { expect, fn, screen, userEvent, within } from '@storybook/test';
 
-import ComponentsRemoveStoriesMeta from './components-remove.stories';
-import type { ComponentsRemoveMeta, Story } from './components-remove.stories';
+import ComponentRemoveStoriesMeta from './component-remove.stories';
+import type { ComponentRemoveMeta, Story } from './component-remove.stories';
 
 import { withMockedApi } from '../../../hooks/use-api/mocked';
 
 export default {
-  ...ComponentsRemoveStoriesMeta,
-  title: 'ComponentsRemove/tests/api',
-} satisfies ComponentsRemoveMeta;
+  ...ComponentRemoveStoriesMeta,
+  title: 'ComponentRemove/tests/api',
+} satisfies ComponentRemoveMeta;
 
 export const RequestParameters: Story = {
   name: 'При подтверждении удаления, вызывается api.components.delete с id компонента, переданного в пропсах',
@@ -25,12 +25,12 @@ export const RequestParameters: Story = {
   play: async ({ args, canvasElement, step }) => {
     const { apiClient } = args;
     const story = within(canvasElement);
-    const remove = story.getByTestId('components-remove__remove');
+    const remove = story.getByTestId('component-remove__remove');
 
     await step('кликаю на кнопку "Удалить"', () => userEvent.click(remove));
     await step('подтверждаю удаление', async () => {
       // screen, а не story, потому что попап в портале рендерится
-      const confirm = await screen.findByTestId('components-remove__confirm');
+      const confirm = await screen.findByTestId('component-remove__confirm');
       await userEvent.click(confirm);
     });
 
@@ -55,18 +55,18 @@ export const RequestError: Story = {
     step('Предусловие: api.components.delete выбрасывает ошибку', () => {});
 
     const story = within(canvasElement);
-    const remove = story.getByTestId('components-remove__remove');
+    const remove = story.getByTestId('component-remove__remove');
 
     await step('кликаю на кнопку "Удалить"', () => userEvent.click(remove));
     await step('подтверждаю удаление', async () => {
       // screen, а не story, потому что попап в портале рендерится
-      const confirm = await screen.findByTestId('components-remove__confirm');
+      const confirm = await screen.findByTestId('component-remove__confirm');
       await userEvent.click(confirm);
     });
 
     await step('проверяю, что появилось уведомление с текстом ошибки', async () => {
       // screen, а не story, потому что ошибка в портале рендерится
-      const error = await screen.findByTestId('components-remove__error');
+      const error = await screen.findByTestId('component-remove__error');
       await expect(error).toHaveTextContent('Случилось неладное');
     });
   },
@@ -85,21 +85,19 @@ export const RequestSuccess: Story = {
   ],
   play: async ({ args, canvasElement, step }) => {
     const story = within(canvasElement);
-    const remove = story.getByTestId('components-remove__remove');
+    const remove = story.getByTestId('component-remove__remove');
 
     await step('кликаю на кнопку "Удалить"', () => userEvent.click(remove));
     await step('подтверждаю удаление', async () => {
       // screen, а не story, потому что попап в портале рендерится
-      const confirm = await screen.findByTestId('components-remove__confirm');
+      const confirm = await screen.findByTestId('component-remove__confirm');
       await userEvent.click(confirm);
     });
 
     await step('проверяю, что появилось сообщение о том что компонент успешно удалён', async () => {
       // screen, а не story, потому что ошибка в портале рендерится
-      const success = await screen.findByTestId('components-remove__success');
-      await expect(success).toHaveTextContent(
-        `Компонент “${args.component.componentName}” успешно удалён`
-      );
+      const success = await screen.findByTestId('component-remove__success');
+      await expect(success).toHaveTextContent(`Компонент “${args.component.name}” успешно удалён`);
     });
   },
 };

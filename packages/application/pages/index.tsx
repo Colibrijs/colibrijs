@@ -2,6 +2,16 @@ import { Microfrontend } from '@colibrijs/core';
 import React, { useMemo } from 'react';
 
 export default function PageIndex() {
+  const exampleComponent = useMemo(
+    () => ({
+      id: '1',
+      src: String(process.env.EXAMPLE_URL),
+      libraryName: '@colibrijs/example',
+      name: 'Example',
+    }),
+    []
+  );
+
   const exampleProps = useMemo(
     () => ({
       title: 'Удалённый компонент',
@@ -10,14 +20,5 @@ export default function PageIndex() {
     []
   );
 
-  return (
-    <Microfrontend
-      id="1"
-      src={String(process.env.EXAMPLE_URL)}
-      libraryName="@colibrijs/example"
-      componentName="Example"
-      props={exampleProps}
-      ssr={typeof window === 'undefined'}
-    />
-  );
+  return <Microfrontend id="1" component={exampleComponent} props={exampleProps} />;
 }

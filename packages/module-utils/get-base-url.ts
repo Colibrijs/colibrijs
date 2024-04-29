@@ -1,11 +1,11 @@
-import type { ImportRemoteOptions } from './types';
+import type { IComponent } from '@colibrijs/types';
 
 /**
  * Возвращает базовый URL компонента. Отсюда можно брать серверный и клиентский js, css и другое
  */
-export function getBaseUrl(options: ImportRemoteOptions): string {
-  const { componentName, libraryName, src } = options;
+export function getBaseUrl(component: IComponent): string {
+  const { name, libraryName, src } = component;
   const srcWithTrailingSlash = src.endsWith('/') ? src : `${src}/`;
 
-  return `${srcWithTrailingSlash}${libraryName}/${componentName}`;
+  return `${srcWithTrailingSlash}${libraryName}/${name}`;
 }

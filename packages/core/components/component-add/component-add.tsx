@@ -9,14 +9,14 @@ export interface Props {
   defaultValues?: Partial<IComponentConstructorOptions>;
 }
 
-export function ComponentsAdd({ defaultValues }: Props) {
+export function ComponentAdd({ defaultValues }: Props) {
   const api = useApi();
   const queryClient = useQueryClient();
   const [form] = Form.useForm<IComponentConstructorOptions>();
 
   useEffect(() => {
     form.setFieldsValue({
-      componentName: defaultValues?.componentName ?? '',
+      name: defaultValues?.name ?? '',
       libraryName: defaultValues?.libraryName ?? '',
       src: defaultValues?.src ?? '',
     });
@@ -33,7 +33,7 @@ export function ComponentsAdd({ defaultValues }: Props) {
 
   const rules = useMemo(
     (): Record<keyof IComponentConstructorOptions, FormRule[]> => ({
-      componentName: [{ required: true, message: 'Параметр "Название компонента" обязательный' }],
+      name: [{ required: true, message: 'Параметр "Название компонента" обязательный' }],
       libraryName: [{ required: true, message: 'Параметр "Название библиотеки" обязательный' }],
       src: [
         { required: true, message: 'Параметр "Ссылка на сборку" обязательный' },
@@ -47,45 +47,45 @@ export function ComponentsAdd({ defaultValues }: Props) {
     <Form layout="vertical" form={form} onFinish={addComponent}>
       {error && (
         <>
-          <Alert message={error.message} type="error" data-testid="components-add__error" />
+          <Alert message={error.message} type="error" data-testid="component-add__error" />
           <Divider type="vertical" />
         </>
       )}
       <Form.Item
         label="Название компонента"
-        name="componentName"
-        rules={rules.componentName}
-        data-testid="components-add__component-name"
+        name="name"
+        rules={rules.name}
+        data-testid="component-add__name"
         required
       >
-        <Input type="text" data-testid="components-add__component-name-input" />
+        <Input type="text" data-testid="component-add__name-input" />
       </Form.Item>
 
       <Form.Item
         label="Название библиотеки"
         name="libraryName"
         rules={rules.libraryName}
-        data-testid="components-add__library-name"
+        data-testid="component-add__library-name"
         required
       >
-        <Input type="text" data-testid="components-add__library-name-input" />
+        <Input type="text" data-testid="component-add__library-name-input" />
       </Form.Item>
 
       <Form.Item
         label="Ссылка на сборку"
         name="src"
         rules={rules.src}
-        data-testid="components-add__src"
+        data-testid="component-add__src"
         required
       >
-        <Input type="url" data-testid="components-add__src-input" />
+        <Input type="url" data-testid="component-add__src-input" />
       </Form.Item>
 
       <Button
         htmlType="submit"
         loading={isPending}
         type="primary"
-        data-testid="components-add__submit"
+        data-testid="component-add__submit"
       >
         Добавить
       </Button>

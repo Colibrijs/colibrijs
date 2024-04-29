@@ -10,7 +10,7 @@ export class ComponentDTO implements IComponent {
 
   @Column({ nullable: false })
   @ApiProperty()
-  componentName!: string;
+  name!: string;
 
   @Column({ nullable: false })
   @ApiProperty()

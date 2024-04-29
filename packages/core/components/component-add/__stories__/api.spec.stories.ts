@@ -1,14 +1,14 @@
 import { exampleComponentConstructorOptions, exampleComponent } from '@colibrijs/mocks/components';
 import { expect, fn, within, userEvent } from '@storybook/test';
 
-import ComponentsAddStoriesMeta from './components-add.stories';
-import type { ComponentsAddMeta, Story } from './components-add.stories';
+import ComponentAddStoriesMeta from './component-add.stories';
+import type { ComponentAddMeta, Story } from './component-add.stories';
 import { withMockedApi } from '../../../hooks/use-api/mocked';
 
 export default {
-  ...ComponentsAddStoriesMeta,
-  title: 'ComponentsAdd/tests/api',
-} satisfies ComponentsAddMeta;
+  ...ComponentAddStoriesMeta,
+  title: 'ComponentAdd/tests/api',
+} satisfies ComponentAddMeta;
 
 export const RequestParameters: Story = {
   name: 'При клике на кнопку "Добавить", вызывается api components.post с данными, которые ввёл пользователь',
@@ -25,27 +25,27 @@ export const RequestParameters: Story = {
     const story = within(canvasElement);
 
     await step('Заполняю поле "Название компонента"', async () => {
-      const componentName = story.getByTestId('components-add__component-name-input');
-      await userEvent.type(componentName, exampleComponentConstructorOptions.componentName);
+      const name = story.getByTestId('component-add__name-input');
+      await userEvent.type(name, exampleComponentConstructorOptions.name);
     });
 
     await step('Заполняю поле "Название библиотеки"', async () => {
-      const libraryName = story.getByTestId('components-add__library-name-input');
+      const libraryName = story.getByTestId('component-add__library-name-input');
       await userEvent.type(libraryName, exampleComponentConstructorOptions.libraryName);
     });
 
     await step('Заполняю поле "Ссылка на сборку"', async () => {
-      const src = story.getByTestId('components-add__src-input');
+      const src = story.getByTestId('component-add__src-input');
       await userEvent.type(src, exampleComponentConstructorOptions.src);
     });
 
     await step('Кликаю на кнопку "Добавить"', () =>
-      userEvent.click(story.getByTestId('components-add__submit'))
+      userEvent.click(story.getByTestId('component-add__submit'))
     );
 
     await step('Проверяю, что api.components.post вызвался с теми данными, которые я ввёл', () => {
       expect(args.apiClient.components.post).toHaveBeenCalledWith({
-        componentName: exampleComponentConstructorOptions.componentName,
+        name: exampleComponentConstructorOptions.name,
         libraryName: exampleComponentConstructorOptions.libraryName,
         src: exampleComponentConstructorOptions.src,
       });
@@ -70,15 +70,15 @@ export const RequestError: Story = {
     const { findByTestId, getByTestId, queryByTestId } = within(canvasElement);
 
     await step('Проверяю, что изначально ошибки нет', async () => {
-      await expect(queryByTestId('components-add__error')).toBeNull();
+      await expect(queryByTestId('component-add__error')).toBeNull();
     });
 
     await step('Кликаю на кнопку "Добавить"', () =>
-      userEvent.click(getByTestId('components-add__submit'))
+      userEvent.click(getByTestId('component-add__submit'))
     );
 
     await step('Проверяю, что появилась ошибка "Случилось неладное!"', async () => {
-      const error = await findByTestId('components-add__error');
+      const error = await findByTestId('component-add__error');
       await expect(error).toBeVisible();
       await expect(error).toHaveTextContent('Случилось неладное!');
     });

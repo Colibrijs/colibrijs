@@ -1,6 +1,6 @@
 export interface IComponent {
   id: string;
-  componentName: string;
+  name: string;
   libraryName: string;
   src: string;
 }

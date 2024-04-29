@@ -1,12 +1,12 @@
+import { getSchemaUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Table, type TableColumnsType, Typography } from 'antd';
 import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
 
-import { getComponentSchemaUrl } from './get-component-schema-url';
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
-import { ComponentsAdd } from '../components-add';
-import { ComponentsRemove } from '../components-remove';
+import { ComponentAdd } from '../component-add';
+import { ComponentRemove } from '../component-remove';
 
 export function ComponentsList() {
   const api = useApi();
@@ -27,28 +27,28 @@ export function ComponentsList() {
 
   const columns = useMemo(
     (): TableColumnsType<IComponent> => [
-      { title: 'Компонент', dataIndex: 'componentName', key: 'componentName' },
+      { title: 'Компонент', dataIndex: 'name', key: 'name' },
       { title: 'Библиотека', dataIndex: 'libraryName', key: 'libraryName' },
       {
         title: 'Ссылка',
         dataIndex: 'src',
         key: 'src',
         render: (_, component) => (
-          <Typography.Link href={getComponentSchemaUrl(component)} target="_blank" rel="noreferrer">
-            {getComponentSchemaUrl(component)}
+          <Typography.Link href={getSchemaUrl(component)} target="_blank" rel="noreferrer">
+            {getSchemaUrl(component)}
           </Typography.Link>
         ),
       },
       {
         key: 'actions',
-        render: (_, component) => <ComponentsRemove component={component} />,
+        render: (_, component) => <ComponentRemove component={component} />,
       },
     ],
     []
   );
 
   const Footer = useCallback(() => {
-    return <ComponentsAdd />;
+    return <ComponentAdd />;
   }, []);
 
   return (
