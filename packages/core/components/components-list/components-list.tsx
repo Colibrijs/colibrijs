@@ -6,7 +6,7 @@ import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
 
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 import { ComponentAdd } from '../component-add';
-import { ComponentsRemove } from '../components-remove';
+import { ComponentRemove } from '../component-remove';
 
 export function ComponentsList() {
   const api = useApi();
@@ -41,7 +41,7 @@ export function ComponentsList() {
       },
       {
         key: 'actions',
-        render: (_, component) => <ComponentsRemove component={component} />,
+        render: (_, component) => <ComponentRemove component={component} />,
       },
     ],
     []

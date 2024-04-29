@@ -11,14 +11,14 @@ export interface Props {
   onRemove?: (component: IComponent) => void;
 }
 
-export function ComponentsRemove({ component, onRemove }: Props): ReactNode {
+export function ComponentRemove({ component, onRemove }: Props): ReactNode {
   const api = useApi();
   const queryClient = useQueryClient();
 
   const { mutate: deleteComponent, isPending } = useMutation({
     mutationFn: () => api.components.delete(component.id),
     onError: (error) =>
-      message.error(<span data-testid="components-remove__error">{error.message}</span>),
+      message.error(<span data-testid="component-remove__error">{error.message}</span>),
     onSuccess: (removedComponent) => {
       if (onRemove) {
         onRemove(removedComponent);
@@ -26,7 +26,7 @@ export function ComponentsRemove({ component, onRemove }: Props): ReactNode {
 
       queryClient.invalidateQueries({ queryKey: [COMPONENTS_KEY] });
       message.success(
-        <span data-testid="components-remove__success">
+        <span data-testid="component-remove__success">
           Компонент “{component.name}” успешно удалён
         </span>
       );
@@ -41,7 +41,7 @@ export function ComponentsRemove({ component, onRemove }: Props): ReactNode {
     <Popconfirm
       title="Удалить компонент?"
       description={`Компонент “${component.name}” будет удалён с концами`}
-      okText={<span data-testid="components-remove__confirm">Да</span>}
+      okText={<span data-testid="component-remove__confirm">Да</span>}
       cancelText="Галя, отмена"
       onConfirm={confirmHandler}
     >
@@ -50,7 +50,7 @@ export function ComponentsRemove({ component, onRemove }: Props): ReactNode {
           loading={isPending}
           icon={<DeleteOutlined />}
           htmlType="button"
-          data-testid="components-remove__remove"
+          data-testid="component-remove__remove"
           shape="circle"
           danger
           ghost

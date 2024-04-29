@@ -5,14 +5,14 @@ import { message } from 'antd';
 import React from 'react';
 
 import type { WithMockedApi } from '../../../hooks/use-api/mocked';
-import { ComponentsRemove, type Props } from '../components-remove';
+import { ComponentRemove, type Props } from '../component-remove';
 
-export type ComponentsRemoveMeta = Meta<WithMockedApi<Props>>;
+export type ComponentRemoveMeta = Meta<WithMockedApi<Props>>;
 export type Story = StoryObj<WithMockedApi<Props>>;
 
 export default {
-  component: ComponentsRemove,
-  title: 'ComponentsRemove',
+  component: ComponentRemove,
+  title: 'ComponentRemove',
   args: {
     component: exampleComponent,
     onRemove: fn(),
@@ -25,6 +25,6 @@ export default {
       return <Story />;
     },
   ],
-} satisfies ComponentsRemoveMeta;
+} satisfies ComponentRemoveMeta;
 
 export const Default: Story = {};
