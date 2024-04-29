@@ -1,3 +1,5 @@
+import { examplePageConstructorOptions } from '@colibrijs/mocks/pages';
+import type { IPageConstructorOptions } from '@colibrijs/types';
 import { userEvent, type queries, within } from '@storybook/test';
 
 type StepImplementation = () => void | Promise<void>;
@@ -36,6 +38,18 @@ export class PageAddTO {
     return this._root;
   }
 
+  async fillAndSubmit(options: IPageConstructorOptions = examplePageConstructorOptions) {
+    await this.fillName(options.name);
+    await this.fillRoute(options.route);
+    await this.submit();
+  }
+
+  async fillName(text: string): Promise<void> {
+    const input = this.root.getByTestId('page-add__name-input');
+
+    await this.step(`Ввожу в поле "Адрес" значение "${text}"`, () => userEvent.type(input, text));
+  }
+
   async fillRoute(text: string): Promise<void> {
     const input = this.root.getByTestId('page-add__route-input');
 
@@ -55,6 +69,13 @@ export class PageAddTO {
     return strict
       ? this.root.findByTestId('page-add__error')
       : Promise.resolve(this.root.queryByTestId('page-add__error'));
+  }
+
+  getNameError(options: SearchElementOptions = {}): Promise<HTMLElement | null> {
+    const { strict = true } = options;
+    const name = within(this.root.getByTestId('page-add__name'));
+
+    return strict ? name.findByRole('alert') : Promise.resolve(name.queryByRole('alert'));
   }
 
   getRouteError(options: SearchElementOptions = {}): Promise<HTMLElement | null> {

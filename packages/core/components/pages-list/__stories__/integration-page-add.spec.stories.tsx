@@ -27,8 +27,7 @@ export const IntegrationPageAdd: Story = {
       () => expect(pageAddRoot).toBeVisible()
     );
 
-    await pageAdd.fillRoute(examplePageConstructorOptions.route);
-    await pageAdd.submit();
+    await pageAdd.fillAndSubmit(examplePageConstructorOptions);
     // Нужно подождать некоторое время, прежде чем модалка с добавлением страницы пропадёт
     await new Promise((resolve) => setTimeout(resolve, 500));
 

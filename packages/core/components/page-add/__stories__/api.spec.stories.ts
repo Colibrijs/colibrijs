@@ -24,12 +24,11 @@ export const RequestParameters: Story = {
   ],
   play: async ({ args, canvasElement, step }) => {
     const pageAdd = new PageAddTO({ rootElement: canvasElement, step });
-
-    await pageAdd.fillRoute(examplePageConstructorOptions.route);
-    await pageAdd.submit();
+    await pageAdd.fillAndSubmit(examplePageConstructorOptions);
 
     await step('Проверяю, что api.pages.post вызвался с введёнными данными', () => {
       expect(args.apiClient.pages.post).toHaveBeenCalledWith({
+        name: examplePageConstructorOptions.name,
         route: examplePageConstructorOptions.route,
       });
     });

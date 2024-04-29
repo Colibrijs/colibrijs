@@ -10,6 +10,30 @@ export default {
   title: 'PageAdd/tests/validation',
 } satisfies PageAddMeta;
 
+export const NameRequired: Story = {
+  name: 'Поле "Название" является обязательным',
+  args: {
+    defaultValues: { ...examplePageConstructorOptions, name: '' },
+  },
+  play: async ({ canvasElement, step }) => {
+    step('Предусловие: изначально все поля, кроме name заполнены', () => {});
+    const pageAdd = new PageAddTO({ rootElement: canvasElement, step });
+
+    await step('Убеждаюсь, что изначально элемента с ошибкой не видно', async () => {
+      const error = await pageAdd.getNameError({ strict: false });
+      expect(error).toBeNull();
+    });
+
+    await pageAdd.submit();
+
+    await step('Убеждаюсь, что теперь элемент с ошибкой виден', async () => {
+      const error = await pageAdd.getNameError({ strict: true });
+      await expect(error).toBeVisible();
+      await expect(error).toHaveTextContent('Параметр "Название" обязательный');
+    });
+  },
+};
+
 export const RouteRequired: Story = {
   name: 'Поле "Адрес" является обязательным',
   args: {

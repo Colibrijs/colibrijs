@@ -10,10 +10,13 @@ export interface Props {
 
 export function PageTitle({ page }: Props) {
   return (
-    <Flex align="center" justify="space-between" data-testid="page-title">
-      <Typography.Title level={1} data-testid="page-title__title">
-        {page.route}
+    <Flex align="baseline" justify="space-between" data-testid="page-title">
+      <Typography.Title level={1} data-testid="page-title__name">
+        {page.name}
       </Typography.Title>
+      <Typography.Text type="secondary" data-testid="page-title__route">
+        {page.route}
+      </Typography.Text>
       <PageRemove page={page} />
     </Flex>
   );
