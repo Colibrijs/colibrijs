@@ -55,11 +55,42 @@
       }
     },
     "/pages/{pageId}": {
+      "get": {
+        "operationId": "PagesController_getById",
+        "parameters": [
+          {
+            "name": "pageId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      },
       "delete": {
         "operationId": "PagesController_delete",
         "parameters": [
           {
-            "name": ":pageId",
+            "name": "pageId",
             "required": true,
             "in": "path",
             "schema": {
@@ -142,7 +173,7 @@
         "operationId": "ComponentsController_delete",
         "parameters": [
           {
-            "name": ":componentId",
+            "name": "componentId",
             "required": true,
             "in": "path",
             "schema": {
