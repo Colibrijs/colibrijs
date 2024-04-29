@@ -21,16 +21,3 @@ export const TitleText: Story = {
     );
   },
 };
-
-export const SubtitleText: Story = {
-  name: 'В подзаголовке отображается значение поля route пропса page',
-  args: { page: examplePage },
-  play: async ({ canvasElement, step }) => {
-    const pageTitle = new PageTitleTO({ rootElement: canvasElement });
-    const routeElement = pageTitle.getRoute();
-
-    await step('Проверяю, что заголовок страницы равен значению поля route', () =>
-      expect(routeElement).toHaveTextContent(examplePage.route)
-    );
-  },
-};
