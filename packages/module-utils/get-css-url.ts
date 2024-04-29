@@ -2,8 +2,8 @@ import type { IComponent } from '@colibrijs/types';
 
 import { getBaseUrl } from './get-base-url';
 
-export function getComponentSchemaUrl(component: IComponent): string {
+export function getCssUrl(component: IComponent): string {
   const baseUrl = getBaseUrl(component);
 
-  return `${baseUrl}/schema.json`;
+  return `${baseUrl}/component.css`;
 }

@@ -1,5 +1,5 @@
 import { exampleComponent } from '@colibrijs/mocks/components';
-import { getComponentSchemaUrl } from '@colibrijs/module-utils';
+import { getSchemaUrl } from '@colibrijs/module-utils';
 import { expect, within } from '@storybook/test';
 
 import ComponentsListStoriesMeta from './components-list.stories';
@@ -39,7 +39,7 @@ export const ResponseData: Story = {
 
     await step('Проверяю, что в третьем столбике отображается ссылка на схему', async () => {
       const thirdColumn = componentRow.querySelector('.ant-table-cell:nth-child(3)');
-      const schemaUrl = getComponentSchemaUrl(exampleComponent);
+      const schemaUrl = getSchemaUrl(exampleComponent);
       await expect(thirdColumn).toHaveTextContent(schemaUrl);
     });
   },

@@ -1,4 +1,4 @@
-import { getComponentSchemaUrl } from '@colibrijs/module-utils';
+import { getSchemaUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Table, type TableColumnsType, Typography } from 'antd';
@@ -34,8 +34,8 @@ export function ComponentsList() {
         dataIndex: 'src',
         key: 'src',
         render: (_, component) => (
-          <Typography.Link href={getComponentSchemaUrl(component)} target="_blank" rel="noreferrer">
-            {getComponentSchemaUrl(component)}
+          <Typography.Link href={getSchemaUrl(component)} target="_blank" rel="noreferrer">
+            {getSchemaUrl(component)}
           </Typography.Link>
         ),
       },

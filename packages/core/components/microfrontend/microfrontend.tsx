@@ -1,4 +1,4 @@
-import { getBaseUrl } from '@colibrijs/module-utils';
+import { getCssUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import React, { lazy, Suspense } from 'react';
 import type { ComponentType, PropsWithRef } from 'react';
@@ -17,15 +17,13 @@ export interface Props<P> {
 }
 
 export function Microfrontend<P>({ component, props }: Props<P>) {
-  const cssUrl = `${getBaseUrl(component)}/component.css`;
-
   const Component = lazy<ComponentType<P>>(() => {
     return importRemote<{ default: ComponentType<P> }>(component);
   });
 
   return (
     <>
-      <link rel="stylesheet" href={cssUrl} />
+      <link rel="stylesheet" href={getCssUrl(component)} />
       <Suspense>
         <Component {...props} />
       </Suspense>

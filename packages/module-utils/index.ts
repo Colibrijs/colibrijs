@@ -1,3 +1,4 @@
 export { encodePackageName } from './encode-package-name';
 export { getBaseUrl } from './get-base-url';
-export { getComponentSchemaUrl } from './get-component-schema-url';
+export { getCssUrl } from './get-css-url';
+export { getSchemaUrl } from './get-schema-url';
