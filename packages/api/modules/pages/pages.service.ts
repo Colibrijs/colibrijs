@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { PageDTO, type PageConstructorOptions } from './page.entity';
@@ -20,6 +20,16 @@ export class PagesService implements IPagesService {
   /** Возвращает все существующие страницы */
   find(): Promise<PageDTO[]> {
     return this.pages.find();
+  }
+
+  async findById(pageId: string): Promise<PageDTO> {
+    const page = await this.pages.findOneBy({ id: pageId });
+
+    if (!page) {
+      throw new NotFoundException();
+    }
+
+    return page;
   }
 
   async remove(pageId: string): Promise<PageDTO> {

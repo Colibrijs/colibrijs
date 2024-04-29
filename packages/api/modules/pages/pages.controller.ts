@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
-import { ApiOkResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiNotFoundResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { PageDTO, PageConstructorOptions } from './page.entity';
 import { type IPagesService, PagesServiceToken } from './pages.types';
@@ -18,6 +18,13 @@ export class PagesController {
     return this.pagesService.find();
   }
 
+  @Get(':pageId')
+  @ApiOkResponse({ type: PageDTO })
+  @ApiNotFoundResponse()
+  getById(@Param('pageId') pageId: string): Promise<PageDTO> {
+    return this.pagesService.findById(pageId);
+  }
+
   @Post()
   @ApiCreatedResponse({ type: PageDTO })
   post(@Body() options: PageConstructorOptions): Promise<PageDTO> {
@@ -26,7 +33,7 @@ export class PagesController {
 
   @Delete(':pageId')
   @ApiOkResponse({ type: PageDTO })
-  delete(@Param(':pageId') pageId: string): Promise<PageDTO> {
+  delete(@Param('pageId') pageId: string): Promise<PageDTO> {
     return this.pagesService.remove(pageId);
   }
 }
