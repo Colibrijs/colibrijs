@@ -1,12 +1,13 @@
 import { getSchemaUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
-import { Table, type TableColumnsType, Typography } from 'antd';
+import { Table, type TableColumnsType } from 'antd';
 import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
 
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 import { ComponentAdd } from '../component-add';
 import { ComponentRemove } from '../component-remove';
+import { Link } from '../link';
 
 export function ComponentsList() {
   const api = useApi();
@@ -34,9 +35,9 @@ export function ComponentsList() {
         dataIndex: 'src',
         key: 'src',
         render: (_, component) => (
-          <Typography.Link href={getSchemaUrl(component)} target="_blank" rel="noreferrer">
+          <Link href={getSchemaUrl(component)} target="_blank" rel="noreferrer">
             {getSchemaUrl(component)}
-          </Typography.Link>
+          </Link>
         ),
       },
       {

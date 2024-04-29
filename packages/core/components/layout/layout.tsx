@@ -1,9 +1,10 @@
-import { Layout as AntdLayout, Menu, Typography, type MenuProps } from 'antd';
+import { Layout as AntdLayout, Menu, type MenuProps } from 'antd';
 import React, { useMemo } from 'react';
 import type { PropsWithChildren, ReactNode } from 'react';
 
 import styles from './layout.module.css';
 import { Sidebar } from './sidebar';
+import { Link } from '../link';
 
 export type Props = PropsWithChildren<{
   sidebar?: ReactNode;
@@ -14,11 +15,8 @@ export function Layout({ children, sidebar }: Props) {
 
   const menuItems: MenuProps['items'] = useMemo(
     () => [
-      { key: 'pages', label: <Typography.Link href="/pages">Страницы</Typography.Link> },
-      {
-        key: 'components',
-        label: <Typography.Link href="/components/">Компоненты</Typography.Link>,
-      },
+      { key: 'pages', label: <Link href="/pages">Страницы</Link> },
+      { key: 'components', label: <Link href="/components/">Компоненты</Link> },
     ],
     []
   );

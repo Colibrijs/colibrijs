@@ -8,6 +8,7 @@ import React, { useCallback, useMemo, useState, type ReactNode } from 'react';
 import styles from './pages-list.module.css';
 import { getPageHref, pagesToTree } from './utils';
 import { useApi, PAGES_KEY } from '../../hooks/use-api';
+import { Link } from '../link';
 import { PageAddModal } from '../page-add-modal';
 
 const EMPTY_ARRAY: TreeDataNode[] = [];
@@ -22,13 +23,9 @@ export function PagesList() {
 
   const wrapTitle = useCallback(
     (title: string, page: IPage): ReactNode => (
-      <Typography.Link
-        href={getPageHref(page)}
-        type="secondary"
-        data-testid={`pages-list__${page.id}`}
-      >
+      <Link href={getPageHref(page)} type="secondary" data-testid={`pages-list__${page.id}`}>
         {title}
-      </Typography.Link>
+      </Link>
     ),
     []
   );
