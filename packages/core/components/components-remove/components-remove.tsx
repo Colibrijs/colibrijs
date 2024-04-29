@@ -27,7 +27,7 @@ export function ComponentsRemove({ component, onRemove }: Props): ReactNode {
       queryClient.invalidateQueries({ queryKey: [COMPONENTS_KEY] });
       message.success(
         <span data-testid="components-remove__success">
-          Компонент “{component.componentName}” успешно удалён
+          Компонент “{component.name}” успешно удалён
         </span>
       );
     },
@@ -40,7 +40,7 @@ export function ComponentsRemove({ component, onRemove }: Props): ReactNode {
   return (
     <Popconfirm
       title="Удалить компонент?"
-      description={`Компонент “${component.componentName}” будет удалён с концами`}
+      description={`Компонент “${component.name}” будет удалён с концами`}
       okText={<span data-testid="components-remove__confirm">Да</span>}
       cancelText="Галя, отмена"
       onConfirm={confirmHandler}

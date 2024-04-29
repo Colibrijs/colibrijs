@@ -25,8 +25,8 @@ export const RequestParameters: Story = {
     const story = within(canvasElement);
 
     await step('Заполняю поле "Название компонента"', async () => {
-      const componentName = story.getByTestId('components-add__component-name-input');
-      await userEvent.type(componentName, exampleComponentConstructorOptions.componentName);
+      const name = story.getByTestId('components-add__name-input');
+      await userEvent.type(name, exampleComponentConstructorOptions.name);
     });
 
     await step('Заполняю поле "Название библиотеки"', async () => {
@@ -45,7 +45,7 @@ export const RequestParameters: Story = {
 
     await step('Проверяю, что api.components.post вызвался с теми данными, которые я ввёл', () => {
       expect(args.apiClient.components.post).toHaveBeenCalledWith({
-        componentName: exampleComponentConstructorOptions.componentName,
+        name: exampleComponentConstructorOptions.name,
         libraryName: exampleComponentConstructorOptions.libraryName,
         src: exampleComponentConstructorOptions.src,
       });

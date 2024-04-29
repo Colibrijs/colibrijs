@@ -27,7 +27,7 @@ export function ComponentsList() {
 
   const columns = useMemo(
     (): TableColumnsType<IComponent> => [
-      { title: 'Компонент', dataIndex: 'componentName', key: 'componentName' },
+      { title: 'Компонент', dataIndex: 'name', key: 'name' },
       { title: 'Библиотека', dataIndex: 'libraryName', key: 'libraryName' },
       {
         title: 'Ссылка',

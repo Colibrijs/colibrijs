@@ -9,19 +9,19 @@ export default {
   title: 'ComponentsAdd/tests/validation',
 } satisfies ComponentsAddMeta;
 
-export const ComponentNameRequired: Story = {
+export const NameRequired: Story = {
   name: 'Поле "Название компонента" является обязательным',
   args: {
-    defaultValues: { ...exampleComponentConstructorOptions, componentName: '' },
+    defaultValues: { ...exampleComponentConstructorOptions, name: '' },
   },
   play: async ({ canvasElement, step }) => {
-    step('Предусловие: изначально все поля, кроме componentName заполнены', () => {});
+    step('Предусловие: изначально все поля, кроме name заполнены', () => {});
 
     const story = within(canvasElement);
-    const componentName = within(story.getByTestId('components-add__component-name'));
+    const name = within(story.getByTestId('components-add__name'));
 
     await step('Убеждаюсь, что изначально элемента с ошибкой не видно', () => {
-      const error = componentName.queryByRole('alert');
+      const error = name.queryByRole('alert');
       expect(error).toBeNull();
     });
 
@@ -30,7 +30,7 @@ export const ComponentNameRequired: Story = {
     );
 
     await step('Убеждаюсь, что теперь элемент с ошибкой виден', async () => {
-      const error = await componentName.findByRole('alert');
+      const error = await name.findByRole('alert');
 
       await expect(error).toBeVisible();
       await expect(error).toHaveTextContent('Параметр "Название компонента" обязательный');

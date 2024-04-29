@@ -16,7 +16,7 @@ export function ComponentsAdd({ defaultValues }: Props) {
 
   useEffect(() => {
     form.setFieldsValue({
-      componentName: defaultValues?.componentName ?? '',
+      name: defaultValues?.name ?? '',
       libraryName: defaultValues?.libraryName ?? '',
       src: defaultValues?.src ?? '',
     });
@@ -33,7 +33,7 @@ export function ComponentsAdd({ defaultValues }: Props) {
 
   const rules = useMemo(
     (): Record<keyof IComponentConstructorOptions, FormRule[]> => ({
-      componentName: [{ required: true, message: 'Параметр "Название компонента" обязательный' }],
+      name: [{ required: true, message: 'Параметр "Название компонента" обязательный' }],
       libraryName: [{ required: true, message: 'Параметр "Название библиотеки" обязательный' }],
       src: [
         { required: true, message: 'Параметр "Ссылка на сборку" обязательный' },
@@ -53,12 +53,12 @@ export function ComponentsAdd({ defaultValues }: Props) {
       )}
       <Form.Item
         label="Название компонента"
-        name="componentName"
-        rules={rules.componentName}
-        data-testid="components-add__component-name"
+        name="name"
+        rules={rules.name}
+        data-testid="components-add__name"
         required
       >
-        <Input type="text" data-testid="components-add__component-name-input" />
+        <Input type="text" data-testid="components-add__name-input" />
       </Form.Item>
 
       <Form.Item

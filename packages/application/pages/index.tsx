@@ -7,7 +7,7 @@ export default function PageIndex() {
       id: '1',
       src: String(process.env.EXAMPLE_URL),
       libraryName: '@colibrijs/example',
-      componentName: 'Example',
+      name: 'Example',
     }),
     []
   );

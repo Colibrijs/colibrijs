@@ -97,9 +97,7 @@ export const RequestSuccess: Story = {
     await step('проверяю, что появилось сообщение о том что компонент успешно удалён', async () => {
       // screen, а не story, потому что ошибка в портале рендерится
       const success = await screen.findByTestId('components-remove__success');
-      await expect(success).toHaveTextContent(
-        `Компонент “${args.component.componentName}” успешно удалён`
-      );
+      await expect(success).toHaveTextContent(`Компонент “${args.component.name}” успешно удалён`);
     });
   },
 };

@@ -29,7 +29,7 @@ export const ResponseData: Story = {
 
     await step('Проверяю, что в первом столбике отображается имя компонента', async () => {
       const firstColumn = componentRow.querySelector('.ant-table-cell:nth-child(1)');
-      await expect(firstColumn).toHaveTextContent(exampleComponent.componentName);
+      await expect(firstColumn).toHaveTextContent(exampleComponent.name);
     });
 
     await step('Проверяю, что в во втором столбике отображается название библиотеки', async () => {

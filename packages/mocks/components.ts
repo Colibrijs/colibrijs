@@ -1,7 +1,7 @@
 import type { IComponent, IComponentConstructorOptions } from '@colibrijs/types';
 
 export const exampleComponentConstructorOptions: IComponentConstructorOptions = {
-  componentName: 'Example',
+  name: 'Example',
   libraryName: '@colibrijs/example',
   src: 'https://colibrijs.github.io/colibrijs/main/example',
 };

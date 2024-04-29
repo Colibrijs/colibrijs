@@ -5,12 +5,12 @@ import { describe, expect, it } from '@jest/globals';
 import { getBaseUrl } from '../get-base-url';
 
 describe(getBaseUrl.name, () => {
-  it('возвращает ссылку на базовый урл компонента - результат объединения src, libraryName, componentName', () => {
+  it('возвращает ссылку на базовый урл компонента - результат объединения src, libraryName, name', () => {
     expect.assertions(1);
 
     const component: IComponent = {
       ...exampleComponent,
-      componentName: 'Example',
+      name: 'Example',
       libraryName: '@colibrijs/example',
       src: 'https://colibrijs.github.io/colibrijs/main/example',
     };
@@ -25,7 +25,7 @@ describe(getBaseUrl.name, () => {
 
     const component: IComponent = {
       ...exampleComponent,
-      componentName: 'Example',
+      name: 'Example',
       libraryName: '@colibrijs/example',
       src: 'https://colibrijs.github.io/colibrijs/main/example/',
     };

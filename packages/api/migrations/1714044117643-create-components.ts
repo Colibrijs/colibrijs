@@ -8,7 +8,7 @@ export class CreateComponents1714044117643 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE "components" (
         "id" varchar PRIMARY KEY NOT NULL,
-        "componentName" varchar NOT NULL,
+        "name" varchar NOT NULL,
         "libraryName" varchar NOT NULL,
         "src" varchar NOT NULL
        )`
