@@ -3,6 +3,7 @@
   "description": "Вспомогательные утилиты для работы с модулями",
   "version": "1.0.0",
   "devDependencies": {
+    "@colibrijs/mocks": "^1.0.0",
     "@jest/globals": "^29.7.0"
   }
 }

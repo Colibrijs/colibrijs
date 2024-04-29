@@ -1,10 +1,10 @@
 import { exampleComponent } from '@colibrijs/mocks/components';
+import { getComponentSchemaUrl } from '@colibrijs/module-utils';
 import { expect, within } from '@storybook/test';
 
 import ComponentsListStoriesMeta from './components-list.stories';
 import type { ComponentsListMeta, Story } from './components-list.stories';
 import { withMockedApi } from '../../../hooks/use-api/mocked';
-import { getComponentSchemaUrl } from '../get-component-schema-url';
 
 export default {
   ...ComponentsListStoriesMeta,

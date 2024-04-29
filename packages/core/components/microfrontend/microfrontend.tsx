@@ -1,8 +1,9 @@
+import { getBaseUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import React, { lazy, Suspense } from 'react';
 import type { ComponentType, PropsWithRef } from 'react';
 
-import { getBaseUrl, importRemote } from './import-remote';
+import { importRemote } from './import-remote';
 
 export interface Props<P> {
   /** id элемента */

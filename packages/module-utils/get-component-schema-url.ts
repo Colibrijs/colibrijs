@@ -1,6 +1,6 @@
 import type { IComponent } from '@colibrijs/types';
 
-import { getBaseUrl } from '../microfrontend';
+import { getBaseUrl } from './get-base-url';
 
 export function getComponentSchemaUrl(component: IComponent): string {
   const baseUrl = getBaseUrl(component);

@@ -1,2 +1,2 @@
-export { getBaseUrl } from './import-remote';
-export { Microfrontend, type Props as MicrofrontendProps } from './microfrontend';
+export { Microfrontend } from './microfrontend';
+export type { Props as MicrofrontendProps } from './microfrontend';

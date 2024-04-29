@@ -2,7 +2,7 @@ import { exampleComponent } from '@colibrijs/mocks/components';
 import type { IComponent } from '@colibrijs/types';
 import { describe, expect, it } from '@jest/globals';
 
-import { getBaseUrl } from '../get-base-url';
+import { getBaseUrl } from './get-base-url';
 
 describe(getBaseUrl.name, () => {
   it('возвращает ссылку на базовый урл компонента - результат объединения src, libraryName, name', () => {

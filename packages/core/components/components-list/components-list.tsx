@@ -1,9 +1,9 @@
+import { getComponentSchemaUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Table, type TableColumnsType, Typography } from 'antd';
 import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
 
-import { getComponentSchemaUrl } from './get-component-schema-url';
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 import { ComponentsAdd } from '../components-add';
 import { ComponentsRemove } from '../components-remove';
