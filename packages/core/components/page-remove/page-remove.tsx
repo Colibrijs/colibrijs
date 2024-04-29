@@ -21,7 +21,9 @@ export function PageRemove({ page }: Props): ReactNode {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [PAGES_KEY] });
       message.success(
-        <span data-testid="page-remove__success">Страница “{page.route}” успешно удалена</span>
+        <span data-testid="page-remove__success">
+          Страница “{page.name}” ({page.route}) успешно удалена
+        </span>
       );
     },
   });
@@ -33,7 +35,7 @@ export function PageRemove({ page }: Props): ReactNode {
   return (
     <Popconfirm
       title="Удалить страницу?"
-      description={`Страница “${page.route}” будет удалена с концами`}
+      description={`Страница “${page.name}” (${page.route}) будет удалена с концами`}
       okText={<span data-testid="page-remove__confirm">Да</span>}
       cancelText="Галя, отмена"
       onConfirm={confirmHandler}

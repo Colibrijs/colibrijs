@@ -6,7 +6,11 @@ export class CreatePages1714254081707 implements MigrationInterface {
 
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "pages" ("id" varchar PRIMARY KEY NOT NULL, "route" varchar NOT NULL)`
+      `CREATE TABLE "pages" (
+        "id" varchar PRIMARY KEY NOT NULL,
+        "name" varchar NOT NULL,
+        "route" varchar NOT NULL
+      )`
     );
   }
 

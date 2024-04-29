@@ -17,6 +17,7 @@ export function PageAdd({ defaultValues, onReady }: Props) {
 
   useEffect(() => {
     form.setFieldsValue({
+      name: defaultValues?.name ?? '',
       route: defaultValues?.route ?? '',
     });
   }, [form, defaultValues]);
@@ -35,6 +36,7 @@ export function PageAdd({ defaultValues, onReady }: Props) {
 
   const rules = useMemo(
     (): Record<keyof IPageConstructorOptions, FormRule[]> => ({
+      name: [{ required: true, message: 'Параметр "Название" обязательный' }],
       route: [{ required: true, message: 'Параметр "Адрес" обязательный' }],
     }),
     []
@@ -48,6 +50,17 @@ export function PageAdd({ defaultValues, onReady }: Props) {
           <Divider type="vertical" />
         </>
       )}
+
+      <Form.Item
+        label="Название"
+        name="name"
+        rules={rules.name}
+        data-testid="page-add__name"
+        required
+      >
+        <Input type="text" data-testid="page-add__name-input" />
+      </Form.Item>
+
       <Form.Item
         label="Адрес"
         name="route"

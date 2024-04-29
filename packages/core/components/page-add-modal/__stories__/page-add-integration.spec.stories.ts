@@ -19,8 +19,7 @@ export const IntegrationPageAdd: Story = {
     const modalContent = await pageAddModal.waitForContent();
     const pageAdd = new PageAddTO({ rootElement: modalContent, step });
 
-    await pageAdd.fillRoute(examplePageConstructorOptions.route);
-    await pageAdd.submit();
+    await pageAdd.fillAndSubmit(examplePageConstructorOptions);
 
     await step('Проверяю, что колбэк onClose вызван', () =>
       waitFor(() => expect(args.onClose).toHaveBeenCalled())

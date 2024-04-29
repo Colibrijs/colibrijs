@@ -80,7 +80,8 @@ export const RequestSuccess: Story = {
 
     await step('проверяю, что появилось сообщение о том что страница успешно удалена', async () => {
       const success = await pageRemove.getSuccessMessage();
-      await expect(success).toHaveTextContent(`Страница “${args.page.route}” успешно удалена`);
+      const expectedMessage = `Страница “${args.page.name}” (${args.page.route}) успешно удалена`;
+      await expect(success).toHaveTextContent(expectedMessage);
     });
   },
 };

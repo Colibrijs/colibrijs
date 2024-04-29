@@ -10,6 +10,10 @@ export class PageDTO implements IPage {
 
   @Column({ nullable: false })
   @ApiProperty()
+  name!: string;
+
+  @Column({ nullable: false })
+  @ApiProperty()
   route!: string;
 }
 

@@ -26,7 +26,11 @@ export class PageTitleTO {
     return this._root;
   }
 
-  getTitle(): HTMLElement {
-    return this.root.getByTestId('page-title__title');
+  getName(): HTMLElement {
+    return this.root.getByTestId('page-title__name');
+  }
+
+  getRoute(): HTMLElement {
+    return this.root.getByTestId('page-title__route');
   }
 }
