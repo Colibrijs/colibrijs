@@ -1,5 +1,6 @@
 import type { IApiClient } from './api-client';
 import { MockedComponentsEndpoint } from './endpoints/components/mocked';
+import { MockedElementsEndpoint } from './endpoints/elements/mocked';
 import { MockedPagesEndpoint } from './endpoints/pages/mocked';
 
 type DeepPartialApiClient = Partial<{
@@ -10,6 +11,7 @@ type DeepPartialApiClient = Partial<{
 
 export class MockedApiClient implements IApiClient {
   components = new MockedComponentsEndpoint();
+  elements = new MockedElementsEndpoint();
   pages = new MockedPagesEndpoint();
 
   override(deepPartialApiClient: DeepPartialApiClient) {
