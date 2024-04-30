@@ -1,4 +1,5 @@
 export type { IComponent, IComponentConstructorOptions } from './components';
+export type { IElement, IElementConstructorOptions } from './elements';
 export type { IPage, IPageConstructorOptions } from './pages';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- осознанно пока что игнорируется параметр P
