@@ -18,7 +18,8 @@ export function getFederationPluginOptions(
   settings: Settings,
   exportName: string
 ): FederationPluginOptions {
-  const packageName = encodePackageName(settings.packageJson.name);
+  const packageName = path.join(settings.packageJson.name, exportName);
+  const encoedPackageName = encodePackageName(packageName);
   const dirname = getExportOutputDirectory(exportName, settings.packageJson);
   const filename = path.join(dirname, `./remote.${settings.platform}.js`);
   const modulePath = settings.packageJson.exports[exportName];
@@ -29,7 +30,7 @@ export function getFederationPluginOptions(
 
   const options: FederationPluginOptions = {
     filename: `./${filename}`,
-    name: packageName,
+    name: encoedPackageName,
     exposes: { './component/': modulePath },
     shared: {
       react: {
@@ -43,7 +44,7 @@ export function getFederationPluginOptions(
   };
 
   if (settings.platform === 'server') {
-    options.library = { name: packageName, type: 'commonjs-module' };
+    options.library = { name: encoedPackageName, type: 'commonjs-module' };
   }
 
   return options;

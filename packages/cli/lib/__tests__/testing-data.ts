@@ -3,7 +3,7 @@ import type { PackageJson, Settings } from '../../types';
 export const defaultPackageJson: PackageJson = {
   name: '@colibrijs/example',
   exports: {
-    './Example/': './components/example/index.ts',
+    './Example': './components/example/index.ts',
   },
 };
 

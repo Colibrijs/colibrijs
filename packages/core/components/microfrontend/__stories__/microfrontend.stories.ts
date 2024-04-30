@@ -15,7 +15,10 @@ export default {
   component: Microfrontend,
   title: 'Microfrontend',
   args: {
-    component: exampleComponent,
+    component: {
+      ...exampleComponent,
+      src: String(process.env.EXAMPLE_URL),
+    },
     props: {
       title: 'Удалённый компонент',
       text: 'Но тем не менее, рендерюсь здесь',
