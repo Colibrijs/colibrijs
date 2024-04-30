@@ -220,6 +220,76 @@
         "tags": [
           "elements"
         ]
+      },
+      "post": {
+        "operationId": "ElementsController_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ElementConstructorOptions"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ElementDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      },
+      "delete": {
+        "operationId": "ElementsController_delete",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ElementDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
       }
     }
   },
@@ -315,12 +385,39 @@
           "id": {
             "type": "string"
           },
+          "component": {
+            "$ref": "#/components/schemas/ComponentDTO"
+          },
+          "pageId": {
+            "type": "string"
+          },
           "props": {
             "type": "object"
           }
         },
         "required": [
           "id",
+          "component",
+          "pageId",
+          "props"
+        ]
+      },
+      "ElementConstructorOptions": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "$ref": "#/components/schemas/ComponentDTO"
+          },
+          "pageId": {
+            "type": "string"
+          },
+          "props": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "component",
+          "pageId",
           "props"
         ]
       }
