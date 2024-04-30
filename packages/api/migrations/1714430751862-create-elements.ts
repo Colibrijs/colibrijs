@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import type { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class CreateElements1714430751862 implements MigrationInterface {
   name = 'CreateElements1714430751862';

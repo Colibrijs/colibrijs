@@ -3,7 +3,7 @@ import { Body, Controller, Delete, Get, Inject, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { ElementDTO, ElementConstructorOptions } from './element.entity';
-import { ElementsServiceToken, IElementsService } from './elements.types';
+import { ElementsServiceToken, type IElementsService } from './elements.types';
 
 @ApiTags('elements')
 @Controller('/elements')
