@@ -6,11 +6,12 @@ import { importRemoteSsr } from './import-remote-ssr';
 
 export function importRemote<T>(component: IComponent): Promise<T> {
   const ssr = typeof window === 'undefined';
+  const packageName = `${component.libraryName}/${component.name}`;
 
   if (ssr) {
     return importRemoteSsr({
       url: getBaseUrl(component),
-      scope: encodePackageName(component.libraryName),
+      scope: encodePackageName(packageName),
       module: './component/',
       remoteEntryFileName: 'remote.server.js',
     });
@@ -18,7 +19,7 @@ export function importRemote<T>(component: IComponent): Promise<T> {
 
   return importRemoteCsr<T>({
     url: getBaseUrl(component),
-    scope: encodePackageName(component.libraryName),
+    scope: encodePackageName(packageName),
     module: './component/',
     remoteEntryFileName: 'remote.client.js',
   });

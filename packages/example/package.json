@@ -15,6 +15,8 @@
     "react": "^18"
   },
   "exports": {
-    "./Example": "./components/example/index.ts"
+    "./Example": "./components/example/index.ts",
+    "./Image": "./components/image/index.ts",
+    "./Text": "./components/text/index.ts"
   }
 }

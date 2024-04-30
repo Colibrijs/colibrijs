@@ -9,7 +9,7 @@ describe(createFederationPlugin.name, () => {
   it('если settings.platform = client, возвращает экземпляр ModuleFederationPlugin', () => {
     expect.assertions(1);
 
-    const plugin = createFederationPlugin({ ...defaultSettings, platform: 'client' }, './Example/');
+    const plugin = createFederationPlugin({ ...defaultSettings, platform: 'client' }, './Example');
 
     expect(plugin).toBeInstanceOf(container.ModuleFederationPlugin);
   });
@@ -17,7 +17,7 @@ describe(createFederationPlugin.name, () => {
   it('если settings.platform = server, возвращает экземпляр NodeFederationPlugin', () => {
     expect.assertions(1);
 
-    const plugin = createFederationPlugin({ ...defaultSettings, platform: 'server' }, './Example/');
+    const plugin = createFederationPlugin({ ...defaultSettings, platform: 'server' }, './Example');
 
     expect(plugin).toBeInstanceOf(NodeFederationPlugin);
   });
