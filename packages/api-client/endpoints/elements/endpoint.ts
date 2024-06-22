@@ -5,6 +5,11 @@ import type { HttpClient } from '../../types';
 export class ElementsEndpoint {
   constructor(private readonly httpClient: HttpClient) {}
 
+  async get(): Promise<IElement[]> {
+    const response = await this.httpClient.get('/elements');
+    return response.data;
+  }
+
   async post(elementsData: IElementConstructorOptions[]): Promise<IElement[]> {
     const response = await this.httpClient.post('/elements', elementsData);
     return response.data;
