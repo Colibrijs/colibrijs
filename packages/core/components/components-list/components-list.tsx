@@ -20,7 +20,7 @@ export function ComponentsList() {
   const getRowClassName = useCallback((component: IComponent) => component.id, []);
   const setRowAttributes = useCallback(
     (component: IComponent): HTMLAttributes<HTMLTableRowElement> => ({
-      // @ts-expect-error не верит что tr можно задать атрибут с именем data-testid
+      // @ts-expect-error не верит что tr можно задать атрибут с именем data-testid. Проверил - можно
       'data-testid': `components-list__${component.id}`,
     }),
     []

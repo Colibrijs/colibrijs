@@ -1,5 +1,5 @@
 {
-  "*.{ts,tsx,js,jsx}": "eslint --fix",
-  "*.css": ["prettier --write", "stylelint --fix"],
-  "*.{yml,json,md}": "prettier --write"
+  "*.{ts,tsx,js,jsx}": "npm run lint:js -- --fix",
+  "*.css": ["npm run lint:formatting -- --write", "npm run lint:css -- --fix"],
+  "*.{yml,json,md}": "npm run lint:formatting -- --write"
 }

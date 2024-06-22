@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/default, import/no-named-as-default, import/no-named-as-default-member -- eslint подумал, что Axios и axios - это одно и то же
 import axios from 'axios';
 
 import { NotFoundError } from './errors';

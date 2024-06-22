@@ -17,7 +17,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['packages/core/storybook-static'],
+    ignores: ['packages/core/storybook-static', '**/node_modules/', '**/dist/', '**/.next/'],
   },
   js.configs.recommended,
   ...fixupConfigRules(
@@ -80,7 +80,12 @@ export default [
           },
         },
       ],
+      // следующие правила отключены потому что eslint-plugin-import пока что некорректно работает в 9 версии eslint
       'import/namespace': 'off',
+      'import/default': 'off',
+      'import/no-named-as-default': 'off',
+      'import/no-named-as-default-member': 'off',
+      // -----------------------------------------------------------------------------------------------------------
       'import/no-default-export': 'error',
       'import/prefer-default-export': 'off',
       'import/no-extraneous-dependencies': [
@@ -109,6 +114,8 @@ export default [
       '**/eslint.config.js',
       '**/jest.config.js',
       '**/playwright.config.ts',
+      'packages/core/.storybook/main.ts',
+      'packages/core/.storybook/preview.ts',
       'packages/example/components/*/index.ts',
       'packages/{admin,application}/pages/**/*.tsx',
     ],
