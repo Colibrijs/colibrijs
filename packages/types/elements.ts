@@ -12,3 +12,4 @@ export interface IElement {
 }
 
 export type IElementConstructorOptions = Omit<IElement, 'id'>;
+export type IElementEditOptions = object;

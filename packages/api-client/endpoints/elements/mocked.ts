@@ -12,7 +12,11 @@ export class MockedElementsEndpoint implements IElementsEndpoint {
     return Promise.resolve(exampleElement);
   }
 
-  delete(): Promise<IElement[]> {
-    return Promise.resolve(exampleElements);
+  patch(): Promise<IElement> {
+    return Promise.resolve(exampleElement);
+  }
+
+  delete(): Promise<IElement> {
+    return Promise.resolve(exampleElement);
   }
 }

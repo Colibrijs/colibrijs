@@ -1,4 +1,4 @@
-import type { IElement } from '@colibrijs/types';
+import type { IElement, IElementEditOptions } from '@colibrijs/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -21,13 +21,26 @@ export class ElementsService implements IElementsService {
     return this.elements.save(rawElement);
   }
 
-  async remove(elementId: string): Promise<IElement> {
-    const component = await this.elements.findOneBy({ id: elementId });
+  async edit(elementId: string, newProps: IElementEditOptions): Promise<IElement> {
+    const sourceElement = await this.elements.findOneBy({ id: elementId });
 
-    if (!component) {
-      throw new Error(`Компонент с id "${elementId}" не найден`);
+    if (!sourceElement) {
+      throw new Error(`Элемент с id "${elementId}" не найден`);
     }
 
-    return this.elements.remove(component);
+    return this.elements.save({
+      ...sourceElement,
+      props: { ...sourceElement.props, ...newProps },
+    });
+  }
+
+  async remove(elementId: string): Promise<IElement> {
+    const element = await this.elements.findOneBy({ id: elementId });
+
+    if (!element) {
+      throw new Error(`Элемент с id "${elementId}" не найден`);
+    }
+
+    return this.elements.remove(element);
   }
 }

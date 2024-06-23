@@ -1,4 +1,4 @@
-import type { IElement, IElementConstructorOptions } from '@colibrijs/types';
+import type { IElement, IElementConstructorOptions, IElementEditOptions } from '@colibrijs/types';
 
 import type { HttpClient } from '../../types';
 
@@ -12,6 +12,11 @@ export class ElementsEndpoint {
 
   async post(elementData: IElementConstructorOptions): Promise<IElement> {
     const response = await this.httpClient.post('/elements', elementData);
+    return response.data;
+  }
+
+  async patch(elementId: string, newProps: IElementEditOptions): Promise<IElement> {
+    const response = await this.httpClient.patch(`/elements/${elementId}`, newProps);
     return response.data;
   }
 
