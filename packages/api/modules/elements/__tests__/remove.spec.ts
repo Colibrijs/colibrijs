@@ -1,41 +1,49 @@
-import { exampleElements } from '@colibrijs/mocks/elements';
+import { exampleElement } from '@colibrijs/mocks/elements';
 import { describe, expect, it } from '@jest/globals';
-import { In } from 'typeorm';
 
 import { createMockedElementsRepository } from './mocked-elements-repository';
 import { ElementsService } from '../elements.service';
 
-describe(ElementsService, () => {
+describe(ElementsService.name, () => {
   describe(ElementsService.prototype.remove.name, () => {
     it('удаляет компонент с указанным id из репозитория', async () => {
       expect.assertions(2);
 
       const mockedRepository = createMockedElementsRepository({
-        findBy: exampleElements,
-        remove: exampleElements,
+        findOneBy: exampleElement,
+        remove: exampleElement,
       });
 
-      const elementsIds = exampleElements.map((element) => element.id);
       const elementsService = new ElementsService(mockedRepository);
-      await elementsService.remove(elementsIds);
+      await elementsService.remove(exampleElement.id);
 
-      expect(mockedRepository.findBy).toHaveBeenCalledWith({ id: In(elementsIds) });
-      expect(mockedRepository.remove).toHaveBeenCalledWith(exampleElements);
+      expect(mockedRepository.findOneBy).toHaveBeenCalledWith({ id: exampleElement.id });
+      expect(mockedRepository.remove).toHaveBeenCalledWith(exampleElement);
+    });
+
+    it('выбрасывает ошибку, если элемент с указанным id не найден', async () => {
+      expect.assertions(1);
+
+      const mockedRepository = createMockedElementsRepository({ findOneBy: null });
+      const elementsService = new ElementsService(mockedRepository);
+
+      await expect(() => elementsService.remove('some-unknown-id')).rejects.toThrow(
+        new Error(`Элемент с id "some-unknown-id" не найден`)
+      );
     });
 
     it('возвращает удалённый компонент', async () => {
       expect.assertions(1);
 
       const mockedRepository = createMockedElementsRepository({
-        findBy: exampleElements,
-        remove: exampleElements,
+        findOneBy: exampleElement,
+        remove: exampleElement,
       });
 
-      const elementsIds = exampleElements.map((element) => element.id);
       const elementsService = new ElementsService(mockedRepository);
-      const removedElements = await elementsService.remove(elementsIds);
+      const removedElements = await elementsService.remove(exampleElement.id);
 
-      expect(removedElements).toStrictEqual(exampleElements);
+      expect(removedElements).toStrictEqual(exampleElement);
     });
   });
 });

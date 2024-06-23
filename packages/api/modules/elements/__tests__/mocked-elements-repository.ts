@@ -5,7 +5,7 @@ import { jest } from '@jest/globals';
 import type { IElementsRepository } from '../elements.types';
 
 type RepositoryReturnTypes = {
-  [K in keyof Omit<IElementsRepository, 'create' | 'remove' | 'save'>]: Awaited<
+  [K in keyof Omit<IElementsRepository, 'create' | 'findOneBy' | 'remove' | 'save'>]: Awaited<
     ReturnType<IElementsRepository[K]>
   >;
 };
@@ -14,7 +14,8 @@ type PartialMock = jest.MockedObject<
   Partial<
     RepositoryReturnTypes & {
       create: IElement;
-      remove: IElement[];
+      findOneBy: IElement | null;
+      remove: IElement;
       save: IElement;
     }
   >
@@ -30,12 +31,12 @@ export function createMockedElementsRepository(
     find: jest
       .fn<IElementsRepository['find']>()
       .mockResolvedValue(partialMock?.find ?? exampleElements),
-    findBy: jest
-      .fn<IElementsRepository['findBy']>()
-      .mockResolvedValue(partialMock.findBy ?? exampleElements),
+    findOneBy: jest
+      .fn<IElementsRepository['findOneBy']>()
+      .mockResolvedValue('findOneBy' in partialMock ? partialMock.findOneBy : exampleElement),
     remove: jest
-      .fn<(elements: IElement[]) => Promise<IElement[]>>()
-      .mockResolvedValue(partialMock?.remove ?? exampleElements),
+      .fn<(element: IElement) => Promise<IElement>>()
+      .mockResolvedValue(partialMock?.remove ?? exampleElement),
     save: jest
       .fn<(element: IElement) => Promise<IElement>>()
       .mockResolvedValue(partialMock?.save ?? exampleElement),

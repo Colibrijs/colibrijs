@@ -1,5 +1,5 @@
 import type { IElement } from '@colibrijs/types';
-import { Body, Controller, Delete, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { ElementDTO, ElementConstructorOptions } from './element.entity';
@@ -26,10 +26,9 @@ export class ElementsController {
     return this.elementsService.create(elementsData);
   }
 
-  @Delete()
-  @ApiBody({ type: [String] })
-  @ApiOkResponse({ type: [ElementDTO] })
-  delete(@Body() elementsIds: string[]): Promise<IElement[]> {
-    return this.elementsService.remove(elementsIds);
+  @Delete(':elementId')
+  @ApiOkResponse({ type: ElementDTO })
+  delete(@Param('elementId') elementId: string): Promise<IElement> {
+    return this.elementsService.remove(elementId);
   }
 }

@@ -15,8 +15,8 @@ export class ElementsEndpoint {
     return response.data;
   }
 
-  async delete(elementsIds: string[]): Promise<IElement[]> {
-    const response = await this.httpClient.delete('/elements', { data: elementsIds });
+  async delete(elementId: string): Promise<IElement> {
+    const response = await this.httpClient.delete(`/elements/${elementId}`);
     return response.data;
   }
 }

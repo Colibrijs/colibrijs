@@ -1,7 +1,6 @@
 import type { IElement } from '@colibrijs/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In } from 'typeorm';
 
 import { ElementDTO, type ElementConstructorOptions } from './element.entity';
 import type { IElementsRepository, IElementsService } from './elements.types';
@@ -22,9 +21,13 @@ export class ElementsService implements IElementsService {
     return this.elements.save(rawElement);
   }
 
-  async remove(elementsIds: string[]): Promise<IElement[]> {
-    const elements = await this.elements.findBy({ id: In(elementsIds) });
+  async remove(elementId: string): Promise<IElement> {
+    const component = await this.elements.findOneBy({ id: elementId });
 
-    return this.elements.remove(elements);
+    if (!component) {
+      throw new Error(`Компонент с id "${elementId}" не найден`);
+    }
+
+    return this.elements.remove(component);
   }
 }
