@@ -1,7 +1,6 @@
 import { MockedApiClient } from '@colibrijs/api-client/mocked';
 import type { Decorator, StoryContext } from '@storybook/react';
-
-import React, { type ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 import { ApiContext } from './use-api';
 

@@ -105,6 +105,7 @@ export default [
       ],
       'react/destructuring-assignment': ['error', 'always', { destructureInSignature: 'always' }],
       'react/jsx-boolean-value': 'error',
+      'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'error',
       '@typescript-eslint/no-extraneous-class': ['error', { allowWithDecorator: true }],
     },

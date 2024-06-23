@@ -1,6 +1,6 @@
 import { getCssUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import type { ComponentType, PropsWithRef } from 'react';
 
 import { importRemote } from './import-remote';

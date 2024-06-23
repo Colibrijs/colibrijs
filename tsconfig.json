@@ -6,7 +6,7 @@
     "incremental": true,
 
     "target": "ES2022" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    "jsx": "react" /* Specify what JSX code is generated. */,
+    "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     "module": "preserve" /* Specify what module code is generated. */,
     "moduleResolution": "Bundler" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "allowJs": false /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,

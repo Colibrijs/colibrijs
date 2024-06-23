@@ -1,5 +1,4 @@
 import { Modal } from 'antd';
-import React from 'react';
 
 import { PageAdd } from '../page-add';
 

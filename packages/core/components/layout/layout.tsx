@@ -1,5 +1,5 @@
 import { Layout as AntdLayout, Menu, type MenuProps } from 'antd';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { PropsWithChildren, ReactNode } from 'react';
 
 import styles from './layout.module.css';

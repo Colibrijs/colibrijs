@@ -2,7 +2,6 @@ import { exampleComponent } from '@colibrijs/mocks/components';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { message } from 'antd';
-import React from 'react';
 
 import type { WithMockedApi } from '../../../hooks/use-api/mocked';
 import { ComponentRemove, type Props } from '../component-remove';

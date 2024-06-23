@@ -1,7 +1,6 @@
 import { apiClient, NotFoundError } from '@colibrijs/api-client';
 import { Layout, PageTitle, type PageTitleProps } from '@colibrijs/core';
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import React from 'react';
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext

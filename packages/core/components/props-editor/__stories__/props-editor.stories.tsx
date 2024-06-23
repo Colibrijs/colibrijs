@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import { schema } from './schema';
 import { SidebarDecorator } from '../../layout/sidebar-decorator';

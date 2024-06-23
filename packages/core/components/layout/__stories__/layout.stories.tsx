@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Typography } from 'antd';
-import React from 'react';
 
 import { Layout } from '../layout';
 

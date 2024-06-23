@@ -2,7 +2,7 @@ import { getSchemaUrl } from '@colibrijs/module-utils';
 import type { IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Table, type TableColumnsType } from 'antd';
-import React, { useCallback, useMemo, type HTMLAttributes } from 'react';
+import { useCallback, useMemo, type HTMLAttributes } from 'react';
 
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 import { ComponentAdd } from '../component-add';
