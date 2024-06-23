@@ -1,0 +1,9 @@
+{
+  "name": "@colibrijs/schema",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Пакет для работы со схемами",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0"
+  }
+}
