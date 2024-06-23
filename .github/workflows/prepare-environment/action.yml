@@ -8,4 +8,8 @@ runs:
         cache: npm
     - name: Install dependencies
       shell: bash
-      run: npm ci
+      run: npm install
+    - name: Check package-lock.json
+      shell: bash
+      # Если всё упало на этом шаге, значит нужно выполнить локально npm install
+      run: git diff --exit-code -- package-lock.json
