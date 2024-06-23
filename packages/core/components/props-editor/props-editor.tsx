@@ -1,8 +1,6 @@
-import type { JsonSchema } from '@colibrijs/types';
+import { type JsonSchema, getPropertiesNames } from '@colibrijs/schema';
 import { Form, Input } from 'antd';
 import React, { useCallback, type ChangeEvent } from 'react';
-
-import { getPropertiesNames } from './utils/get-properties-names';
 
 export interface Props<T extends Record<string, string>> {
   /** JSON схема, которая описывает каким должен быть объект */

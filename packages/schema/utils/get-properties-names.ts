@@ -1,4 +1,4 @@
-import type { JsonSchema } from '@colibrijs/types';
+import type { JsonSchema } from '../types';
 
 export function getPropertiesNames<T extends Record<string, string>>(
   jsonSchema: JsonSchema<T>

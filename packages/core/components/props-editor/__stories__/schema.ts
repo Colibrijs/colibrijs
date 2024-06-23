@@ -1,4 +1,4 @@
-import type { JsonSchema } from '@colibrijs/types';
+import type { JsonSchema } from '@colibrijs/schema';
 
 export const schema: JsonSchema<Record<string, string>> = {
   $schema: 'https://json-schema.org/draft/2020-12/schema',
