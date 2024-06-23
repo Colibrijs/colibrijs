@@ -1,5 +1,5 @@
 import { Microfrontend } from '@colibrijs/core';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 export default function PageIndex() {
   const exampleComponent = useMemo(

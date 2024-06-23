@@ -1,7 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import type { Decorator, StoryContext } from '@storybook/react';
-
-import React, { type ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 import { RouterContext } from './context';
 import type { Router } from './types';

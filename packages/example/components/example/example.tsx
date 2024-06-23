@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from './example.css';
 import type { Props } from './schema';
 

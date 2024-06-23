@@ -1,7 +1,7 @@
 import type { IPageConstructorOptions } from '@colibrijs/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Alert, Button, Divider, Form, Input, type FormRule } from 'antd';
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useApi, PAGES_KEY } from '../../hooks/use-api';
 

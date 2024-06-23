@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import type { AnchorHTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
 
 import { useRouter } from '../../hooks/use-router';

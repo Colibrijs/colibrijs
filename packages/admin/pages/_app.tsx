@@ -1,7 +1,6 @@
 import { RouterContext, ReactQueryProvider } from '@colibrijs/core';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import React from 'react';
 
 import '@colibrijs/core/global.css';
 

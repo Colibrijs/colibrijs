@@ -1,7 +1,6 @@
 import { examplePage } from '@colibrijs/mocks/pages';
 import type { Meta, StoryObj } from '@storybook/react';
 import { message } from 'antd';
-import React from 'react';
 
 import type { WithMockedApi } from '../../../hooks/use-api/mocked';
 import { PageRemove, type Props } from '../page-remove';

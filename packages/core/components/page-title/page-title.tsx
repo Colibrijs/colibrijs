@@ -1,6 +1,5 @@
 import type { IPage } from '@colibrijs/types';
 import { Flex, Typography } from 'antd';
-import React from 'react';
 
 import { PageRemove } from '../page-remove';
 

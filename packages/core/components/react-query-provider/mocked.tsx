@@ -1,6 +1,6 @@
 import type { Decorator } from '@storybook/react';
 import type { QueryClientConfig } from '@tanstack/react-query';
-import React, { useMemo, type ComponentType } from 'react';
+import { useMemo, type ComponentType } from 'react';
 
 import { ReactQueryProvider } from './react-query-provider';
 

@@ -2,7 +2,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import type { IComponent } from '@colibrijs/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message, Button, Popconfirm, Tooltip } from 'antd';
-import React, { useCallback, type ReactNode } from 'react';
+import { useCallback, type ReactNode } from 'react';
 
 import { useApi, COMPONENTS_KEY } from '../../hooks/use-api';
 

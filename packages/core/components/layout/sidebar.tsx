@@ -1,5 +1,5 @@
 import { ConfigProvider, Layout, theme } from 'antd';
-import React, { useMemo, type PropsWithChildren } from 'react';
+import { useMemo, type PropsWithChildren } from 'react';
 
 import styles from './layout.module.css';
 

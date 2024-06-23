@@ -3,7 +3,7 @@ import type { IPage } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Button, ConfigProvider, Flex, Tooltip, Tree, theme, Typography } from 'antd';
 import type { TreeDataNode } from 'antd';
-import React, { useCallback, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useMemo, useState, type ReactNode } from 'react';
 
 import styles from './pages-list.module.css';
 import { getPageHref, pagesToTree } from './utils';

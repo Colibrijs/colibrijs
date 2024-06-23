@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import React, { type ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 import { Sidebar, SIDEBAR_WIDTH } from './sidebar';
 
