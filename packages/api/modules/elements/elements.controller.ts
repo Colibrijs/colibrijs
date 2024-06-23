@@ -1,5 +1,5 @@
 import type { IElement } from '@colibrijs/types';
-import { Body, Controller, Delete, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { ElementDTO, ElementConstructorOptions } from './element.entity';
@@ -20,16 +20,22 @@ export class ElementsController {
   }
 
   @Post()
-  @ApiBody({ type: [ElementConstructorOptions] })
-  @ApiCreatedResponse({ type: [ElementDTO] })
-  post(@Body() elementsData: ElementConstructorOptions[]): Promise<IElement[]> {
+  @ApiBody({ type: ElementConstructorOptions })
+  @ApiCreatedResponse({ type: ElementDTO })
+  post(@Body() elementsData: ElementConstructorOptions): Promise<IElement> {
     return this.elementsService.create(elementsData);
   }
 
-  @Delete()
-  @ApiBody({ type: [String] })
-  @ApiOkResponse({ type: [ElementDTO] })
-  delete(@Body() elementsIds: string[]): Promise<IElement[]> {
-    return this.elementsService.remove(elementsIds);
+  @Patch(':elementId')
+  @ApiBody({ type: Object })
+  @ApiOkResponse({ type: ElementDTO })
+  edit(@Param('elementId') elementId: string, @Body() newProps: object): Promise<IElement> {
+    return this.elementsService.edit(elementId, newProps);
+  }
+
+  @Delete(':elementId')
+  @ApiOkResponse({ type: ElementDTO })
+  delete(@Param('elementId') elementId: string): Promise<IElement> {
+    return this.elementsService.remove(elementId);
   }
 }

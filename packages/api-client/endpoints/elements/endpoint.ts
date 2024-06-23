@@ -1,4 +1,4 @@
-import type { IElement, IElementConstructorOptions } from '@colibrijs/types';
+import type { IElement, IElementConstructorOptions, IElementEditOptions } from '@colibrijs/types';
 
 import type { HttpClient } from '../../types';
 
@@ -10,13 +10,18 @@ export class ElementsEndpoint {
     return response.data;
   }
 
-  async post(elementsData: IElementConstructorOptions[]): Promise<IElement[]> {
-    const response = await this.httpClient.post('/elements', elementsData);
+  async post(elementData: IElementConstructorOptions): Promise<IElement> {
+    const response = await this.httpClient.post('/elements', elementData);
     return response.data;
   }
 
-  async delete(elementsIds: string[]): Promise<IElement[]> {
-    const response = await this.httpClient.delete('/elements', { data: elementsIds });
+  async patch(elementId: string, newProps: IElementEditOptions): Promise<IElement> {
+    const response = await this.httpClient.patch(`/elements/${elementId}`, newProps);
+    return response.data;
+  }
+
+  async delete(elementId: string): Promise<IElement> {
+    const response = await this.httpClient.delete(`/elements/${elementId}`);
     return response.data;
   }
 }

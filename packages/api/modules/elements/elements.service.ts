@@ -1,7 +1,6 @@
-import type { IElement } from '@colibrijs/types';
+import type { IElement, IElementEditOptions } from '@colibrijs/types';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In } from 'typeorm';
 
 import { ElementDTO, type ElementConstructorOptions } from './element.entity';
 import type { IElementsRepository, IElementsService } from './elements.types';
@@ -17,14 +16,31 @@ export class ElementsService implements IElementsService {
     return this.elements.find();
   }
 
-  create(elementsData: ElementConstructorOptions[]): Promise<IElement[]> {
-    const rawElements = this.elements.create(elementsData);
-    return this.elements.save(rawElements);
+  create(elementData: ElementConstructorOptions): Promise<IElement> {
+    const rawElement = this.elements.create(elementData);
+    return this.elements.save(rawElement);
   }
 
-  async remove(elementsIds: string[]): Promise<IElement[]> {
-    const elements = await this.elements.findBy({ id: In(elementsIds) });
+  async edit(elementId: string, newProps: IElementEditOptions): Promise<IElement> {
+    const sourceElement = await this.elements.findOneBy({ id: elementId });
 
-    return this.elements.remove(elements);
+    if (!sourceElement) {
+      throw new Error(`Элемент с id "${elementId}" не найден`);
+    }
+
+    return this.elements.save({
+      ...sourceElement,
+      props: { ...sourceElement.props, ...newProps },
+    });
+  }
+
+  async remove(elementId: string): Promise<IElement> {
+    const element = await this.elements.findOneBy({ id: elementId });
+
+    if (!element) {
+      throw new Error(`Элемент с id "${elementId}" не найден`);
+    }
+
+    return this.elements.remove(element);
   }
 }
