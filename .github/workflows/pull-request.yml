@@ -23,11 +23,11 @@ jobs:
       - name: Check types
         run: npm run check:types
       - name: Lint
-        run: npm run lint
+        run: npm run lint:js:all
       - name: Lint CSS
-        run: npm run lint:css
+        run: npm run lint:css:all
       - name: Lint formatting
-        run: npm run lint:formatting
+        run: npm run lint:formatting:all
       - name: Validate commits in pull request
         run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
