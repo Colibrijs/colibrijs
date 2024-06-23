@@ -229,10 +229,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/ElementConstructorOptions"
-                }
+                "$ref": "#/components/schemas/ElementConstructorOptions"
               }
             }
           }
@@ -243,10 +240,47 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ElementDTO"
-                  }
+                  "$ref": "#/components/schemas/ElementDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      }
+    },
+    "/elements/{elementId}": {
+      "patch": {
+        "operationId": "ElementsController_edit",
+        "parameters": [
+          {
+            "name": "elementId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ElementDTO"
                 }
               }
             }
@@ -258,30 +292,23 @@
       },
       "delete": {
         "operationId": "ElementsController_delete",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
+        "parameters": [
+          {
+            "name": "elementId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ElementDTO"
-                  }
+                  "$ref": "#/components/schemas/ElementDTO"
                 }
               }
             }
@@ -420,6 +447,10 @@
           "pageId",
           "props"
         ]
+      },
+      "Object": {
+        "type": "object",
+        "properties": {}
       }
     }
   },
