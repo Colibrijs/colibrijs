@@ -17,9 +17,9 @@ export class ElementsService implements IElementsService {
     return this.elements.find();
   }
 
-  create(elementsData: ElementConstructorOptions[]): Promise<IElement[]> {
-    const rawElements = this.elements.create(elementsData);
-    return this.elements.save(rawElements);
+  create(elementData: ElementConstructorOptions): Promise<IElement> {
+    const rawElement = this.elements.create(elementData);
+    return this.elements.save(rawElement);
   }
 
   async remove(elementsIds: string[]): Promise<IElement[]> {

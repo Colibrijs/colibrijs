@@ -10,8 +10,8 @@ export class ElementsEndpoint {
     return response.data;
   }
 
-  async post(elementsData: IElementConstructorOptions[]): Promise<IElement[]> {
-    const response = await this.httpClient.post('/elements', elementsData);
+  async post(elementData: IElementConstructorOptions): Promise<IElement> {
+    const response = await this.httpClient.post('/elements', elementData);
     return response.data;
   }
 

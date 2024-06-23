@@ -1,4 +1,4 @@
-import { exampleElements } from '@colibrijs/mocks/elements';
+import { exampleElement, exampleElements } from '@colibrijs/mocks/elements';
 import type { IElement, IElementConstructorOptions } from '@colibrijs/types';
 import { jest } from '@jest/globals';
 
@@ -13,9 +13,9 @@ type RepositoryReturnTypes = {
 type PartialMock = jest.MockedObject<
   Partial<
     RepositoryReturnTypes & {
-      create: IElement[];
+      create: IElement;
       remove: IElement[];
-      save: IElement[];
+      save: IElement;
     }
   >
 >;
@@ -25,8 +25,8 @@ export function createMockedElementsRepository(
 ): jest.MockedObject<IElementsRepository> {
   const repository = {
     create: jest
-      .fn<(elementsData: IElementConstructorOptions[]) => IElement[]>()
-      .mockReturnValue(partialMock?.create ?? exampleElements),
+      .fn<(elementData: IElementConstructorOptions) => IElement>()
+      .mockReturnValue(partialMock?.create ?? exampleElement),
     find: jest
       .fn<IElementsRepository['find']>()
       .mockResolvedValue(partialMock?.find ?? exampleElements),
@@ -37,8 +37,8 @@ export function createMockedElementsRepository(
       .fn<(elements: IElement[]) => Promise<IElement[]>>()
       .mockResolvedValue(partialMock?.remove ?? exampleElements),
     save: jest
-      .fn<(elements: IElement[]) => Promise<IElement[]>>()
-      .mockResolvedValue(partialMock?.save ?? exampleElements),
+      .fn<(element: IElement) => Promise<IElement>>()
+      .mockResolvedValue(partialMock?.save ?? exampleElement),
   };
 
   // @ts-expect-error не может совладать с перегруженными функциями

@@ -9,7 +9,7 @@ export type IElementsRepository = Pick<
 >;
 
 export interface IElementsService {
-  create(elementsData: IElementConstructorOptions[]): Promise<IElement[]>;
+  create(elementData: IElementConstructorOptions): Promise<IElement>;
   find(): Promise<IElement[]>;
   remove(elementsIds: string[]): Promise<IElement[]>;
 }

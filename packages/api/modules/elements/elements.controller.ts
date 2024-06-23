@@ -20,9 +20,9 @@ export class ElementsController {
   }
 
   @Post()
-  @ApiBody({ type: [ElementConstructorOptions] })
-  @ApiCreatedResponse({ type: [ElementDTO] })
-  post(@Body() elementsData: ElementConstructorOptions[]): Promise<IElement[]> {
+  @ApiBody({ type: ElementConstructorOptions })
+  @ApiCreatedResponse({ type: ElementDTO })
+  post(@Body() elementsData: ElementConstructorOptions): Promise<IElement> {
     return this.elementsService.create(elementsData);
   }
 
