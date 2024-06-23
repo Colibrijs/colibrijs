@@ -1,7 +1,7 @@
 import { expect, within, userEvent, fn } from '@storybook/test';
 
 import PropsEditorStoryMeta, { type PropsEditorMeta, type Story } from './props-editor.stories';
-import schema from './schema.json';
+import { schema } from './schema';
 
 export default {
   ...PropsEditorStoryMeta,
@@ -45,7 +45,7 @@ export const DefaultValues: Story = {
   name: 'По умолчанию отображаются значения из value',
   args: {
     onChange: fn(),
-    schema: JSON.stringify(schema, null, 2),
+    schema,
     value: {
       name: 'Ivan',
       surname: 'Ivanych',

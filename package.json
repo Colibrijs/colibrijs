@@ -10,6 +10,7 @@
     "./packages/*"
   ],
   "scripts": {
+    "check:types": "tsc --noEmit",
     "dev:api": "npm run dev -w @colibrijs/api",
     "dev:admin": "npm run dev -w @colibrijs/admin",
     "dev:application": "npm run dev -w @colibrijs/application",

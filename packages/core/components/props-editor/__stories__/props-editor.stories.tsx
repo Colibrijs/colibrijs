@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 
 import React, { useState, useCallback } from 'react';
 
-import schema from './schema.json';
+import { schema } from './schema';
 import { SidebarDecorator } from '../../layout/sidebar-decorator';
 import { PropsEditor, type Props } from '../props-editor';
 
@@ -15,7 +15,7 @@ export default {
   title: 'PropsEditor',
   args: {
     onChange: fn(),
-    schema: JSON.stringify(schema, null, 2),
+    schema,
     value: {
       name: '',
       surname: '',

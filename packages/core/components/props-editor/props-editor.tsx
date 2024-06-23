@@ -4,7 +4,7 @@ import React, { useCallback, type ChangeEvent } from 'react';
 
 import { getPropertiesNames } from './utils/get-properties-names';
 
-export interface Props<T> {
+export interface Props<T extends Record<string, string>> {
   /** JSON схема, которая описывает каким должен быть объект */
   schema: JsonSchema<T>;
 
