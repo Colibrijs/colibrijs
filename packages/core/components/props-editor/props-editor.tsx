@@ -1,8 +1,8 @@
-import { type JsonSchema, getPropertiesNames } from '@colibrijs/schema';
+import { type JsonSchema, getPropertiesNames, SchemaValues } from '@colibrijs/schema';
 import { Form, Input } from 'antd';
 import { useCallback, type ChangeEvent } from 'react';
 
-export interface Props<T extends Record<string, string>> {
+export interface Props<T extends Record<string, SchemaValues>> {
   /** JSON схема, которая описывает каким должен быть объект */
   schema: JsonSchema<T>;
 
@@ -13,7 +13,7 @@ export interface Props<T extends Record<string, string>> {
   onChange: (value: T) => void;
 }
 
-export function PropsEditor<T extends Record<string, string>>({
+export function PropsEditor<T extends Record<string, SchemaValues>>({
   schema,
   onChange,
   value,
@@ -29,6 +29,10 @@ export function PropsEditor<T extends Record<string, string>>({
     [onChange, value]
   );
 
+  function getType(propName: string) {
+    return schema.properties[propName]?.type || 'string'; // прокомментируй это. Не даёт мне без вопросика писать
+  }
+
   return (
     <Form layout="vertical">
       {propertiesNames.map((propName) => (
@@ -39,6 +43,7 @@ export function PropsEditor<T extends Record<string, string>>({
         >
           <Input
             value={value[propName]}
+            type={getType(propName)}
             data-testid="props-editor__input"
             onChange={getChangeHandler(propName)}
           />

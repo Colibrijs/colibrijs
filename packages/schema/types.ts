@@ -13,7 +13,9 @@ type Properties<T> = {
   };
 };
 
-export type JsonSchema<T extends Record<string, string>> = {
+export type SchemaValues = string | number;
+
+export type JsonSchema<T extends Record<string, SchemaValues>> = {
   $schema: string;
   $id: string;
   title: string;
