@@ -1,4 +1,4 @@
-import { type JsonSchema, getPropertiesNames, SchemaValues } from '@colibrijs/schema';
+import { type JsonSchema, getPropertiesNames, type SchemaValues } from '@colibrijs/schema';
 import { Form, Input } from 'antd';
 import { useCallback, type ChangeEvent } from 'react';
 
