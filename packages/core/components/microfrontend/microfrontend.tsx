@@ -22,11 +22,11 @@ export function Microfrontend<P>({ component, props }: Props<P>) {
   });
 
   return (
-    <>
+    <div data-name={component.name}>
       <link rel="stylesheet" href={getCssUrl(component)} />
       <Suspense>
         <Component {...props} />
       </Suspense>
-    </>
+    </div>
   );
 }
