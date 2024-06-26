@@ -12,9 +12,12 @@ const nextConfig = {
     'rc-util',
     'rc-pagination',
     'rc-picker',
+    'rc-table',
+    'rc-tree',
   ],
 
   env: {
+    COLIBRIJS_API_BASE_URL: process.env.COLIBRIJS_API_BASE_URL || 'http://localhost:3001/',
     EXAMPLE_URL: process.env.EXAMPLE_URL || 'https://colibrijs.github.io/colibrijs/main/example/',
   },
 

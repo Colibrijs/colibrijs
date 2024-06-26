@@ -1,5 +1,5 @@
 import type { IElement } from '@colibrijs/types';
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 import { ElementDTO, ElementConstructorOptions } from './element.entity';
@@ -15,8 +15,8 @@ export class ElementsController {
 
   @Get()
   @ApiOkResponse({ type: [ElementDTO] })
-  get(): Promise<IElement[]> {
-    return this.elementsService.find();
+  get(@Query('route') route: string): Promise<IElement[]> {
+    return this.elementsService.find(route);
   }
 
   @Post()

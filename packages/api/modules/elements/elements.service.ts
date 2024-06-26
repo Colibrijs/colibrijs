@@ -12,8 +12,16 @@ export class ElementsService implements IElementsService {
     private readonly elements: IElementsRepository
   ) {}
 
-  find(): Promise<IElement[]> {
-    return this.elements.find();
+  find(route: string): Promise<IElement[]> {
+    return this.elements.find({
+      join: {
+        alias: 'element',
+        innerJoin: { page: 'element.page' },
+      },
+      where: {
+        page: { route },
+      },
+    });
   }
 
   create(elementData: ElementConstructorOptions): Promise<IElement> {

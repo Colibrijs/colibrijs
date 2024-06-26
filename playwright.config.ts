@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -20,9 +23,16 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  webServer: {
-    command: 'npm run build -w @colibrijs/application && npm run start:application:prod',
-    port: 3000,
-    reuseExistingServer: true,
-  },
+  webServer: [
+    {
+      command: 'npm run build -w @colibrijs/application && npm run start:application:prod',
+      port: 3000,
+      reuseExistingServer: true,
+    },
+    {
+      command: 'npm run start:api:prod',
+      port: 3001,
+      reuseExistingServer: true,
+    },
+  ],
 });
