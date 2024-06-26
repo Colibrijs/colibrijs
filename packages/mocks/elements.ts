@@ -17,6 +17,7 @@ export const exampleElementConstructorOptions: IElementConstructorOptions = {
   pageId: examplePage.id,
   props: {
     title: 'Заголовок',
+    text: 'некий текст',
   },
 };
 

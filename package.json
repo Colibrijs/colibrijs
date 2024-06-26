@@ -25,6 +25,7 @@
     "test:unit": "jest",
     "postinstall": "husky install",
     "pre-commit": "lint-staged",
+    "start:api:prod": "npm run start -w @colibrijs/api",
     "start:application:prod": "npm run start -w @colibrijs/application"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/react": "^18.3.3",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
+    "dotenv": "^16.4.5",
     "eslint": "^9.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",

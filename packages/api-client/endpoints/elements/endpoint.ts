@@ -5,8 +5,17 @@ import type { HttpClient } from '../../types';
 export class ElementsEndpoint {
   constructor(private readonly httpClient: HttpClient) {}
 
-  async get(): Promise<IElement[]> {
-    const response = await this.httpClient.get('/elements');
+  /**
+   * Ищет и возвращает контент определённой страницы
+   * @param route - роут для которого нужно найти контент. Если указать /about, будет искать
+   *                элементы, которые относятся к странице /about
+   * @returns
+   */
+  async get(route: string): Promise<IElement[]> {
+    const response = await this.httpClient.get('/elements', {
+      params: { route },
+    });
+
     return response.data;
   }
 
