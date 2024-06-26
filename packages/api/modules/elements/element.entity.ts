@@ -11,11 +11,14 @@ export class ElementDTO implements IElement {
   @ApiProperty()
   id!: string;
 
-  @ManyToOne(() => ComponentDTO, { eager: true })
+  @ManyToOne(() => ComponentDTO, { eager: true, nullable: false })
   @ApiProperty()
   component!: ComponentDTO;
 
-  @ManyToOne(() => PageDTO)
+  @ManyToOne(() => PageDTO, { nullable: false })
+  page?: PageDTO;
+
+  @Column({ type: 'varchar', length: 40 })
   @ApiProperty()
   pageId!: string;
 
