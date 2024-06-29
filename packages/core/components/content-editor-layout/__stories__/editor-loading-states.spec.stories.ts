@@ -62,8 +62,7 @@ export const Error: Story = {
     withMockedApi((apiClient) => {
       apiClient.override({
         elements: {
-          // Промис никогда не зарезолвится - данные грузятся бесконечно
-          get: () => new Promise<IElement[]>(() => {}),
+          get: () => Promise.reject('Произошло что-то неладное'),
         },
       });
     }),

@@ -1,24 +1,20 @@
 import type { StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/test';
+import { within } from '@storybook/test';
 
 type PlayFunctionContext = Parameters<NonNullable<StoryObj['play']>>[0];
-type StepFn = PlayFunctionContext['step'];
 
 interface Options {
   canvasElement: PlayFunctionContext['canvasElement'];
-  step: StepFn;
   /** @default 'content-editor-layout' */
   testId?: string;
 }
 
 export class ContentEditorLayoutTO {
   private readonly canvasElement: PlayFunctionContext['canvasElement'];
-  private readonly step: PlayFunctionContext['step'];
   private readonly testId: string;
 
   constructor(options: Options) {
     this.canvasElement = options.canvasElement;
-    this.step = options.step;
     this.testId = options.testId ?? 'content-editor-layout';
   }
 
@@ -27,50 +23,27 @@ export class ContentEditorLayoutTO {
     return within(canvas.getByTestId(this.testId));
   }
 
-  async startEdit(): Promise<void> {
-    await this.step('Кликаю на кнопку "Открыть редактор"', async () => {
-      await userEvent.click(this.root.getByTestId('content-editor-layout__start-edit'));
-    });
-
-    // Ждём пока сработают все анимации открытия
-    await new Promise((resolve) => setTimeout(resolve, 400));
-  }
-
-  async endEdit(): Promise<void> {
-    await this.step('Кликаю на кнопку "Закрыть редактор"', async () => {
-      await userEvent.click(this.root.getByTestId('content-editor-layout__end-edit'));
-    });
-
-    // Ждём пока сработают все анимации закрытия
-    await new Promise((resolve) => setTimeout(resolve, 400));
-  }
-
+  /** Возвращает элемент в котором рендерится контент */
   async getContentElement(): Promise<HTMLElement | null> {
     return this.findElement('content-editor-layout__content');
   }
 
+  /** Возвращает элемент-скелетон контента */
   async getContentSkeleton(): Promise<HTMLElement | null> {
     return this.findElement('content-editor-layout__content-skeleton');
   }
 
-  async isEditorVisible(): Promise<boolean> {
-    const editor = await this.getEditorElement();
-
-    if (!editor) {
-      return false;
-    }
-
-    return editor.getBoundingClientRect().width > 0;
-  }
-
+  /** Возвращает элемент в котором рендерится редактор контента */
   async getEditorElement(): Promise<HTMLElement | null> {
     return this.findElement('content-editor-layout__content-editor');
   }
 
+  /** Возвращает элемент в котором рендерится скелетон редактора контента */
   async getEditorSkeleton(): Promise<HTMLElement | null> {
     return this.findElement('content-editor-layout__content-editor-skeleton');
   }
 
+  /** Возвращает элемент, который зарезолвится, когда контент загрузится */
   async waitForContent(): Promise<void> {
     await this.root.findByTestId('content-editor-layout__content');
   }

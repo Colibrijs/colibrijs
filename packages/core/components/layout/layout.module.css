@@ -6,6 +6,10 @@
   padding: 20px 16px;
 }
 
+.sidebar_collapsed {
+  padding: 0;
+}
+
 .content {
   min-height: calc(100vh - var(--header-height));
   padding: 20px;
