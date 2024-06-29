@@ -1,0 +1,13 @@
+.edit_start,
+.edit_finish {
+  position: absolute;
+  top: 50px;
+}
+
+.edit_start {
+  right: -4px;
+}
+
+.edit_finish {
+  left: -30px;
+}
