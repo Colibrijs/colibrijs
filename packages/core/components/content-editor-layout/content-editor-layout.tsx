@@ -43,17 +43,15 @@ export function ContentEditorLayout({ pageRoute }: Props) {
         )
       }
     >
-      <div data-testid="content-editor-layout__content-editor-skeleton">
-        {isSuccess ? (
-          <div data-testid="content-editor-layout__content">
-            <Content content={content} />
-          </div>
-        ) : (
-          <div data-testid="content-editor-layout__content-skeleton">
-            <Skeleton active />
-          </div>
-        )}
-      </div>
+      {isSuccess ? (
+        <div data-testid="content-editor-layout__content">
+          <Content content={content} />
+        </div>
+      ) : (
+        <div data-testid="content-editor-layout__content-skeleton">
+          <Skeleton active />
+        </div>
+      )}
     </Layout>
   );
 }
