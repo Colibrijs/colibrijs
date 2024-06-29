@@ -8,9 +8,11 @@ import { Link } from '../link';
 
 export type Props = PropsWithChildren<{
   sidebar?: ReactNode;
+  /** @default 'layout' */
+  testId?: string;
 }>;
 
-export function Layout({ children, sidebar }: Props) {
+export function Layout({ children, sidebar, testId = 'layout' }: Props) {
   const hasSidebar = useMemo(() => Boolean(sidebar), [sidebar]);
 
   const menuItems: MenuProps['items'] = useMemo(
@@ -22,7 +24,7 @@ export function Layout({ children, sidebar }: Props) {
   );
 
   return (
-    <AntdLayout className={styles.root}>
+    <AntdLayout className={styles.root} data-testid={testId}>
       <AntdLayout.Header>
         <Menu items={menuItems} mode="horizontal" theme="dark" />
       </AntdLayout.Header>

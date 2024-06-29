@@ -15,6 +15,16 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
+const devFiles = [
+  'eslint.config.js',
+  'playwright.config.ts',
+  'packages/**/*.stories.{ts,tsx}',
+  'packages/**/__tests__/**/*.{ts,tsx}',
+  'packages/**/*.test.ts',
+  'packages/**/*.spec.ts',
+  'packages/**/{test-object,mocked,fixture}.{ts,tsx}',
+];
+
 export default [
   {
     ignores: ['packages/core/storybook-static', '**/node_modules/', '**/dist/', '**/.next/'],
@@ -91,15 +101,7 @@ export default [
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: [
-            'eslint.config.js',
-            'playwright.config.ts',
-            './packages/**/*.stories.{ts,tsx}',
-            './packages/**/__tests__/**/*.{ts,tsx}',
-            './packages/**/*.test.ts',
-            './packages/**/*.spec.ts',
-            './packages/**/{test-object,mocked,fixture}.{ts,tsx}',
-          ],
+          devDependencies: devFiles,
           peerDependencies: true,
         },
       ],
@@ -108,6 +110,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'error',
       '@typescript-eslint/no-extraneous-class': ['error', { allowWithDecorator: true }],
+      '@typescript-eslint/no-non-null-assertion': 'off',
     },
   },
   {
@@ -122,6 +125,23 @@ export default [
     ],
     rules: {
       'import/no-default-export': 'off',
+    },
+  },
+  {
+    /** Правила ниже применяются только к прод-файлам */
+    ignores: devFiles,
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          // Запрещаем использовать во всех местах тс-оператор "!", кроме случаев styles.someClass!
+          // Когда используем classNames, хотим писать объекты в которых ключи названия классов.
+          // Тайпскрипт не верит что название класса существует в объекте styles, поэтому приходится
+          // разрешить использовать этот оператор в случае с styles.
+          selector: 'TSNonNullExpression[expression.object.name!="styles"]',
+          message: 'Forbidden non-null assertion',
+        },
+      ],
     },
   },
   {
@@ -149,7 +169,6 @@ export default [
       },
     },
     rules: {
-      '@typescript-eslint/no-non-null-assertion': 'off',
       'import/no-default-export': 'off',
     },
   },
