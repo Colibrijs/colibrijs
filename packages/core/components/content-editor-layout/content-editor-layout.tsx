@@ -1,9 +1,11 @@
+import type { IElement } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useApi } from '../../hooks/use-api';
 import { Content } from '../content';
+import { ContentEditor } from '../content-editor';
 import { Layout } from '../layout';
 
 export interface Props {
@@ -12,9 +14,10 @@ export interface Props {
 
 export function ContentEditorLayout({ pageRoute }: Props) {
   const apiClient = useApi();
+  const [content, setContent] = useState<IElement[]>([]);
 
   const {
-    data: content,
+    data: loadedContent,
     error,
     isError,
     isSuccess,
@@ -22,6 +25,12 @@ export function ContentEditorLayout({ pageRoute }: Props) {
     queryKey: ['content', pageRoute],
     queryFn: () => apiClient.elements.get(pageRoute),
   });
+
+  useEffect(() => {
+    if (loadedContent) {
+      setContent(loadedContent);
+    }
+  }, [loadedContent]);
 
   useEffect(() => {
     if (isError) {
@@ -35,7 +44,9 @@ export function ContentEditorLayout({ pageRoute }: Props) {
       testId="content-editor-layout"
       sidebar={
         isSuccess ? (
-          <div data-testid="content-editor-layout__content-editor">Редактор</div>
+          <div data-testid="content-editor-layout__content-editor">
+            <ContentEditor content={content} onChange={setContent} />
+          </div>
         ) : (
           <div data-testid="content-editor-layout__content-editor-skeleton">
             <Skeleton active />

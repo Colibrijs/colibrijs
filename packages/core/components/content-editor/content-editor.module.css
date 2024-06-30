@@ -1,0 +1,4 @@
+.container [role="tree"] {
+  /* stylelint-disable-next-line declaration-no-important -- нужно перебить стиль antd */
+  background-color: transparent !important;
+}
