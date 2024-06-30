@@ -6,11 +6,13 @@ type StringifiedType<T> = T extends string
       ? 'boolean'
       : 'never';
 
+export type Property<T> = {
+  type: StringifiedType<T>;
+  description: string;
+};
+
 type Properties<T> = {
-  [K in keyof T]: {
-    type: StringifiedType<T[K]>;
-    description: string;
-  };
+  [K in keyof T]: Property<T[K]>;
 };
 
 export type SchemaValues = string | number;

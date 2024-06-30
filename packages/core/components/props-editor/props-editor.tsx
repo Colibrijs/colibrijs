@@ -1,6 +1,14 @@
-import { type JsonSchema, getPropertiesNames, type SchemaValues } from '@colibrijs/schema';
-import { Form, Input } from 'antd';
-import { useCallback, type ChangeEvent } from 'react';
+import {
+  type JsonSchema,
+  getPropertiesNames,
+  type SchemaValues,
+  type Property,
+} from '@colibrijs/schema';
+import { Form } from 'antd';
+
+import { useCallback } from 'react';
+
+import { PropEditor } from '../prop-editor/prop-editor';
 
 export interface Props<T extends Record<string, SchemaValues>> {
   /** JSON схема, которая описывает каким должен быть объект */
@@ -20,34 +28,39 @@ export function PropsEditor<T extends Record<string, SchemaValues>>({
 }: Props<T>) {
   const propertiesNames = getPropertiesNames(schema);
 
-  const getChangeHandler = useCallback(
+  const changeHandler = useCallback(
     <K extends keyof T>(key: K) =>
-      (event: ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
+      (newValue: SchemaValues) => {
         onChange({ ...value, [key]: newValue });
       },
     [onChange, value]
   );
 
-  function getType(propName: string) {
-    return schema.properties[propName]?.type || 'string'; // прокомментируй это. Не даёт мне без вопросика писать
-  }
+  const getValue = useCallback(
+    (propName: keyof T) => {
+      return value[propName];
+    },
+    [value]
+  );
+
+  const getProperty = useCallback(
+    (propName: keyof T): Property<SchemaValues> => {
+      return schema.properties[propName];
+    },
+    [schema.properties]
+  );
 
   return (
     <Form layout="vertical">
       {propertiesNames.map((propName) => (
-        <Form.Item
+        <PropEditor
+          property={getProperty(propName)}
           key={propName}
-          label={<span data-testid="props-editor__label">{propName}</span>}
-          data-testid="props-editor__item"
-        >
-          <Input
-            value={value[propName]}
-            type={getType(propName)}
-            data-testid="props-editor__input"
-            onChange={getChangeHandler(propName)}
-          />
-        </Form.Item>
+          name={propName}
+          value={getValue(propName)}
+          data-testid="props-editor__input"
+          onChange={changeHandler(propName)}
+        />
       ))}
     </Form>
   );
