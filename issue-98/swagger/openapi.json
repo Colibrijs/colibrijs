@@ -201,7 +201,16 @@
     "/elements": {
       "get": {
         "operationId": "ElementsController_get",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "route",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
