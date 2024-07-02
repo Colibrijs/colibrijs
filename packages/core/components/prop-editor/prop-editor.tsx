@@ -2,23 +2,16 @@ import { type SchemaValues, type Property } from '@colibrijs/schema';
 
 import { NumberEditor } from './components/number-editor';
 import { StringEditor } from './components/string-editor';
+import type { BaseProps } from './types';
 
 type ChangeHandler<T> = (value: T) => void;
-export interface Props<T extends SchemaValues> {
-  /* Имя инпута */
-  name: string;
 
-  /** Редактируемое свойство */
-  property: Property<T>;
-
-  /** Значение по умолчанию */
-  value: T;
-
-  /** Функция, которая будет вызвана, когда пропсы поменяются */
-  onChange: ChangeHandler<T>;
-}
-
-export function PropEditor<T extends SchemaValues>({ property, onChange, value, name }: Props<T>) {
+export function PropEditor<T extends SchemaValues>({
+  property,
+  onChange,
+  value,
+  name,
+}: BaseProps<T>) {
   return (
     <>
       {property.type === 'string' && (
