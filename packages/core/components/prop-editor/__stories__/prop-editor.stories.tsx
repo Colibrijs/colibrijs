@@ -5,7 +5,8 @@ import { fn } from '@storybook/test';
 import { useState, useCallback } from 'react';
 
 import { SidebarDecorator } from '../../layout/sidebar-decorator';
-import { PropEditor, type Props } from '../prop-editor';
+import { PropEditor } from '../prop-editor';
+import type { BaseProps } from '../types';
 
 export type PropEditorMeta = Meta<typeof PropEditor>;
 export type Story = StoryObj<typeof PropEditor>;
@@ -25,7 +26,7 @@ export default {
   decorators: [SidebarDecorator],
 } satisfies PropEditorMeta;
 
-export function Default<T extends SchemaValues>({ name, value, property, onChange }: Props<T>) {
+export function Default<T extends SchemaValues>({ name, value, property, onChange }: BaseProps<T>) {
   const [currentValue, setCurrentValue] = useState(value);
   const changeHandler = useCallback(
     (newValue: T) => {
