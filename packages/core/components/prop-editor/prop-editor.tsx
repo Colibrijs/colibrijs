@@ -1,7 +1,7 @@
 import { type SchemaValues, type Property } from '@colibrijs/schema';
 
-import { NumberEditor } from './types/number-editor';
-import { StringEditor } from './types/string-editor';
+import { NumberEditor } from './components/number-editor';
+import { StringEditor } from './components/string-editor';
 
 type ChangeHandler<T> = (value: T) => void;
 export interface Props<T extends SchemaValues> {
