@@ -13,8 +13,17 @@ export function StringEditor({ onChange, value, property, name }: BaseProps<stri
   );
 
   return (
-    <Form.Item label={name} help={property.description}>
-      <Input name={name} type="text" value={value} onChange={changeHandler} />
+    <Form.Item
+      label={<span data-testid="string-editor__label">{name}</span>}
+      help={<span data-testid="string-editor__description">{property.description}</span>}
+    >
+      <Input
+        data-testid="string-editor__input"
+        name={name}
+        type="text"
+        value={value}
+        onChange={changeHandler}
+      />
     </Form.Item>
   );
 }
