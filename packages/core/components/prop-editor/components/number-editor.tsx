@@ -13,8 +13,16 @@ export function NumberEditor({ onChange, value, property, name }: BaseProps<numb
   );
 
   return (
-    <Form.Item label={name} help={property.description}>
-      <InputNumber name={name} value={value} onChange={changeHandler} />
+    <Form.Item
+      label={<span data-testid="number-editor__label">{name}</span>}
+      help={<span data-testid="number-editor__description">{property.description}</span>}
+    >
+      <InputNumber
+        name={name}
+        value={value}
+        data-testid="number-editor__input"
+        onChange={changeHandler}
+      />
     </Form.Item>
   );
 }

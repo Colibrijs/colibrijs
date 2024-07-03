@@ -4,35 +4,35 @@ import PropEditorStoryMeta, { type PropEditorMeta, type Story } from './prop-edi
 
 export default {
   ...PropEditorStoryMeta,
-  title: 'PropEditor/tests/string-editor',
+  title: 'PropEditor/tests/number-editor',
 } satisfies PropEditorMeta;
 
-export const StringEditorValue: Story = {
-  name: 'Передается value пропс в string-editor инпут',
+export const NumberEditorValue: Story = {
+  name: 'Передается value пропс в number-editor инпут',
   args: {
     property: {
-      type: 'string',
+      type: 'number',
       description: 'description',
     },
     name: 'Name',
     onChange: fn(),
-    value: 'Valueff',
+    value: 228,
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const stringEditor = getByTestId('string-editor__input');
+    const numberEditor = getByTestId('number-editor__input');
 
     await step('Проверяем, что инпуте значение из пропса value', () => {
-      expect(stringEditor).toHaveValue('Valueff');
+      expect(numberEditor).toHaveValue('228');
     });
   },
 };
 
-export const StringEditorChange: Story = {
-  name: 'Вызывается onChange при вводе в инпут в string-editor',
+export const NumberEditorChange: Story = {
+  name: 'Вызывается onChange при вводе в инпут в number-editor',
   args: {
     property: {
-      type: 'string',
+      type: 'number',
       description: 'description',
     },
     name: 'Name',
@@ -41,43 +41,43 @@ export const StringEditorChange: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const stringEditor = getByTestId('string-editor__input');
+    const numberEditor = getByTestId('number-editor__input');
 
-    await userEvent.type(stringEditor, 'Kek');
+    await userEvent.type(numberEditor, '227');
 
-    await step('Проверяем, что вызвалось onChange событие с введенным текстом', () => {
-      expect(StringEditorChange.args?.onChange).toHaveBeenCalledWith('Kek');
+    await step('Проверяем, что вызвалось onChange событие с введенным числом', () => {
+      expect(NumberEditorChange.args?.onChange).toHaveBeenCalledWith(227);
     });
   },
 };
 
-export const StringEditorName: Story = {
-  name: 'Отображается именование инпута в string-editor',
+export const NumberEditorName: Story = {
+  name: 'Отображается именование инпута в number-editor',
   args: {
     property: {
-      type: 'string',
+      type: 'number',
       description: 'description',
     },
-    name: 'Name',
+    name: 'num-name',
     onChange: fn(),
     value: '',
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const label = getByTestId('string-editor__label');
+    const label = getByTestId('number-editor__label');
 
     await step('Проверяем, что именование инпута - значение пропса name', () => {
-      expect(label).toHaveTextContent('Name');
+      expect(label).toHaveTextContent('num-name');
     });
   },
 };
 
-export const StringEditorDescription: Story = {
-  name: 'Отображается описание property в string-editor',
+export const NumberEditorDescription: Story = {
+  name: 'Отображается описание property в number-editor',
   args: {
     property: {
-      type: 'string',
-      description: 'description',
+      type: 'number',
+      description: 'num-description',
     },
     name: 'Name',
     onChange: fn(),
@@ -85,10 +85,10 @@ export const StringEditorDescription: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const description = getByTestId('string-editor__description');
+    const description = getByTestId('number-editor__description');
 
     await step('Проверяем, что описание инпута - значение пропса property.description', () => {
-      expect(description).toHaveTextContent('description');
+      expect(description).toHaveTextContent('num-description');
     });
   },
 };
