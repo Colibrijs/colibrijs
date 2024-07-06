@@ -11,7 +11,7 @@ export function PropEditor<T extends SchemaValues>({
   onChange,
   value,
   name,
-  testId,
+  testId = 'prop-editor',
 }: BaseProps<T>) {
   return (
     <>
