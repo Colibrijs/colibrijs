@@ -20,10 +20,10 @@ export const NumberEditorValue: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const numberEditor = getByTestId('number-editor__input');
+    const numberEditor = getByTestId('prop-editor__input');
 
     await step('Проверяем, что инпуте значение из пропса value', () => {
-      expect(numberEditor).toHaveValue('228');
+      expect(numberEditor).toHaveValue(228);
     });
   },
 };
@@ -41,7 +41,7 @@ export const NumberEditorChange: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const numberEditor = getByTestId('number-editor__input');
+    const numberEditor = getByTestId('prop-editor__input');
 
     await userEvent.type(numberEditor, '227');
 
@@ -64,7 +64,7 @@ export const NumberEditorName: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const label = getByTestId('number-editor__label');
+    const label = getByTestId('prop-editor__label');
 
     await step('Проверяем, что именование инпута - значение пропса name', () => {
       expect(label).toHaveTextContent('num-name');
@@ -85,7 +85,7 @@ export const NumberEditorDescription: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const description = getByTestId('number-editor__description');
+    const description = getByTestId('prop-editor__description');
 
     await step('Проверяем, что описание инпута - значение пропса property.description', () => {
       expect(description).toHaveTextContent('num-description');

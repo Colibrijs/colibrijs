@@ -58,7 +58,7 @@ export function PropsEditor<T extends Record<string, SchemaValues>>({
           key={propName}
           name={propName}
           value={getValue(propName)}
-          data-testid="props-editor__input"
+          testId={`props-editor__${propName}`}
           onChange={changeHandler(propName)}
         />
       ))}

@@ -1,6 +1,9 @@
 import type { SchemaValues, Property } from '@colibrijs/schema';
 
 export type BaseProps<T extends SchemaValues> = {
+  /* data-testid аттрибут для компонента */
+  testId: string;
+
   /* Имя инпута */
   name: string;
 

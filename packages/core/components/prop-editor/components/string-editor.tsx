@@ -3,7 +3,7 @@ import { useCallback, type ChangeEvent } from 'react';
 
 import type { BaseProps } from '../types';
 
-export function StringEditor({ onChange, value, property, name }: BaseProps<string>) {
+export function StringEditor({ onChange, value, property, name, testId }: BaseProps<string>) {
   const changeHandler = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
@@ -14,11 +14,12 @@ export function StringEditor({ onChange, value, property, name }: BaseProps<stri
 
   return (
     <Form.Item
-      label={<span data-testid="string-editor__label">{name}</span>}
-      help={<span data-testid="string-editor__description">{property.description}</span>}
+      data-testid={testId}
+      label={<span data-testid="prop-editor__label">{name}</span>}
+      help={<span data-testid="prop-editor__description">{property.description}</span>}
     >
       <Input
-        data-testid="string-editor__input"
+        data-testid="prop-editor__input"
         name={name}
         type="text"
         value={value}

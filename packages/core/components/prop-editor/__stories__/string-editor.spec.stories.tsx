@@ -20,7 +20,7 @@ export const StringEditorValue: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const stringEditor = getByTestId('string-editor__input');
+    const stringEditor = getByTestId('prop-editor__input');
 
     await step('Проверяем, что инпуте значение из пропса value', () => {
       expect(stringEditor).toHaveValue('Valueff');
@@ -41,7 +41,7 @@ export const StringEditorChange: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const stringEditor = getByTestId('string-editor__input');
+    const stringEditor = getByTestId('prop-editor__input');
 
     await userEvent.type(stringEditor, 'Kek');
 
@@ -64,7 +64,7 @@ export const StringEditorName: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const label = getByTestId('string-editor__label');
+    const label = getByTestId('prop-editor__label');
 
     await step('Проверяем, что именование инпута - значение пропса name', () => {
       expect(label).toHaveTextContent('Name');
@@ -85,7 +85,7 @@ export const StringEditorDescription: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const { getByTestId } = within(canvasElement);
-    const description = getByTestId('string-editor__description');
+    const description = getByTestId('prop-editor__description');
 
     await step('Проверяем, что описание инпута - значение пропса property.description', () => {
       expect(description).toHaveTextContent('description');

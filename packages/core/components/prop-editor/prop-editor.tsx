@@ -11,6 +11,7 @@ export function PropEditor<T extends SchemaValues>({
   onChange,
   value,
   name,
+  testId,
 }: BaseProps<T>) {
   return (
     <>
@@ -19,7 +20,7 @@ export function PropEditor<T extends SchemaValues>({
           name={name}
           property={property as Property<string>}
           value={value as string}
-          data-testid="props-editor__input"
+          testId={testId}
           onChange={onChange as ChangeHandler<string>}
         />
       )}
@@ -28,7 +29,7 @@ export function PropEditor<T extends SchemaValues>({
           name={name}
           property={property as Property<number>}
           value={value as number}
-          data-testid="props-editor__input"
+          testId={testId}
           onChange={onChange as ChangeHandler<number>}
         />
       )}
