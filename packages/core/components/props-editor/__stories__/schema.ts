@@ -1,6 +1,6 @@
-import type { JsonSchema } from '@colibrijs/schema';
+import type { JsonSchema, SchemaValues } from '@colibrijs/schema';
 
-export const schema: JsonSchema<Record<string, string>> = {
+export const schema: JsonSchema<Record<string, SchemaValues>> = {
   $schema: 'https://json-schema.org/draft/2020-12/schema',
   $id: 'user',
   title: 'User',
@@ -10,9 +10,9 @@ export const schema: JsonSchema<Record<string, string>> = {
       description: 'Your name',
       type: 'string',
     },
-    surname: {
-      description: 'Your surname',
-      type: 'string',
+    age: {
+      description: 'Your age',
+      type: 'number',
     },
   },
 };

@@ -1,3 +1,4 @@
+import type { SchemaValues } from '@colibrijs/schema';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
@@ -17,14 +18,18 @@ export default {
     onChange: fn(),
     schema,
     value: {
-      name: '',
-      surname: '',
+      name: 'Kekich',
+      age: 228,
     },
   },
   decorators: [SidebarDecorator],
 } satisfies PropsEditorMeta;
 
-export function Default<T extends Record<string, string>>({ value, schema, onChange }: Props<T>) {
+export function Default<T extends Record<string, SchemaValues>>({
+  value,
+  schema,
+  onChange,
+}: Props<T>) {
   const [currentValue, setCurrentValue] = useState(value);
   const changeHandler = useCallback(
     (newValue: T) => {

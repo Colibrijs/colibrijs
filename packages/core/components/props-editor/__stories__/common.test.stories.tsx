@@ -1,7 +1,8 @@
-import { expect, within, userEvent, fn } from '@storybook/test';
+import { expect, userEvent, fn } from '@storybook/test';
 
 import PropsEditorStoryMeta, { type PropsEditorMeta, type Story } from './props-editor.stories';
 import { schema } from './schema';
+import { PropEditorTO } from '../../prop-editor/test-object';
 
 export default {
   ...PropsEditorStoryMeta,
@@ -10,17 +11,24 @@ export default {
 
 export const ChangeEvent: Story = {
   name: 'При изменении поля, происходит вызов onChange с введенными данными',
+  args: {
+    onChange: fn(),
+    schema,
+    value: {
+      name: '',
+      age: 229,
+    },
+  },
   play: async ({ args, canvasElement, step }) => {
-    const { getAllByTestId } = within(canvasElement);
-    const firstInput = getAllByTestId('props-editor__input')[0]!;
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const nameInput = nameEditorTO.getInput()!;
 
-    await step(
-      'Вводим слово "Кек" в первый инпут',
-      async () => await userEvent.type(firstInput, 'Кек')
-    );
+    await step('Вводим слово "Кек" в первый инпут', async () => {
+      await userEvent.type(nameInput, 'Кек');
+    });
 
     await step('Проверем, что пропс onChange был вызван с введенными данными', async () => {
-      await expect(args.onChange).toHaveBeenCalledWith({ name: 'Кек', surname: '' });
+      await expect(args.onChange).toHaveBeenCalledWith({ name: 'Кек', age: 229 });
     });
   },
 };
@@ -28,15 +36,15 @@ export const ChangeEvent: Story = {
 export const LabelFields: Story = {
   name: 'При передаче схемы, отрисовываются поля с лейблами из JSON-схемы',
   play: async ({ canvasElement, step }) => {
-    const { getAllByTestId } = within(canvasElement);
-    const items = getAllByTestId('props-editor__item');
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся что лейблы соответствуют тем, что в схеме', () => {
-      const nameLabel = within(items[0]!).getByTestId('props-editor__label');
-      const surnameLabel = within(items[1]!).getByTestId('props-editor__label');
+      const nameLabel = nameEditorTO.getPropertyName();
+      const ageLabel = ageEditorTO.getPropertyName();
 
       expect(nameLabel).toHaveTextContent('name');
-      expect(surnameLabel).toHaveTextContent('surname');
+      expect(ageLabel).toHaveTextContent('age');
     });
   },
 };
@@ -48,19 +56,43 @@ export const DefaultValues: Story = {
     schema,
     value: {
       name: 'Ivan',
-      surname: 'Ivanych',
+      age: 227,
     },
   },
   play: async ({ canvasElement, step }) => {
-    const { getAllByTestId } = within(canvasElement);
-    const items = getAllByTestId('props-editor__item');
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся что значения соответствуют тем, что в пропсе', () => {
-      const nameInput: HTMLInputElement = within(items[0]!).getByTestId('props-editor__input');
-      const surnameInput: HTMLInputElement = within(items[1]!).getByTestId('props-editor__input');
+      const nameInput = nameEditorTO.getInput();
+      const ageInput = ageEditorTO.getInput();
 
-      expect(nameInput.value).toBe('Ivan');
-      expect(surnameInput.value).toBe('Ivanych');
+      expect(nameInput).toHaveValue('Ivan');
+      expect(ageInput).toHaveValue(227);
+    });
+  },
+};
+
+export const Description: Story = {
+  name: 'При передаче схемы, отрисовываются поля с описанием свойства из JSON-схемы',
+  args: {
+    onChange: fn(),
+    schema,
+    value: {
+      name: 'Ivan',
+      age: 1488,
+    },
+  },
+  play: async ({ canvasElement, step }) => {
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
+
+    await step('Ищем все поля и убеждаемся описание соответствуют тем, что в схеме', () => {
+      const nameDescription = nameEditorTO.getPropertyDescription();
+      const ageDescription = ageEditorTO.getPropertyDescription();
+
+      expect(nameDescription).toHaveTextContent('Your name');
+      expect(ageDescription).toHaveTextContent('Your age');
     });
   },
 };
