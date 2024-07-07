@@ -1,6 +1,7 @@
-import { expect, within, userEvent, fn } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 
 import PropEditorStoryMeta, { type PropEditorMeta, type Story } from './prop-editor.stories';
+import { PropEditorTO } from '../test-object';
 
 export default {
   ...PropEditorStoryMeta,
@@ -10,43 +11,31 @@ export default {
 export const StringEditorValue: Story = {
   name: 'Передается value пропс в string-editor инпут',
   args: {
-    property: {
-      type: 'string',
-      description: 'description',
-    },
-    name: 'Name',
-    onChange: fn(),
     value: 'Valueff',
   },
-  play: async ({ canvasElement, step }) => {
-    const { getByTestId } = within(canvasElement);
-    const stringEditor = getByTestId('prop-editor__input');
+  play: async ({ canvasElement, step, args }) => {
+    const stringEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const input = stringEditorTO.getInput();
 
     await step('Проверяем, что инпуте значение из пропса value', () => {
-      expect(stringEditor).toHaveValue('Valueff');
+      expect(input).toHaveValue(args.value);
     });
   },
 };
 
 export const StringEditorChange: Story = {
-  name: 'Вызывается onChange при вводе в инпут в string-editor',
+  name: 'Вызывается onChange с введённым значением при вводе в инпут в string-editor',
   args: {
-    property: {
-      type: 'string',
-      description: 'description',
-    },
-    name: 'Name',
     onChange: fn(),
     value: '',
   },
-  play: async ({ canvasElement, step }) => {
-    const { getByTestId } = within(canvasElement);
-    const stringEditor = getByTestId('prop-editor__input');
+  play: async ({ canvasElement, step, args }) => {
+    const stringEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
 
-    await userEvent.type(stringEditor, 'Kek');
+    await stringEditorTO.setValue('Kek');
 
     await step('Проверяем, что вызвалось onChange событие с введенным текстом', () => {
-      expect(StringEditorChange.args?.onChange).toHaveBeenCalledWith('Kek');
+      expect(args.onChange).toHaveBeenCalledWith('Kek');
     });
   },
 };
@@ -54,20 +43,14 @@ export const StringEditorChange: Story = {
 export const StringEditorName: Story = {
   name: 'Отображается именование инпута в string-editor',
   args: {
-    property: {
-      type: 'string',
-      description: 'description',
-    },
     name: 'Name',
-    onChange: fn(),
-    value: '',
   },
   play: async ({ canvasElement, step }) => {
-    const { getByTestId } = within(canvasElement);
-    const label = getByTestId('prop-editor__label');
+    const stringEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const name = stringEditorTO.getPropertyName();
 
     await step('Проверяем, что именование инпута - значение пропса name', () => {
-      expect(label).toHaveTextContent('Name');
+      expect(name).toHaveTextContent('Name');
     });
   },
 };
@@ -79,13 +62,10 @@ export const StringEditorDescription: Story = {
       type: 'string',
       description: 'description',
     },
-    name: 'Name',
-    onChange: fn(),
-    value: '',
   },
   play: async ({ canvasElement, step }) => {
-    const { getByTestId } = within(canvasElement);
-    const description = getByTestId('prop-editor__description');
+    const stringEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const description = stringEditorTO.getPropertyDescription();
 
     await step('Проверяем, что описание инпута - значение пропса property.description', () => {
       expect(description).toHaveTextContent('description');

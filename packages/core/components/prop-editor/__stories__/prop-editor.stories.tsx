@@ -37,6 +37,12 @@ export function Default<T extends SchemaValues>({ name, value, property, onChang
   );
 
   return (
-    <PropEditor name={name} value={currentValue} property={property} onChange={changeHandler} />
+    <PropEditor
+      name={name}
+      testId="prop-editor"
+      value={currentValue}
+      property={property}
+      onChange={changeHandler}
+    />
   );
 }

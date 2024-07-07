@@ -1,16 +1,28 @@
-import { within, type queries } from '@storybook/test';
+import { userEvent, within, type queries } from '@storybook/test';
 
-type CanvasElement = ReturnType<typeof within<typeof queries>>;
+type ComponentElement = ReturnType<typeof within<typeof queries>>;
 
 export class PropEditorTO {
-  private canvas: CanvasElement;
+  private component: ComponentElement;
 
-  constructor(canvasElement: HTMLElement) {
-    this.canvas = within(canvasElement);
+  constructor(canvasElement: HTMLElement, testId: string) {
+    this.component = within(within(canvasElement).getByTestId(testId));
   }
 
-  getElement(propEditorTestId: string, elementType: 'input' | 'label' | 'description') {
-    const component = within(this.canvas.getByTestId(propEditorTestId));
-    return component.getByTestId(`prop-editor__${elementType}`);
+  getPropertyName() {
+    return this.component.getByTestId('prop-editor__label');
+  }
+
+  getPropertyDescription() {
+    return this.component.getByTestId('prop-editor__description');
+  }
+
+  getInput() {
+    return this.component.getByTestId('prop-editor__input');
+  }
+
+  async setValue(value: string) {
+    const input = this.getInput();
+    await userEvent.type(input, value);
   }
 }

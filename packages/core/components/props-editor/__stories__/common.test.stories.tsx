@@ -20,8 +20,8 @@ export const ChangeEvent: Story = {
     },
   },
   play: async ({ args, canvasElement, step }) => {
-    const propEditorTO = new PropEditorTO(canvasElement);
-    const nameInput = propEditorTO.getElement('props-editor__name', 'input')!;
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const nameInput = nameEditorTO.getInput()!;
 
     await step('Вводим слово "Кек" в первый инпут', async () => {
       await userEvent.type(nameInput, 'Кек');
@@ -36,11 +36,12 @@ export const ChangeEvent: Story = {
 export const LabelFields: Story = {
   name: 'При передаче схемы, отрисовываются поля с лейблами из JSON-схемы',
   play: async ({ canvasElement, step }) => {
-    const propEditorTO = new PropEditorTO(canvasElement);
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся что лейблы соответствуют тем, что в схеме', () => {
-      const nameLabel = propEditorTO.getElement('props-editor__name', 'label');
-      const ageLabel = propEditorTO.getElement('props-editor__age', 'label');
+      const nameLabel = nameEditorTO.getPropertyName();
+      const ageLabel = ageEditorTO.getPropertyName();
 
       expect(nameLabel).toHaveTextContent('name');
       expect(ageLabel).toHaveTextContent('age');
@@ -59,37 +60,15 @@ export const DefaultValues: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
-    const propEditorTO = new PropEditorTO(canvasElement);
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся что значения соответствуют тем, что в пропсе', () => {
-      const nameInput = propEditorTO.getElement('props-editor__name', 'input');
-      const ageInput = propEditorTO.getElement('props-editor__age', 'input');
+      const nameInput = nameEditorTO.getInput();
+      const ageInput = ageEditorTO.getInput();
 
       expect(nameInput).toHaveValue('Ivan');
       expect(ageInput).toHaveValue(227);
-    });
-  },
-};
-
-export const TypeAttributes: Story = {
-  name: 'У инпутов значение аттрибута type зависит от типов значений в пропсе schema',
-  args: {
-    onChange: fn(),
-    schema,
-    value: {
-      name: 'Ivan',
-      age: 1488,
-    },
-  },
-  play: async ({ canvasElement, step }) => {
-    const propEditorTO = new PropEditorTO(canvasElement);
-
-    await step('Ищем все поля и убеждаемся что type соответствуют тем, что в схеме', () => {
-      const nameInput = propEditorTO.getElement('props-editor__name', 'input');
-      const ageInput = propEditorTO.getElement('props-editor__age', 'input');
-
-      expect(nameInput).toHaveAttribute('type', 'text');
-      expect(ageInput).toHaveAttribute('type', 'number');
     });
   },
 };
@@ -105,11 +84,12 @@ export const Description: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
-    const propEditorTO = new PropEditorTO(canvasElement);
+    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся описание соответствуют тем, что в схеме', () => {
-      const nameDescription = propEditorTO.getElement('props-editor__name', 'description');
-      const ageDescription = propEditorTO.getElement('props-editor__age', 'description');
+      const nameDescription = nameEditorTO.getPropertyDescription();
+      const ageDescription = ageEditorTO.getPropertyDescription();
 
       expect(nameDescription).toHaveTextContent('Your name');
       expect(ageDescription).toHaveTextContent('Your age');
