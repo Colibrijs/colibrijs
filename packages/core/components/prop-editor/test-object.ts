@@ -25,6 +25,11 @@ export class PropEditorTO {
     return this.component.getByTestId('prop-editor__switcher');
   }
 
+  async toggleSwitcher() {
+    const switcher = this.getSwitcher();
+    await userEvent.click(switcher);
+  }
+
   async setValue(value: string) {
     const input = this.getInput();
     await userEvent.type(input, value);
