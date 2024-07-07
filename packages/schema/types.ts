@@ -15,7 +15,7 @@ type Properties<T> = {
   [K in keyof T]: Property<T[K]>;
 };
 
-export type SchemaValues = string | number;
+export type SchemaValues = string | number | boolean;
 
 export type JsonSchema<T extends Record<string, SchemaValues>> = {
   $schema: string;

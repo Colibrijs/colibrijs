@@ -1,5 +1,6 @@
 import { type SchemaValues, type Property } from '@colibrijs/schema';
 
+import { BooleanEditor } from './components/boolean-editor';
 import { NumberEditor } from './components/number-editor';
 import { StringEditor } from './components/string-editor';
 import type { BaseProps } from './types';
@@ -31,6 +32,15 @@ export function PropEditor<T extends SchemaValues>({
           value={value as number}
           testId={testId}
           onChange={onChange as ChangeHandler<number>}
+        />
+      )}
+      {property.type === 'boolean' && (
+        <BooleanEditor
+          name={name}
+          property={property as Property<boolean>}
+          value={value as boolean}
+          testId={testId}
+          onChange={onChange as ChangeHandler<boolean>}
         />
       )}
     </>
