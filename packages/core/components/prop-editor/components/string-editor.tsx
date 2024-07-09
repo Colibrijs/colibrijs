@@ -14,6 +14,7 @@ export function StringEditor({ onChange, value, property, name, testId }: BasePr
 
   return (
     <Form.Item
+      data-type="string"
       data-testid={testId}
       label={<span data-testid="prop-editor__label">{name}</span>}
       help={<span data-testid="prop-editor__description">{property.description}</span>}

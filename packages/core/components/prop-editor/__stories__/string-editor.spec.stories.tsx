@@ -18,7 +18,7 @@ export const StringEditorValue: Story = {
     const input = stringEditorTO.getInput();
 
     await step('Проверяем, что инпуте значение из пропса value', () => {
-      expect(input).toHaveValue(args.value);
+      expect(input).toHaveValue(args.value as string);
     });
   },
 };

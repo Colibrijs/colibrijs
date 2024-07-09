@@ -38,13 +38,16 @@ export const LabelFields: Story = {
   play: async ({ canvasElement, step }) => {
     const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
     const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
+    const isBaldEditorTO = new PropEditorTO(canvasElement, 'props-editor__isBald');
 
     await step('Ищем все поля и убеждаемся что лейблы соответствуют тем, что в схеме', () => {
       const nameLabel = nameEditorTO.getPropertyName();
       const ageLabel = ageEditorTO.getPropertyName();
+      const isBaldLabel = isBaldEditorTO.getPropertyName();
 
       expect(nameLabel).toHaveTextContent('name');
       expect(ageLabel).toHaveTextContent('age');
+      expect(isBaldLabel).toHaveTextContent('isBald');
     });
   },
 };

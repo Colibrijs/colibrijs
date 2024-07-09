@@ -14,5 +14,9 @@ export const schema: JsonSchema<Record<string, SchemaValues>> = {
       description: 'Your age',
       type: 'number',
     },
+    isBald: {
+      description: 'Your hair availability',
+      type: 'boolean',
+    },
   },
 };

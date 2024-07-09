@@ -20,6 +20,7 @@ export default {
     value: {
       name: 'Kekich',
       age: 228,
+      isBald: true,
     },
   },
   decorators: [SidebarDecorator],
