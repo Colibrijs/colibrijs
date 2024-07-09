@@ -1,16 +1,8 @@
 import { Form, Switch } from 'antd';
-import { useCallback } from 'react';
 
 import type { BaseProps } from '../types';
 
 export function BooleanEditor({ onChange, value, property, name, testId }: BaseProps<boolean>) {
-  const changeHandler = useCallback(
-    (checked: boolean) => {
-      onChange(checked);
-    },
-    [onChange]
-  );
-
   return (
     <Form.Item
       data-type="boolean"
@@ -22,7 +14,7 @@ export function BooleanEditor({ onChange, value, property, name, testId }: BaseP
         defaultChecked={value}
         data-testid="prop-editor__switcher"
         value={value}
-        onChange={changeHandler}
+        onChange={onChange}
       />
     </Form.Item>
   );
