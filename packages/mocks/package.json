@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Моки для разных сущностей colibrijs",
   "dependencies": {
+    "@colibrijs/schema": "1.0.0",
     "@colibrijs/types": "1.0.0"
   }
 }
