@@ -1,0 +1,10 @@
+.fieldset {
+  padding: 12px 8px;
+  border: 1px solid #9a9a9a;
+  border-radius: 8px;
+}
+
+.legend {
+  padding: 0 4px;
+  color: #ffffff;
+}

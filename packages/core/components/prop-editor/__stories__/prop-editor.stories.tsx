@@ -46,3 +46,47 @@ export function Default<T extends SchemaValues>({ name, value, property, onChang
     />
   );
 }
+
+export const ObjectExampleStory: Story = {
+  render: <T extends SchemaValues>(args: BaseProps<T>) => {
+    const [currentValue, setCurrentValue] = useState(args.value);
+    const changeHandler = useCallback(
+      (newValue: T) => {
+        args.onChange(newValue);
+        setCurrentValue(newValue);
+      },
+      [args]
+    );
+
+    return <PropEditor {...args} value={currentValue} onChange={changeHandler} />;
+  },
+  args: {
+    name: 'objectName',
+    value: { age: 228, name: 'kek', obj: { isBald: true } },
+    property: {
+      type: 'object',
+      description: 'kek',
+      properties: {
+        age: {
+          type: 'number',
+          description: 'its a number',
+        },
+        name: {
+          type: 'string',
+          description: 'its a string',
+        },
+        obj: {
+          type: 'object',
+          description: 'its an object',
+          properties: {
+            isBald: {
+              type: 'boolean',
+              description: 'its a boolean',
+            },
+          },
+        },
+      },
+    },
+    onChange: fn(),
+  },
+};
