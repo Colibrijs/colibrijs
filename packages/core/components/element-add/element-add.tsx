@@ -39,7 +39,14 @@ export function ElementAdd({ open, pageId, testId = 'element-add', onClose, onRe
   const componentsOptions: SelectProps<string>['options'] = useMemo(() => {
     if (!isSuccess) return [];
 
-    return components.map((component) => ({ label: component.name, value: component.id }));
+    return components.map((component) => ({
+      label: (
+        <span data-testid="component-option" data-value={component.id}>
+          {component.name}
+        </span>
+      ),
+      value: component.id,
+    }));
   }, [components, isSuccess]);
 
   const changeComponentHandler = useCallback(
@@ -68,6 +75,7 @@ export function ElementAdd({ open, pageId, testId = 'element-add', onClose, onRe
       open={open}
       title="Добавить элемент"
       onClose={onClose}
+      onCancel={onClose}
       data-testid={testId}
     >
       <Form layout="vertical" onFinish={submitHandler}>
@@ -78,6 +86,7 @@ export function ElementAdd({ open, pageId, testId = 'element-add', onClose, onRe
             options={componentsOptions}
             value={component?.id ?? null}
             data-testid="element-add__select"
+            data-value={String(component?.id ?? null)}
           />
         </Form.Item>
         {schema && (

@@ -5,8 +5,8 @@ import { fn } from '@storybook/test';
 import type { WithMockedApi } from '../../../hooks/use-api/mocked';
 import { ElementAdd, type Props } from '../element-add';
 
-type ElementAddMeta = Meta<WithMockedApi<Props>>;
-type ElementAddStory = StoryObj<WithMockedApi<Props>>;
+export type ElementAddMeta = Meta<WithMockedApi<Props>>;
+export type ElementAddStory = StoryObj<WithMockedApi<Props>>;
 
 export default {
   component: ElementAdd,
