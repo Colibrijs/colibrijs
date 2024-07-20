@@ -6,6 +6,7 @@ export function BooleanEditor({ onChange, value, property, name, testId }: BaseP
   return (
     <Form.Item
       data-type="boolean"
+      layout="vertical"
       data-testid={testId}
       label={<span data-testid="prop-editor__label">{name}</span>}
       help={<span data-testid="prop-editor__description">{property.description}</span>}
