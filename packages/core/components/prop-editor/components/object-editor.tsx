@@ -29,8 +29,14 @@ export function ObjectEditor<T extends object>({
   const properties = Object.keys(property.properties) as (keyof T)[];
 
   return (
-    <fieldset className={cn(styles.fieldset)}>
-      <legend className={cn(styles.legend)}>{name}</legend>
+    <fieldset
+      className={cn(styles.fieldset)}
+      data-testid={`object-editor__${name}`}
+      data-name={name}
+    >
+      <legend className={cn(styles.legend)} data-testid="object-editor__name">
+        {name}
+      </legend>
       {properties.map((prop) =>
         property.properties[prop].type === 'object' ? (
           <ObjectEditor
@@ -47,7 +53,7 @@ export function ObjectEditor<T extends object>({
             name={prop.toString()}
             property={property.properties[prop]}
             value={value[prop] as PrimitiveType}
-            testId={testId}
+            testId={`${testId}__${prop.toString()}`}
             onChange={getChangeHandler(prop) as ChangeHandler<PrimitiveType>}
           />
         )

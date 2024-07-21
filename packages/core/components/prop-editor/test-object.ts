@@ -59,3 +59,19 @@ export class PropEditorTO {
     }
   }
 }
+
+export class ObjectEditorTO {
+  private component: HTMLElement;
+
+  constructor(canvasElement: HTMLElement, objectName: string) {
+    this.component = within(canvasElement).getByTestId(`object-editor__${objectName}`);
+  }
+
+  getFieldset(): HTMLElement {
+    return this.component;
+  }
+
+  getObjectName(): HTMLElement {
+    return within(this.component).getByTestId('object-editor__name');
+  }
+}
