@@ -14,7 +14,7 @@ export const HiddenWhenOpenIsFalse: ElementAddStory = {
   args: { open: false },
   play: async (context) => {
     const elementAdd = new ElementAddTO(context);
-    const visible = await elementAdd.isVisible();
+    const visible = elementAdd.isVisible();
 
     expect(visible, 'Проверяю, что добавление элемента не отображается').toBe(false);
   },
@@ -25,7 +25,7 @@ export const VisibleWhenOpenIsTrue: ElementAddStory = {
   args: { open: true },
   play: async (context) => {
     const elementAdd = new ElementAddTO(context);
-    const visible = await elementAdd.isVisible();
+    const visible = elementAdd.isVisible();
 
     expect(visible, 'Проверяю, что добавление элемента отображается').toBe(true);
   },

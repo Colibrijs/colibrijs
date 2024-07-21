@@ -48,7 +48,7 @@ export class ElementAddTO {
    * Возвращает true, если добавление элемента отображается и false если не отображается
    * @param timeout - время которое будем ждать возможного появления
    */
-  async isVisible(timeout = 1000): Promise<boolean> {
+  isVisible(timeout = 1000): boolean {
     const element = screen.queryByTestId(this.testId);
 
     if (element) {
