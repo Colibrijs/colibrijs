@@ -1,4 +1,4 @@
-import { type SchemaValues, type Property } from '@colibrijs/schema';
+import type { SchemaValues, Property, PrimitiveType } from '@colibrijs/schema';
 
 import { ObjectEditor } from './components/object-editor';
 import { PrimitiveEditor } from './components/primitive-editor';
@@ -6,7 +6,7 @@ import type { BaseProps } from './types';
 
 type ChangeHandler<T> = (value: T) => void;
 
-export function PropEditor<T extends SchemaValues>({
+export function PropEditor<T>({
   property,
   onChange,
   value,
@@ -15,7 +15,6 @@ export function PropEditor<T extends SchemaValues>({
 }: BaseProps<T>) {
   const isPrimitive =
     property.type === 'string' || property.type === 'number' || property.type === 'boolean';
-  type PrimitiveType = string | number | boolean;
 
   return (
     <>

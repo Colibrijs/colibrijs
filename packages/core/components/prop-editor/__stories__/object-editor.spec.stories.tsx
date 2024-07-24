@@ -1,111 +1,22 @@
 import { expect, fn } from '@storybook/test';
 
 import PropEditorStoryMeta, { type PropEditorMeta, type Story } from './prop-editor.stories';
-import { ObjectEditorTO, PropEditorTO } from '../test-object';
+import { PropEditorTO } from '../test-object';
 
 export default {
   ...PropEditorStoryMeta,
   title: 'PropEditor/tests/object-editor',
-} satisfies PropEditorMeta;
-
-export const ObjectMainName: Story = {
-  name: 'Главный объект имеет заголовок из пропа name',
   args: {
-    name: 'objectName',
-    property: {
-      type: 'object',
-      description: 'description',
-      properties: {
-        age: {
-          type: 'number',
-          description: 'text',
-        },
-      },
-    },
-  },
-  play: async ({ canvasElement }) => {
-    const objectEditor = new ObjectEditorTO(canvasElement, 'objectName');
-    const name = objectEditor.getObjectName();
-
-    expect(name).toHaveTextContent('objectName');
-  },
-};
-
-export const NestedObjectsName: Story = {
-  name: 'Корректно именуются вложенные объекты',
-  args: {
-    value: { nestedObj: { age: 0 } },
-    name: 'mainObject',
-    property: {
-      type: 'object',
-      description: 'description',
-      properties: {
-        nestedObj: {
-          type: 'object',
-          description: 'nested object',
-          properties: {
-            age: {
-              type: 'number',
-              description: 'age',
-            },
-          },
-        },
-      },
-    },
-  },
-  play: async ({ canvasElement }) => {
-    const mainObject = new ObjectEditorTO(canvasElement, 'mainObject');
-    const mainObjectFieldset = mainObject.getFieldset();
-    const nestedObj = new ObjectEditorTO(mainObjectFieldset, 'nestedObj');
-    const nestedObjName = nestedObj.getObjectName();
-
-    expect(nestedObjName).toHaveTextContent('nestedObj');
-  },
-};
-
-export const ValueChanging: Story = {
-  name: 'При вводе данных вызывается onChange со всеми данными в property с измененным конкретным свойством',
-  args: {
-    value: { name: '', nestedObj: { age: 0 } },
     onChange: fn(),
+    testId: 'object-editor',
     name: 'mainObject',
-    property: {
-      type: 'object',
-      description: 'description',
-      properties: {
-        name: {
-          type: 'string',
-          description: 'your name',
-        },
-        nestedObj: {
-          type: 'object',
-          description: 'nested object',
-          properties: {
-            age: {
-              type: 'number',
-              description: 'age',
-            },
-          },
-        },
+    value: {
+      name: 'kek',
+      age: 11,
+      additionalInformation: {
+        isBald: true,
       },
     },
-  },
-  play: async ({ canvasElement, args }) => {
-    const objectEditor = new ObjectEditorTO(canvasElement, 'nestedObj');
-    const objectEditorFieldset = objectEditor.getFieldset();
-    const numberEditor = new PropEditorTO(objectEditorFieldset, 'prop-editor__age');
-    await numberEditor.setValue('229');
-
-    expect(args.onChange).toHaveBeenCalledWith({ name: '', nestedObj: { age: 229 } });
-  },
-};
-
-export const CorrectDefaultValues: Story = {
-  name: 'Корректно передаются все значения из value',
-  args: {
-    value: { name: 'Thomas', age: 14, additionalInformation: { isBald: true } },
-    onChange: fn(),
-    name: 'mainObject',
     property: {
       type: 'object',
       description: 'description',
@@ -131,14 +42,69 @@ export const CorrectDefaultValues: Story = {
       },
     },
   },
+} satisfies PropEditorMeta;
+
+export const ObjectMainName: Story = {
+  name: 'Главный объект имеет заголовок из пропа name',
   play: async ({ canvasElement }) => {
-    const nameEditor = new PropEditorTO(canvasElement, 'prop-editor__name');
+    const objectEditor = new PropEditorTO(canvasElement, 'object-editor');
+    const name = objectEditor.getPropertyName();
+
+    expect(name).toHaveTextContent('mainObject');
+  },
+};
+
+export const NestedObjectsName: Story = {
+  name: 'Корректно именуются вложенные объекты',
+  play: async ({ canvasElement }) => {
+    const additionalInformation = new PropEditorTO(
+      canvasElement,
+      'object-editor__additionalInformation'
+    );
+    const additionalInformationName = additionalInformation.getPropertyName();
+
+    expect(additionalInformationName).toHaveTextContent('additionalInformation');
+  },
+};
+
+export const ValueChanging: Story = {
+  name: 'При вводе данных вызывается onChange со всеми данными в property с измененным конкретным свойством',
+  args: {
+    onChange: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const numberEditor = new PropEditorTO(canvasElement, 'object-editor__age');
+    await numberEditor.nextTick();
+    await numberEditor.setValue('1');
+
+    expect(args.onChange).toHaveBeenCalledWith({
+      name: 'kek',
+      age: 111,
+      additionalInformation: {
+        isBald: true,
+      },
+    });
+  },
+};
+
+export const CorrectDefaultValues: Story = {
+  name: 'Корректно передаются все значения из value',
+  args: {
+    value: { name: 'Thomas', age: 14, additionalInformation: { isBald: true } },
+    onChange: fn(),
+    name: 'mainObject',
+  },
+  play: async ({ canvasElement }) => {
+    const nameEditor = new PropEditorTO(canvasElement, 'object-editor__name');
     const nameValue = nameEditor.getValue();
 
-    const ageEditor = new PropEditorTO(canvasElement, 'prop-editor__age');
+    const ageEditor = new PropEditorTO(canvasElement, 'object-editor__age');
     const ageValue = ageEditor.getValue();
 
-    const isBaldEditor = new PropEditorTO(canvasElement, 'prop-editor__isBald');
+    const isBaldEditor = new PropEditorTO(
+      canvasElement,
+      'object-editor__additionalInformation__isBald'
+    );
     const isBaldValue = isBaldEditor.getValue();
 
     expect(nameValue).toBe('Thomas');

@@ -1,5 +1,5 @@
-export type SchemaValues = string | number | boolean | object;
 export type PrimitiveType = string | number | boolean;
+export type SchemaValues = PrimitiveType | object;
 
 type StringifiedType<T> = T extends string
   ? 'string'
@@ -37,13 +37,8 @@ export type Property<T> = T extends object
   ? ObjectProperty<T>
   : PrimitiveProperties[StringifiedType<T>];
 
-export type JsonSchema<T extends object> = {
+export type JsonSchema<T extends object> = ObjectProperty<T> & {
   $schema: string;
   $id: string;
   title: string;
-  description?: string;
-  type: 'object';
-  properties: {
-    [K in keyof T]: Property<T[K]>;
-  };
 };

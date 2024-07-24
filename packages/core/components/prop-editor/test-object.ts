@@ -5,14 +5,20 @@ type ComponentElement = ReturnType<typeof within<typeof queries>>;
 export class PropEditorTO {
   private editorElement: HTMLElement;
   private component: ComponentElement;
+  private testId: string;
 
   constructor(canvasElement: HTMLElement, testId: string) {
     this.editorElement = within(canvasElement).getByTestId(testId);
     this.component = within(this.editorElement);
+    this.testId = testId;
+  }
+
+  async nextTick(): Promise<null> {
+    return await new Promise((resolve) => resolve(null));
   }
 
   getPropertyName() {
-    return this.component.getByTestId('prop-editor__label');
+    return this.component.getByTestId(`${this.testId}__label`);
   }
 
   getPropertyDescription() {
@@ -57,21 +63,5 @@ export class PropEditorTO {
       const input = this.getInput();
       await userEvent.type(input, value as string);
     }
-  }
-}
-
-export class ObjectEditorTO {
-  private component: HTMLElement;
-
-  constructor(canvasElement: HTMLElement, objectName: string) {
-    this.component = within(canvasElement).getByTestId(`object-editor__${objectName}`);
-  }
-
-  getFieldset(): HTMLElement {
-    return this.component;
-  }
-
-  getObjectName(): HTMLElement {
-    return within(this.component).getByTestId('object-editor__name');
   }
 }

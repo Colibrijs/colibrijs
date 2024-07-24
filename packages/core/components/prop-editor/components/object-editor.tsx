@@ -1,9 +1,9 @@
-import type { ObjectProperty, PrimitiveType } from '@colibrijs/schema';
+import { getPropertiesNames, type ObjectProperty, type PrimitiveType } from '@colibrijs/schema';
 import cn from 'classnames';
 
 import { useCallback } from 'react';
 
-import styles from './layout.module.css';
+import styles from './object-editor.module.css';
 import { PrimitiveEditor } from './primitive-editor';
 import type { BaseProps } from '../types';
 
@@ -15,7 +15,7 @@ export function ObjectEditor<T extends object>({
   onChange,
   value,
   name,
-  testId = 'prop-editor',
+  testId,
 }: Props<T>) {
   const getChangeHandler = useCallback(
     <K extends keyof T>(propName: K) => {
@@ -26,15 +26,11 @@ export function ObjectEditor<T extends object>({
     [onChange, value]
   );
 
-  const properties = Object.keys(property.properties) as (keyof T)[];
+  const properties = getPropertiesNames(property);
 
   return (
-    <fieldset
-      className={cn(styles.fieldset)}
-      data-testid={`object-editor__${name}`}
-      data-name={name}
-    >
-      <legend className={cn(styles.legend)} data-testid="object-editor__name">
+    <fieldset className={cn(styles.fieldset)} data-testid={testId} data-name={name}>
+      <legend className={cn(styles.legend)} data-testid={`${testId}__label`}>
         {name}
       </legend>
       {properties.map((prop) =>
@@ -44,7 +40,7 @@ export function ObjectEditor<T extends object>({
             name={prop.toString()}
             property={property.properties[prop]}
             value={value[prop] as object}
-            testId={testId}
+            testId={`${testId}__${prop.toString()}`}
             onChange={getChangeHandler(prop) as ChangeHandler<object>}
           />
         ) : (
