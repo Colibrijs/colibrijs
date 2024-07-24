@@ -8,8 +8,8 @@ import { schema } from './schema';
 import { SidebarDecorator } from '../../layout/sidebar-decorator';
 import { PropsEditor, type Props } from '../props-editor';
 
-export type PropsEditorMeta = Meta<typeof PropsEditor>;
-export type Story = StoryObj<typeof PropsEditor>;
+export type PropsEditorMeta = Meta<typeof PropsEditor<Record<string, SchemaValues>>>;
+export type Story = StoryObj<typeof PropsEditor<Record<string, SchemaValues>>>;
 
 export default {
   component: Default,
