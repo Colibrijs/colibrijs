@@ -26,7 +26,7 @@ type PrimitiveProperties = {
 
 export type ObjectProperty<T> = {
   type: 'object';
-  description: string;
+  description?: string;
   properties: {
     // eslint-disable-next-line no-use-before-define -- по-другому никак
     [K in keyof T]: Property<T[K]>;
