@@ -41,7 +41,7 @@ export const BooleanEditorChange: Story = {
     const booleanEditor = new PropEditorTO(canvasElement, 'prop-editor');
 
     await step('Меняем состояние свитчера', async () => {
-      await booleanEditor.toggleSwitcher();
+      await booleanEditor.toggleSwitcher(step);
     });
 
     await step('Проверяем, что был вызван onChange с противоположным значением', () => {

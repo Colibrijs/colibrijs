@@ -1,4 +1,3 @@
-import type { SchemaValues } from '@colibrijs/schema';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
@@ -8,8 +7,8 @@ import { schema } from './schema';
 import { SidebarDecorator } from '../../layout/sidebar-decorator';
 import { PropsEditor, type Props } from '../props-editor';
 
-export type PropsEditorMeta = Meta<typeof PropsEditor<Record<string, SchemaValues>>>;
-export type Story = StoryObj<typeof PropsEditor<Record<string, SchemaValues>>>;
+export type PropsEditorMeta = Meta<typeof PropsEditor<object>>;
+export type Story = StoryObj<typeof PropsEditor<object>>;
 
 export default {
   component: Default,
@@ -26,11 +25,7 @@ export default {
   decorators: [SidebarDecorator],
 } satisfies PropsEditorMeta;
 
-export function Default<T extends Record<string, SchemaValues>>({
-  value,
-  schema,
-  onChange,
-}: Props<T>) {
+export function Default<T extends object>({ value, schema, onChange }: Props<T>) {
   const [currentValue, setCurrentValue] = useState(value);
   const changeHandler = useCallback(
     (newValue: T) => {

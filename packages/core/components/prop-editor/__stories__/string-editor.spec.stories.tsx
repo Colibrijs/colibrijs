@@ -32,7 +32,7 @@ export const StringEditorChange: Story = {
   play: async ({ canvasElement, step, args }) => {
     const stringEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
 
-    await stringEditorTO.setValue('Kek');
+    await stringEditorTO.setValue('Kek', step);
 
     await step('Проверяем, что вызвалось onChange событие с введенным текстом', () => {
       expect(args.onChange).toHaveBeenCalledWith('Kek');

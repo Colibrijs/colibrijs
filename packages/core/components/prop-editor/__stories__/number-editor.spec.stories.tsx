@@ -31,7 +31,7 @@ export const NumberEditorChange: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const numberEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
-    await numberEditorTO.setValue('227');
+    await numberEditorTO.setValue('227', step);
 
     await step('Проверяем, что вызвалось onChange событие с введенным числом', () => {
       expect(args.onChange).toHaveBeenCalledWith('227');

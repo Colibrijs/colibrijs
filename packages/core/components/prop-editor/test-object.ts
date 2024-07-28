@@ -1,6 +1,9 @@
+import type { StoryObj } from '@storybook/react';
 import { userEvent, within, type queries } from '@storybook/test';
 
 type ComponentElement = ReturnType<typeof within<typeof queries>>;
+type PlayFunctionContext = Parameters<NonNullable<StoryObj['play']>>[0];
+type StepFn = PlayFunctionContext['step'];
 
 export class PropEditorTO {
   private editorElement: HTMLElement;
@@ -11,10 +14,6 @@ export class PropEditorTO {
     this.editorElement = within(canvasElement).getByTestId(testId);
     this.component = within(this.editorElement);
     this.testId = testId;
-  }
-
-  async nextTick(): Promise<null> {
-    return await new Promise((resolve) => resolve(null));
   }
 
   getPropertyName() {
@@ -33,9 +32,11 @@ export class PropEditorTO {
     return this.component.getByTestId('prop-editor__switcher');
   }
 
-  async toggleSwitcher() {
-    const switcher = this.getSwitcher();
-    await userEvent.click(switcher);
+  async toggleSwitcher(step: StepFn) {
+    await step('Переключаю свитчер', async () => {
+      const switcher = this.getSwitcher();
+      await userEvent.click(switcher);
+    });
   }
 
   getValue() {
@@ -48,7 +49,7 @@ export class PropEditorTO {
     }
   }
 
-  async setValue(value: string | boolean) {
+  async setValue(value: string | boolean, step: StepFn) {
     const { type } = this.editorElement.dataset;
 
     if (type === 'boolean') {
@@ -60,8 +61,10 @@ export class PropEditorTO {
         await userEvent.click(switcher);
       }
     } else {
-      const input = this.getInput();
-      await userEvent.type(input, value as string);
+      await step('Ввожу значение в инпут', async () => {
+        const input = this.getInput();
+        await userEvent.type(input, value as string);
+      });
     }
   }
 }

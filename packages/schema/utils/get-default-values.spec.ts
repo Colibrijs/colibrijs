@@ -70,4 +70,36 @@ describe(getDefaultValues.name, () => {
 
     expect(defaultValues).toStrictEqual({ isBald: false });
   });
+
+  it('возвращает объект с вложенными объектами, если таковые переданы в properties схемы', () => {
+    expect.assertions(1);
+    const objExample = {
+      ...schema,
+      properties: {
+        age: {
+          description: 'Your age',
+          type: 'number' as const,
+        },
+        nestedObj: {
+          description: 'obj',
+          type: 'object' as const,
+          properties: {
+            isBald: {
+              description: 'Your hair availability',
+              type: 'boolean' as const,
+            },
+          },
+        },
+      },
+    };
+
+    const defaultValues = getDefaultValues(objExample);
+
+    expect(defaultValues).toStrictEqual({
+      age: 0,
+      nestedObj: {
+        isBald: false,
+      },
+    });
+  });
 });
