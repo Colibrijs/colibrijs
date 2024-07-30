@@ -20,7 +20,7 @@ export const ChangeEvent: Story = {
     },
   },
   play: async ({ args, canvasElement, step }) => {
-    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
+    const nameEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__name');
     const nameInput = nameEditorTO.getInput()!;
 
     await step('Вводим слово "Кек" в первый инпут', async () => {
@@ -36,9 +36,9 @@ export const ChangeEvent: Story = {
 export const LabelFields: Story = {
   name: 'При передаче схемы, отрисовываются поля с лейблами из JSON-схемы',
   play: async ({ canvasElement, step }) => {
-    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
-    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
-    const isBaldEditorTO = new PropEditorTO(canvasElement, 'props-editor__isBald');
+    const nameEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__age');
+    const isBaldEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__isBald');
 
     await step('Ищем все поля и убеждаемся что лейблы соответствуют тем, что в схеме', () => {
       const nameLabel = nameEditorTO.getPropertyName();
@@ -63,8 +63,8 @@ export const DefaultValues: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
-    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
-    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
+    const nameEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся что значения соответствуют тем, что в пропсе', () => {
       const nameInput = nameEditorTO.getInput();
@@ -87,8 +87,8 @@ export const Description: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
-    const nameEditorTO = new PropEditorTO(canvasElement, 'props-editor__name');
-    const ageEditorTO = new PropEditorTO(canvasElement, 'props-editor__age');
+    const nameEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__name');
+    const ageEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__age');
 
     await step('Ищем все поля и убеждаемся описание соответствуют тем, что в схеме', () => {
       const nameDescription = nameEditorTO.getPropertyDescription();
