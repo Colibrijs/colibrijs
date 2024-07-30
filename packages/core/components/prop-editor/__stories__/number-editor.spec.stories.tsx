@@ -65,7 +65,7 @@ export const NumberEditorDescription: Story = {
     const numberEditorTO = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     const description = numberEditorTO.getPropertyDescription();
 
-    expect(
+    await expect(
       description,
       'Проверяем, что описание инпута - значение пропса property.description'
     ).toHaveTextContent('num-description');

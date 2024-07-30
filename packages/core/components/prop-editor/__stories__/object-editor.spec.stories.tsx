@@ -50,7 +50,7 @@ export const ObjectMainName: Story = {
     const objectEditor = new PropEditorTO({ canvasElement, step }, 'object-editor');
     const name = objectEditor.getPropertyName();
 
-    expect(name, 'Проверяем, что именование объекта равно пропсу name').toHaveTextContent(
+    await expect(name, 'Проверяем, что именование объекта равно пропсу name').toHaveTextContent(
       'mainObject'
     );
   },

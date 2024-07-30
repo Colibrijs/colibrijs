@@ -82,7 +82,7 @@ export const BooleanEditorDescription: Story = {
     const booleanEditor = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     const description = booleanEditor.getPropertyDescription();
 
-    expect(
+    await expect(
       description,
       'Проверяем, что описание свитчера - значение пропса property.description'
     ).toHaveTextContent('bool-description');

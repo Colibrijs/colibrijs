@@ -52,7 +52,7 @@ export const StringEditorName: Story = {
     const stringEditorTO = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     const name = stringEditorTO.getPropertyName();
 
-    expect(name, 'Проверяем, что именование инпута - значение пропса name').toHaveTextContent(
+    await expect(name, 'Проверяем, что именование инпута - значение пропса name').toHaveTextContent(
       'Name'
     );
   },

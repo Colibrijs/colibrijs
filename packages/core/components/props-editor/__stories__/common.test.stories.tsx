@@ -40,14 +40,14 @@ export const LabelFields: Story = {
     const ageEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__age');
     const isBaldEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__isBald');
 
-    await step('Ищем все поля и убеждаемся что лейблы соответствуют тем, что в схеме', () => {
+    await step('Ищем все поля и убеждаемся что лейблы соответствуют тем, что в схеме', async () => {
       const nameLabel = nameEditorTO.getPropertyName();
       const ageLabel = ageEditorTO.getPropertyName();
       const isBaldLabel = isBaldEditorTO.getPropertyName();
 
-      expect(nameLabel).toHaveTextContent('name');
-      expect(ageLabel).toHaveTextContent('age');
-      expect(isBaldLabel).toHaveTextContent('isBald');
+      await expect(nameLabel).toHaveTextContent('name');
+      await expect(ageLabel).toHaveTextContent('age');
+      await expect(isBaldLabel).toHaveTextContent('isBald');
     });
   },
 };
@@ -90,12 +90,12 @@ export const Description: Story = {
     const nameEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__name');
     const ageEditorTO = new PropEditorTO({ canvasElement, step }, 'props-editor__age');
 
-    await step('Ищем все поля и убеждаемся описание соответствуют тем, что в схеме', () => {
+    await step('Ищем все поля и убеждаемся описание соответствуют тем, что в схеме', async () => {
       const nameDescription = nameEditorTO.getPropertyDescription();
       const ageDescription = ageEditorTO.getPropertyDescription();
 
-      expect(nameDescription).toHaveTextContent('Your name');
-      expect(ageDescription).toHaveTextContent('Your age');
+      await expect(nameDescription).toHaveTextContent('Your name');
+      await expect(ageDescription).toHaveTextContent('Your age');
     });
   },
 };
