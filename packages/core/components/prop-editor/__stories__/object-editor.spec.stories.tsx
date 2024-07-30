@@ -47,12 +47,12 @@ export default {
 export const ObjectMainName: Story = {
   name: 'Главный объект имеет заголовок из пропа name',
   play: async ({ canvasElement, step }) => {
-    const objectEditor = new PropEditorTO(canvasElement, 'object-editor');
+    const objectEditor = new PropEditorTO({ canvasElement, step }, 'object-editor');
     const name = objectEditor.getPropertyName();
 
-    step('Проверяем, что именование объекта равно пропсу name', () => {
-      expect(name).toHaveTextContent('mainObject');
-    });
+    expect(name, 'Проверяем, что именование объекта равно пропсу name').toHaveTextContent(
+      'mainObject'
+    );
   },
 };
 
@@ -60,14 +60,15 @@ export const NestedObjectsName: Story = {
   name: 'Корректно именуются вложенные объекты',
   play: async ({ canvasElement, step }) => {
     const additionalInformation = new PropEditorTO(
-      canvasElement,
+      { canvasElement, step },
       'object-editor__additionalInformation'
     );
     const additionalInformationName = additionalInformation.getPropertyName();
 
-    step('Проверяем, что имя объекта - именование свойства из properties пропа property', () => {
-      expect(additionalInformationName).toHaveTextContent('additionalInformation');
-    });
+    expect(
+      additionalInformationName,
+      'Проверяем, что имя объекта - именование свойства из properties пропа property'
+    ).toHaveTextContent('additionalInformation');
   },
 };
 
@@ -77,21 +78,19 @@ export const ValueChanging: Story = {
     onChange: fn(),
   },
   play: async ({ canvasElement, args, step }) => {
-    const numberEditor = new PropEditorTO(canvasElement, 'object-editor__age');
-    await numberEditor.setValue('1', step);
+    const numberEditor = new PropEditorTO({ canvasElement, step }, 'object-editor__age');
+    await numberEditor.setValue('1');
 
-    step(
-      'Убеждаемся, что вызвался onChange со значениями из value, а так же с измененными данными age',
-      () => {
-        expect(args.onChange).toHaveBeenCalledWith({
-          name: 'kek',
-          age: 111,
-          additionalInformation: {
-            isBald: true,
-          },
-        });
-      }
-    );
+    expect(
+      args.onChange,
+      'Убеждаемся, что вызвался onChange со значениями из value, а так же с измененными данными age'
+    ).toHaveBeenCalledWith({
+      name: 'kek',
+      age: 111,
+      additionalInformation: {
+        isBald: true,
+      },
+    });
   },
 };
 
@@ -103,14 +102,14 @@ export const CorrectDefaultValues: Story = {
     name: 'mainObject',
   },
   play: async ({ canvasElement, step }) => {
-    const nameEditor = new PropEditorTO(canvasElement, 'object-editor__name');
+    const nameEditor = new PropEditorTO({ canvasElement, step }, 'object-editor__name');
     const nameValue = nameEditor.getValue();
 
-    const ageEditor = new PropEditorTO(canvasElement, 'object-editor__age');
+    const ageEditor = new PropEditorTO({ canvasElement, step }, 'object-editor__age');
     const ageValue = ageEditor.getValue();
 
     const isBaldEditor = new PropEditorTO(
-      canvasElement,
+      { canvasElement, step },
       'object-editor__additionalInformation__isBald'
     );
     const isBaldValue = isBaldEditor.getValue();
