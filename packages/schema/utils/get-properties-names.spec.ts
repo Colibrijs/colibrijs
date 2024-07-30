@@ -8,6 +8,7 @@ const schema: JsonSchema<Record<string, string>> = {
   $id: 'user',
   title: 'User',
   type: 'object',
+  description: 'schema',
   properties: {
     name: {
       description: 'Your name',

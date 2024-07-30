@@ -1,18 +1,30 @@
+import type { StoryObj } from '@storybook/react';
 import { userEvent, within, type queries } from '@storybook/test';
 
 type ComponentElement = ReturnType<typeof within<typeof queries>>;
+type PlayFunctionContext = Parameters<NonNullable<StoryObj['play']>>[0];
+type StepFn = PlayFunctionContext['step'];
+
+interface Options {
+  canvasElement: HTMLElement;
+  step: StepFn;
+}
 
 export class PropEditorTO {
   private editorElement: HTMLElement;
   private component: ComponentElement;
+  private testId: string;
+  private step: StepFn;
 
-  constructor(canvasElement: HTMLElement, testId: string) {
+  constructor({ canvasElement, step }: Options, testId: string) {
+    this.step = step;
     this.editorElement = within(canvasElement).getByTestId(testId);
     this.component = within(this.editorElement);
+    this.testId = testId;
   }
 
   getPropertyName() {
-    return this.component.getByTestId('prop-editor__label');
+    return this.component.getByTestId(`${this.testId}__label`);
   }
 
   getPropertyDescription() {
@@ -28,8 +40,10 @@ export class PropEditorTO {
   }
 
   async toggleSwitcher() {
-    const switcher = this.getSwitcher();
-    await userEvent.click(switcher);
+    await this.step('Переключаю свитчер', async () => {
+      const switcher = this.getSwitcher();
+      await userEvent.click(switcher);
+    });
   }
 
   getValue() {
@@ -48,14 +62,20 @@ export class PropEditorTO {
     if (type === 'boolean') {
       const switcher = this.getSwitcher();
       if (value === true && switcher.ariaChecked === 'false') {
-        await userEvent.click(switcher);
+        await this.step('Привожу свитчер в чекнутое состояние', async () => {
+          await userEvent.click(switcher);
+        });
       }
       if (value === false && switcher.ariaChecked === 'true') {
-        await userEvent.click(switcher);
+        await this.step('Привожу свитчер в нечекнутое состояние', async () => {
+          await userEvent.click(switcher);
+        });
       }
     } else {
-      const input = this.getInput();
-      await userEvent.type(input, value as string);
+      await this.step('Ввожу значение в инпут', async () => {
+        const input = this.getInput();
+        await userEvent.type(input, value as string);
+      });
     }
   }
 }

@@ -1,9 +1,5 @@
-import type { SchemaValues } from '@colibrijs/schema';
+import type { ObjectProperty } from '../types';
 
-import type { JsonSchema } from '../types';
-
-export function getPropertiesNames<T extends Record<string, SchemaValues>>(
-  jsonSchema: JsonSchema<T>
-): string[] {
-  return Object.keys(jsonSchema.properties);
+export function getPropertiesNames<T extends object>(property: ObjectProperty<T>): (keyof T)[] {
+  return Object.keys(property.properties) as (keyof T)[];
 }

@@ -14,12 +14,10 @@ export const NumberEditorValue: Story = {
     value: 228,
   },
   play: async ({ canvasElement, step }) => {
-    const numberEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const numberEditorTO = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     const input = numberEditorTO.getInput();
 
-    await step('Проверяем, что инпуте значение из пропса value', () => {
-      expect(input).toHaveValue('228');
-    });
+    expect(input, 'Проверяем, что инпуте значение из пропса value').toHaveValue('228');
   },
 };
 
@@ -30,12 +28,13 @@ export const NumberEditorChange: Story = {
     onChange: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
-    const numberEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const numberEditorTO = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     await numberEditorTO.setValue('227');
 
-    await step('Проверяем, что вызвалось onChange событие с введенным числом', () => {
-      expect(args.onChange).toHaveBeenCalledWith('227');
-    });
+    expect(
+      args.onChange,
+      'Проверяем, что вызвалось onChange событие с введенным числом'
+    ).toHaveBeenCalledWith('227');
   },
 };
 
@@ -45,12 +44,12 @@ export const NumberEditorName: Story = {
     name: 'num-name',
   },
   play: async ({ canvasElement, step }) => {
-    const numberEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const numberEditorTO = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     const name = numberEditorTO.getPropertyName();
 
-    await step('Проверяем, что именование инпута - значение пропса name', () => {
-      expect(name).toHaveTextContent('num-name');
-    });
+    expect(name, 'Проверяем, что именование инпута - значение пропса name').toHaveTextContent(
+      'num-name'
+    );
   },
 };
 
@@ -63,11 +62,12 @@ export const NumberEditorDescription: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
-    const numberEditorTO = new PropEditorTO(canvasElement, 'prop-editor');
+    const numberEditorTO = new PropEditorTO({ canvasElement, step }, 'prop-editor');
     const description = numberEditorTO.getPropertyDescription();
 
-    await step('Проверяем, что описание инпута - значение пропса property.description', () => {
-      expect(description).toHaveTextContent('num-description');
-    });
+    await expect(
+      description,
+      'Проверяем, что описание инпута - значение пропса property.description'
+    ).toHaveTextContent('num-description');
   },
 };

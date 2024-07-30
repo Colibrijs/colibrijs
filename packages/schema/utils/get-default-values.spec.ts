@@ -1,9 +1,9 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { getDefaultValues } from './get-default-values';
-import type { JsonSchema, SchemaValues } from '../types';
+import type { JsonSchema, ObjectProperty } from '../types';
 
-const schema: JsonSchema<Record<string, SchemaValues>> = {
+const schema: JsonSchema<object> = {
   $schema: 'https://json-schema.org/draft/2020-12/schema',
   $id: 'user',
   title: 'User',
@@ -22,7 +22,7 @@ describe(getDefaultValues.name, () => {
   it('возвращает объект со значением у свойства в виде пустой строки, если type = "string"', () => {
     expect.assertions(1);
 
-    const stringExample = {
+    const stringExample: ObjectProperty<object> = {
       ...schema,
       properties: {
         name: {
@@ -39,7 +39,7 @@ describe(getDefaultValues.name, () => {
 
   it('возвращает объект со значением 0 у свойства, если type = "number"', () => {
     expect.assertions(1);
-    const numberExample = {
+    const numberExample: ObjectProperty<object> = {
       ...schema,
       properties: {
         age: {
@@ -56,7 +56,7 @@ describe(getDefaultValues.name, () => {
 
   it('возвращает объект со значением false у свойства, если type = "boolean"', () => {
     expect.assertions(1);
-    const booleanExample = {
+    const booleanExample: ObjectProperty<object> = {
       ...schema,
       properties: {
         isBald: {
@@ -69,5 +69,37 @@ describe(getDefaultValues.name, () => {
     const defaultValues = getDefaultValues(booleanExample);
 
     expect(defaultValues).toStrictEqual({ isBald: false });
+  });
+
+  it('возвращает объект с вложенными объектами, если таковые переданы в properties схемы', () => {
+    expect.assertions(1);
+    const objExample: ObjectProperty<object> = {
+      ...schema,
+      properties: {
+        age: {
+          description: 'Your age',
+          type: 'number' as const,
+        },
+        nestedObj: {
+          description: 'obj',
+          type: 'object' as const,
+          properties: {
+            isBald: {
+              description: 'Your hair availability',
+              type: 'boolean' as const,
+            },
+          },
+        },
+      },
+    };
+
+    const defaultValues = getDefaultValues(objExample);
+
+    expect(defaultValues).toStrictEqual({
+      age: 0,
+      nestedObj: {
+        isBald: false,
+      },
+    });
   });
 });

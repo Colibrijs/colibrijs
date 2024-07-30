@@ -15,8 +15,9 @@ export function NumberEditor({ onChange, value, property, name, testId }: BasePr
   return (
     <Form.Item
       data-type="number"
+      layout="vertical"
       data-testid={testId}
-      label={<span data-testid="prop-editor__label">{name}</span>}
+      label={<span data-testid={`${testId}__label`}>{name}</span>}
       help={<span data-testid="prop-editor__description">{property.description}</span>}
     >
       <InputNumber

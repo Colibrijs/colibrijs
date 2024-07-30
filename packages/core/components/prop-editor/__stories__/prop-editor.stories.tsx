@@ -8,8 +8,8 @@ import { SidebarDecorator } from '../../layout/sidebar-decorator';
 import { PropEditor } from '../prop-editor';
 import type { BaseProps } from '../types';
 
-export type PropEditorMeta = Meta<typeof PropEditor>;
-export type Story = StoryObj<typeof PropEditor>;
+export type PropEditorMeta = Meta<typeof PropEditor<SchemaValues>>;
+export type Story = StoryObj<typeof PropEditor<SchemaValues>>;
 
 export default {
   component: Default,
@@ -22,11 +22,18 @@ export default {
     },
     value: 'some valuev',
     name: 'name',
+    testId: 'prop-editor',
   },
   decorators: [SidebarDecorator],
 } satisfies PropEditorMeta;
 
-export function Default<T extends SchemaValues>({ name, value, property, onChange }: BaseProps<T>) {
+export function Default<T>({
+  name,
+  value,
+  property,
+  testId = 'prop-editor',
+  onChange,
+}: BaseProps<T>) {
   const [currentValue, setCurrentValue] = useState(value);
   const changeHandler = useCallback(
     (newValue: T) => {
@@ -39,10 +46,54 @@ export function Default<T extends SchemaValues>({ name, value, property, onChang
   return (
     <PropEditor
       name={name}
-      testId="prop-editor"
+      testId={testId}
       value={currentValue}
       property={property}
       onChange={changeHandler}
     />
   );
 }
+
+export const ObjectExampleStory: Story = {
+  render: function <T>(args: BaseProps<T>) {
+    const [currentValue, setCurrentValue] = useState(args.value);
+    const changeHandler = useCallback(
+      (newValue: T) => {
+        args.onChange(newValue);
+        setCurrentValue(newValue);
+      },
+      [args]
+    );
+
+    return <PropEditor {...args} value={currentValue} onChange={changeHandler} />;
+  },
+  args: {
+    name: 'objectName',
+    value: { age: 228, name: 'kek', obj: { isBald: true } },
+    property: {
+      type: 'object',
+      description: 'kek',
+      properties: {
+        age: {
+          type: 'number',
+          description: 'its a number',
+        },
+        name: {
+          type: 'string',
+          description: 'its a string',
+        },
+        obj: {
+          type: 'object',
+          description: 'its an object',
+          properties: {
+            isBald: {
+              type: 'boolean',
+              description: 'its a boolean',
+            },
+          },
+        },
+      },
+    },
+    onChange: fn(),
+  },
+};

@@ -1,12 +1,21 @@
-import type { JsonSchema, SchemaValues } from '../types';
+import { getPropertiesNames } from './get-properties-names';
+import type { ObjectProperty } from '../types';
 
-export function getDefaultValues<T extends Record<string, SchemaValues>>(schema: JsonSchema<T>): T {
-  const keys = Object.keys(schema.properties);
-  const defaultValues = keys.reduce((obj: Record<string, SchemaValues>, key: string) => {
-    if (schema.properties[key]?.type === 'number') obj[key] = 0;
-    if (schema.properties[key]?.type === 'string') obj[key] = '';
-    if (schema.properties[key]?.type === 'boolean') obj[key] = false;
-    return obj;
-  }, {});
+export function getDefaultValues<T extends object>(schema: ObjectProperty<T>): T {
+  const defaultValues = getPropertiesValues(schema);
   return defaultValues as T;
+}
+
+function getPropertiesValues<T extends object>(property: ObjectProperty<T>): T {
+  const keys = getPropertiesNames(property);
+  return keys.reduce((obj, key) => {
+    if (property.properties[key].type === 'number') (obj[key] as number) = 0;
+    if (property.properties[key].type === 'string') (obj[key] as string) = '';
+    if (property.properties[key].type === 'boolean') (obj[key] as boolean) = false;
+    if (property.properties[key].type === 'object')
+      (obj[key] as object) = getPropertiesValues(
+        property.properties[key] as ObjectProperty<object>
+      );
+    return obj;
+  }, {} as T);
 }
