@@ -12,23 +12,26 @@ export interface Props {
   element: IElement;
   onRemove: () => void;
   onEdit: (newProps: object) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export function ElementEditor({ element, onRemove, onEdit }: Props) {
-  const [startProps] = useState(structuredClone(element.props));
+export function ElementEditor({ element, onRemove, onEdit, isOpen, onClose }: Props) {
+  const [startProps, setStartProps] = useState(JSON.stringify(element.props));
   const api = useApi();
   const queryClient = useQueryClient();
 
   const showSaveButton = useMemo(() => {
-    return JSON.stringify(startProps) !== JSON.stringify(element.props);
+    return startProps !== JSON.stringify(element.props);
   }, [element.props, startProps]);
 
   const changeElementHandler = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
       try {
-        onEdit(JSON.parse(event.target.value));
+        const newValue = JSON.parse(event.target.value);
+        onEdit(newValue);
       } catch (error) {
-        alert('Ты за баазром-то следи');
+        alert('Ты за базаром-то следи');
       }
     },
     [onEdit]
@@ -43,6 +46,7 @@ export function ElementEditor({ element, onRemove, onEdit }: Props) {
           Элемент “{element.component.name}” успешно обновлен
         </span>
       );
+      setStartProps(JSON.stringify(element.props));
     },
     onError: (error) => {
       message.error(<span data-testid="element-remove__error">{error.message}</span>);
@@ -53,9 +57,9 @@ export function ElementEditor({ element, onRemove, onEdit }: Props) {
 
   return (
     <Drawer
-      open={Boolean(element)}
+      open={isOpen}
       mask={false}
-      title={<span data-testid="element-editor-drawer__title">{element?.component.name}</span>}
+      title={<span data-testid="element-editor-drawer__title">{element.component.name}</span>}
       data-testid="element-editor-drawer"
       extra={
         <Space>
@@ -64,16 +68,15 @@ export function ElementEditor({ element, onRemove, onEdit }: Props) {
               loading={isPending}
               icon={<CheckOutlined />}
               htmlType="button"
-              data-testid="element-remove"
+              data-testid="element-editor__save"
               shape="circle"
-              danger
-              ghost
               onClick={onClick}
             />
           )}
           <ElementRemove onRemove={onRemove} element={element} />
         </Space>
       }
+      onClose={onClose}
     >
       {element && (
         <Input.TextArea

@@ -11,20 +11,39 @@ import { ElementEditor, type Props } from '../element-editor';
 export type ElementRemoveMeta = Meta<WithMockedApi<Props>>;
 export type ElementRemoveStory = StoryObj<WithMockedApi<Props>>;
 
-function Wrapper({ element, onEdit, onRemove }: Props) {
+function Wrapper({ element, onEdit, onRemove, onClose }: Props) {
   const [elementExample, setElementExample] = useState(element);
+  const [open, setOpen] = useState(true);
+
+  const closeHandler = useCallback(() => {
+    setOpen(false);
+    onClose();
+  }, [onClose]);
 
   const editHandler = useCallback(
     (props: object) => {
       onEdit(props);
-      const elementClone = structuredClone(elementExample);
-      elementClone.props = props;
-      setElementExample(elementClone);
+      setElementExample({ ...elementExample, props });
     },
     [elementExample, onEdit]
   );
 
-  return <ElementEditor element={elementExample} onRemove={onRemove} onEdit={editHandler} />;
+  const onOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  return (
+    <>
+      <button onClick={onOpen}>Открыть эдитор</button>
+      <ElementEditor
+        element={elementExample}
+        onRemove={onRemove}
+        onEdit={editHandler}
+        isOpen={open}
+        onClose={closeHandler}
+      />
+    </>
+  );
 }
 
 export default {
@@ -34,6 +53,7 @@ export default {
     element: mockedElement,
     onRemove: fn(),
     onEdit: fn(),
+    onClose: fn(),
   },
   decorators: [
     (Story) => {
