@@ -17,22 +17,24 @@ export interface Props {
 }
 
 export function ElementEditor({ element, onRemove, onEdit, isOpen, onClose }: Props) {
-  const [startProps, setStartProps] = useState(JSON.stringify(element.props));
+  const [lastSavedProps, setLastSavedProps] = useState(JSON.stringify(element.props));
   const api = useApi();
   const queryClient = useQueryClient();
 
   const showSaveButton = useMemo(() => {
-    return startProps !== JSON.stringify(element.props);
-  }, [element.props, startProps]);
+    return lastSavedProps !== JSON.stringify(element.props);
+  }, [element.props, lastSavedProps]);
 
   const changeElementHandler = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
+      let newValue = {};
       try {
-        const newValue = JSON.parse(event.target.value);
-        onEdit(newValue);
+        newValue = JSON.parse(event.target.value);
       } catch (error) {
         alert('Ты за базаром-то следи');
+        return;
       }
+      onEdit(newValue);
     },
     [onEdit]
   );
@@ -46,7 +48,7 @@ export function ElementEditor({ element, onRemove, onEdit, isOpen, onClose }: Pr
           Элемент “{element.component.name}” успешно обновлен
         </span>
       );
-      setStartProps(JSON.stringify(element.props));
+      setLastSavedProps(JSON.stringify(element.props));
     },
     onError: (error) => {
       message.error(<span data-testid="element-remove__error">{error.message}</span>);
@@ -78,13 +80,11 @@ export function ElementEditor({ element, onRemove, onEdit, isOpen, onClose }: Pr
       }
       onClose={onClose}
     >
-      {element && (
-        <Input.TextArea
-          value={JSON.stringify(element.props, null, 2)}
-          onInput={changeElementHandler}
-          autoSize
-        />
-      )}
+      <Input.TextArea
+        value={JSON.stringify(element.props, null, 2)}
+        onInput={changeElementHandler}
+        autoSize
+      />
     </Drawer>
   );
 }
