@@ -10,9 +10,9 @@ export default {
   title: 'ElementEditor/tests/Common',
 } satisfies ElementEditorMeta;
 
-export const IsOpenProp: ElementEditorStory = {
+export const OpenProp: ElementEditorStory = {
   name: 'Кнопка-галчонок появляется в случае, если изначальные пропсы отличаются от редактированных',
-  args: { isOpen: true, element: { ...exampleElement } },
+  args: { open: true, element: exampleElement },
   play: async ({ step }) => {
     const textarea = screen.getByTestId('element-editor__textarea');
 
@@ -25,16 +25,14 @@ export const IsOpenProp: ElementEditorStory = {
       fireEvent.input(textarea, { target: { value: '{\n "title": "Заголовок1"\n}' } });
     });
 
-    step('Убедимся, что галчонок отныне виден', () => {
-      const saveButton = screen.getByTestId('element-editor__save');
-      expect(saveButton).toBeVisible();
-    });
+    const saveButton = screen.getByTestId('element-editor__save');
+    expect(saveButton, 'Убедимся, что галчонок отныне виден').toBeVisible();
   },
 };
 
 export const SuccessRequest: ElementEditorStory = {
   name: 'Клик по галчонку, в положительном исходе делает запрос на api.elements.patch с идом элемента и новыми пропсами',
-  args: { isOpen: true, element: { ...exampleElement } },
+  args: { open: true, element: exampleElement },
   decorators: [
     withMockedApi((apiClient) => {
       apiClient.override({
@@ -54,16 +52,17 @@ export const SuccessRequest: ElementEditorStory = {
     await step('Сохраним изменения', async () => {
       const saveButton = screen.getByTestId('element-editor__save');
       await userEvent.click(saveButton);
-      expect(args.apiClient.elements.patch).toHaveBeenCalledWith(args.element.id, {
-        title: 'Заголовок1',
-      });
+    });
+
+    expect(args.apiClient.elements.patch).toHaveBeenCalledWith(args.element.id, {
+      title: 'Заголовок1',
     });
   },
 };
 
 export const FailRequest: ElementEditorStory = {
   name: 'Клик по галчонку в случае ошибки выдаст попап с текстом ошибки',
-  args: { isOpen: true, element: { ...exampleElement } },
+  args: { open: true, element: exampleElement },
   decorators: [
     withMockedApi((apiClient) => {
       apiClient.override({
@@ -87,9 +86,9 @@ export const FailRequest: ElementEditorStory = {
       await userEvent.click(saveButton);
     });
 
-    await step('Получаем ошибку с унижениями', async () => {
-      const errorMessage = await screen.findByTestId('element-remove__error');
-      expect(errorMessage).toHaveTextContent('Заплати за интернет, олух!');
-    });
+    const errorMessage = await screen.findByTestId('element-remove__error');
+    expect(errorMessage, 'Получаем ошибку с унижениями').toHaveTextContent(
+      'Заплати за интернет, олух!'
+    );
   },
 };

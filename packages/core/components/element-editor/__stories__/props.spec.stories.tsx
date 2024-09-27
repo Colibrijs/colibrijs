@@ -10,9 +10,9 @@ export default {
   title: 'ElementEditor/tests/Props',
 } satisfies ElementEditorMeta;
 
-export const IsOpenProp: ElementEditorStory = {
-  name: 'При передаче isOpen пропса, модалка открыта',
-  args: { isOpen: true },
+export const OpenProp: ElementEditorStory = {
+  name: 'При передаче open пропса, модалка открыта',
+  args: { open: true },
   play: async () => {
     const modal = await screen.findByTestId('element-editor');
 
@@ -22,7 +22,7 @@ export const IsOpenProp: ElementEditorStory = {
 
 export const OnCloseProp: ElementEditorStory = {
   name: 'При клике на крестик, вызывается onClose пропс',
-  args: { isOpen: true, onClose: fn() },
+  args: { open: true, onClose: fn() },
   play: async ({ args }) => {
     const modal = await screen.findByTestId('element-editor');
     const closeButton = modal.querySelector('.ant-drawer-close')!;

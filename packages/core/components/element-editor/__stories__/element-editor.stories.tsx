@@ -39,7 +39,7 @@ function Wrapper({ element, onEdit, onRemove, onClose }: Props) {
         element={elementExample}
         onRemove={onRemove}
         onEdit={editHandler}
-        isOpen={open}
+        open={open}
         onClose={closeHandler}
       />
     </>

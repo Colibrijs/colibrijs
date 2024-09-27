@@ -11,11 +11,11 @@ export interface Props {
   element: IElement;
   onRemove: () => void;
   onEdit: (newProps: object) => void;
-  isOpen: boolean;
+  open: boolean;
   onClose: () => void;
 }
 
-export function ElementEditor({ element, onRemove, onEdit, isOpen, onClose }: Props) {
+export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Props) {
   const [lastSavedProps, setLastSavedProps] = useState(JSON.stringify(element.props));
   const api = useApi();
   const queryClient = useQueryClient();
@@ -58,7 +58,7 @@ export function ElementEditor({ element, onRemove, onEdit, isOpen, onClose }: Pr
 
   return (
     <Drawer
-      open={isOpen}
+      open={open}
       mask={false}
       title={<span data-testid="element-editor__title">{element.component.name}</span>}
       data-testid="element-editor"
