@@ -8,8 +8,8 @@ import { useCallback, useState } from 'react';
 import { withMockedApi, type WithMockedApi } from '../../../hooks/use-api/mocked';
 import { ElementEditor, type Props } from '../element-editor';
 
-export type ElementRemoveMeta = Meta<WithMockedApi<Props>>;
-export type ElementRemoveStory = StoryObj<WithMockedApi<Props>>;
+export type ElementEditorMeta = Meta<WithMockedApi<Props>>;
+export type ElementEditorStory = StoryObj<WithMockedApi<Props>>;
 
 function Wrapper({ element, onEdit, onRemove, onClose }: Props) {
   const [elementExample, setElementExample] = useState(element);
@@ -71,6 +71,6 @@ export default {
       });
     }),
   ],
-} satisfies ElementRemoveMeta;
+} satisfies ElementEditorMeta;
 
-export const Default: ElementRemoveStory = {};
+export const Default: ElementEditorStory = {};
