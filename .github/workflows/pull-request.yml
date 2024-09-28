@@ -32,6 +32,7 @@ jobs:
         run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
   test:
+    needs: build
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.44.1-jammy
@@ -41,8 +42,11 @@ jobs:
         uses: ./.github/workflows/prepare-environment
       - name: Test unit
         run: npm run test:unit
-      - name: run storybook
-        run: npm run dev:core
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server ./packages/core/storybook-static --port 6006 --silent" \
+            "npx wait-storybook tcp:127.0.0.1:6006 && npm run test-storybook"
       - name: Wait storybook
         run: |
           npm exec wait-storybook -- \
@@ -61,7 +65,7 @@ jobs:
           path: ./playwright-report
 
   deploy:
-    needs: build
+    needs: test
     permissions:
       contents: write
     uses: ./.github/workflows/deploy-github-pages.yml
