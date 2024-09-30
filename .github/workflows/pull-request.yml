@@ -45,13 +45,13 @@ jobs:
       - name: Download storybook
         uses: actions/download-artifact@v4
         with:
-          name: storybook
+          name: ${{ needs.build.outputs.storybook-artifact-name }}
           path: ./packages/core/storybook-static
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
           "npx http-server ./packages/core/storybook-static --port 6006 --silent" \
-          "npx wait-storybook --url http://localhost:6006 --commit-sha ${{ github.sha }} && npm run test:interactions -w @colibrijs/core"
+          "npm run test:interactions:local -w @colibrijs/core"
       - name: Test e2e
         run: npm run test:e2e
         env:
