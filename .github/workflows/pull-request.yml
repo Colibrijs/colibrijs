@@ -42,6 +42,11 @@ jobs:
         uses: ./.github/workflows/prepare-environment
       - name: Test unit
         run: npm run test:unit
+      - name: Download storybook
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook
+          path: ./packages/core/storybook-static
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
