@@ -8,7 +8,7 @@
     "storybook:build": "storybook build",
     "test:interactions": "test-storybook",
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook",
-    "storybook:serve": "http-server ./packages/core/storybook-static --port 6006 --silent"
+    "storybook:serve": "http-server ./storybook-static --port 6006 --silent"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",

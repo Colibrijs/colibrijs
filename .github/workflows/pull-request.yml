@@ -50,7 +50,7 @@ jobs:
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-          "npx http-server ./packages/core/storybook-static --port 6006 --silent" \
+          "npm run storybook:serve -w @colibrijs/core" \
           "npm run test:interactions:local -w @colibrijs/core"
       - name: Test e2e
         run: npm run test:e2e
