@@ -1,9 +1,13 @@
 import { PlusOutlined } from '@ant-design/icons';
-import type { IElement } from '@colibrijs/types';
+import type { IElement, IElementConstructorOptions } from '@colibrijs/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Drawer, Flex, Input, Tree, type TreeDataNode, Tooltip, Typography } from 'antd';
 import { useCallback, useMemo, useState, type Key, type ChangeEvent } from 'react';
 
 import styles from './content-editor.module.css';
+import { useApi, ELEMENTS_KEY } from '../../hooks/use-api';
+
+import { ElementAdd } from '../element-add';
 
 export interface Props {
   content: IElement[];
@@ -11,11 +15,28 @@ export interface Props {
 }
 
 export function ContentEditor({ content, onChange }: Props) {
+  const api = useApi();
+  const queryClient = useQueryClient();
+
+  const { mutate: addElement } = useMutation({
+    mutationFn: (element: IElementConstructorOptions) => api.elements.post(element),
+    // eslint-disable-next-line no-console -- вместо мониторинга, исправить на message.error
+    onError: (error) => console.error('Ошибка при добавлении элемента', error),
+    onSuccess: (element) => {
+      queryClient.invalidateQueries({ queryKey: [ELEMENTS_KEY] });
+
+      if (onChange) {
+        onChange([...content, element]);
+      }
+    },
+  });
+
   const [selectedElement, setSelectedElement] = useState<IElement | null>(null);
+  const [isElementAddOpen, setIsElementAddOpen] = useState(false);
 
   const treeData = useMemo(() => {
     return content.map(
-      (element): TreeDataNode => ({
+      (element: IElement): TreeDataNode => ({
         key: element.id,
         title: <span data-testid={`content-editor__${element.id}`}>{element.component.name}</span>,
         children: [],
@@ -40,8 +61,7 @@ export function ContentEditor({ content, onChange }: Props) {
 
   const selectHandler = useCallback(
     (selectedKeys: Key[]) => {
-      const foundElement = content.find((element) => selectedKeys.includes(element.id));
-
+      const foundElement = content.find((element: IElement) => selectedKeys.includes(element.id));
       if (!foundElement) {
         // eslint-disable-next-line no-console -- вместо мониторинга
         console.error('А как так вышло? Пользователь выбрал несуществующий элемент');
@@ -53,13 +73,29 @@ export function ContentEditor({ content, onChange }: Props) {
     [content]
   );
 
+  // Работа с формой добавления элемента
+  const openElementAddForm = useCallback(() => setIsElementAddOpen(true), []);
+  const closeElementAddForm = useCallback(() => setIsElementAddOpen(false), []);
+  const saveChanges = useCallback(
+    (element: IElementConstructorOptions) => {
+      addElement(element);
+    },
+    [addElement]
+  );
+
   return (
     <div className={styles.container} data-testid="content-editor">
+      <ElementAdd
+        open={isElementAddOpen}
+        pageId={'3'}
+        onClose={closeElementAddForm}
+        onReady={saveChanges}
+      />
       <Typography.Title level={3}>
         <Flex align="center" justify="space-between">
           <span>Контент</span>
           <Tooltip title="Добавить элемент">
-            <Button icon={<PlusOutlined />} />
+            <Button icon={<PlusOutlined />} onClick={openElementAddForm} />
           </Tooltip>
         </Flex>
       </Typography.Title>
