@@ -31,19 +31,8 @@ jobs:
       - name: Validate commits in pull request
         run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-  deploy:
-    needs: build
-    permissions:
-      contents: write
-    uses: ./.github/workflows/deploy-github-pages.yml
-    secrets: inherit
-    with:
-      example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
-      storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
-      swagger-artifact-name: ${{ needs.build.outputs.swagger-artifact-name }}
-
   test:
-    needs: deploy
+    needs: build
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.44.1-jammy
@@ -53,13 +42,16 @@ jobs:
         uses: ./.github/workflows/prepare-environment
       - name: Test unit
         run: npm run test:unit
-      - name: Wait storybook
+      - name: Download storybook
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.storybook-artifact-name }}
+          path: ./packages/core/storybook-static
+      - name: Serve Storybook and run tests
         run: |
-          npm exec wait-storybook -- \
-            --url ${{ needs.deploy.outputs.storybook-url }} \
-            --commit-sha ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
-      - name: Test interactions
-        run: npm run test:interactions -w @colibrijs/core -- --url ${{ needs.deploy.outputs.storybook-url }}
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+          "npm run storybook:serve -w @colibrijs/core" \
+          "npm run test:interactions:local -w @colibrijs/core"
       - name: Test e2e
         run: npm run test:e2e
         env:
@@ -69,6 +61,17 @@ jobs:
         with:
           name: playwright-report
           path: ./playwright-report
+
+  deploy:
+    needs: test
+    permissions:
+      contents: write
+    uses: ./.github/workflows/deploy-github-pages.yml
+    secrets: inherit
+    with:
+      example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
+      storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
+      swagger-artifact-name: ${{ needs.build.outputs.swagger-artifact-name }}
 
   deploy-playwright-report:
     runs-on: ubuntu-latest
