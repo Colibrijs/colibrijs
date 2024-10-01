@@ -1,7 +1,17 @@
 import { PlusOutlined } from '@ant-design/icons';
 import type { IElement, IElementConstructorOptions } from '@colibrijs/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Drawer, Flex, Input, Tree, type TreeDataNode, Tooltip, Typography } from 'antd';
+import {
+  message,
+  Button,
+  Drawer,
+  Flex,
+  Input,
+  Tree,
+  type TreeDataNode,
+  Tooltip,
+  Typography,
+} from 'antd';
 import { useCallback, useMemo, useState, type Key, type ChangeEvent } from 'react';
 
 import styles from './content-editor.module.css';
@@ -20,14 +30,19 @@ export function ContentEditor({ content, onChange }: Props) {
 
   const { mutate: addElement } = useMutation({
     mutationFn: (element: IElementConstructorOptions) => api.elements.post(element),
-    // eslint-disable-next-line no-console -- вместо мониторинга, исправить на message.error
-    onError: (error) => console.error('Ошибка при добавлении элемента', error),
-    onSuccess: (element) => {
-      queryClient.invalidateQueries({ queryKey: [ELEMENTS_KEY] });
-
+    onError: (error) =>
+      message.error(<span data-testid="component-editor__error">{error.message}</span>),
+    onSuccess: (addedElement) => {
       if (onChange) {
-        onChange([...content, element]);
+        onChange([...content, addedElement]);
       }
+
+      queryClient.invalidateQueries({ queryKey: [ELEMENTS_KEY] });
+      message.success(
+        <span data-testid="component-editor__success">
+          Элемент “{addedElement.component.name}” успешно добавлен
+        </span>
+      );
     },
   });
 
@@ -73,7 +88,6 @@ export function ContentEditor({ content, onChange }: Props) {
     [content]
   );
 
-  // Работа с формой добавления элемента
   const openElementAddForm = useCallback(() => setIsElementAddOpen(true), []);
   const closeElementAddForm = useCallback(() => setIsElementAddOpen(false), []);
   const saveChanges = useCallback(
