@@ -31,11 +31,42 @@ jobs:
       - name: Validate commits in pull request
         run: npx --no -- commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-  test:
+  deploy-example:
+    runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: example-${{ github.head_ref }}
+      url: ${{ steps.resolve-example-url.outputs.url }}
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    outputs:
+      example-url: ${{ steps.resolve-example-url.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Deploy artifacts to github pages
+        uses: ./.github/workflows/deploy-artifacts-to-github-pages
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve example url
+        id: resolve-example-url
+        uses: ./.github/workflows/resolve-github-pages-url
+        with:
+          artifact-name: ${{ needs.build.outputs.example-artifact-name }}
+
+  test:
+    needs:
+      - build
+      - deploy-example
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.44.1-jammy
+    outputs:
+      playwright-report-url: ${{ steps.resolve-playwright-report-url.outputs.url }}
     steps:
       - uses: actions/checkout@v4
       - name: Prepare environment
@@ -55,45 +86,27 @@ jobs:
       - name: Test e2e
         run: npm run test:e2e
         env:
-          EXAMPLE_URL: ${{ needs.deploy.outputs.example-url }}
+          EXAMPLE_URL: ${{ needs.deploy-example.outputs.example-url }}
       - name: Save playwright report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: ./playwright-report
-
-  deploy:
-    needs: test
-    permissions:
-      contents: write
-    uses: ./.github/workflows/deploy-github-pages.yml
-    secrets: inherit
-    with:
-      example-artifact-name: ${{ needs.build.outputs.example-artifact-name }}
-      storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
-      swagger-artifact-name: ${{ needs.build.outputs.swagger-artifact-name }}
-
-  deploy-playwright-report:
-    runs-on: ubuntu-latest
-    needs: test
-    environment:
-      name: playwright-report-${{ github.head_ref }}
-      url: ${{ steps.resolve-playwright-report-url.outputs.url }}
-    concurrency:
-      group: 'pages'
-      cancel-in-progress: false
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Prepare environment
-        uses: ./.github/workflows/prepare-environment
-      - name: Deploy artifacts to github pages
-        uses: ./.github/workflows/deploy-artifacts-to-github-pages
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Resolve playwright-report url
         id: resolve-playwright-report-url
         uses: ./.github/workflows/resolve-github-pages-url
         with:
           artifact-name: playwright-report
+
+  deploy:
+    needs:
+      - build
+      - test
+    permissions:
+      contents: write
+    uses: ./.github/workflows/deploy-github-pages.yml
+    secrets: inherit
+    with:
+      playwright-report-artifact-name: ${{ needs.test.outputs.playwright-report-url }}
+      storybook-artifact-name: ${{ needs.build.outputs.storybook-artifact-name }}
+      swagger-artifact-name: ${{ needs.build.outputs.swagger-artifact-name }}

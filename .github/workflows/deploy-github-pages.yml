@@ -3,10 +3,10 @@ name: Deploy github pages
 on:
   workflow_call:
     inputs:
-      example-artifact-name:
-        description: Имя артефакта из которого можно взять собранные компоненты example
+      playwright-report-artifact-name:
+        description: Имя артефакта из которого можно взять playwright report
         type: string
-        required: true
+        required: false
       storybook-artifact-name:
         description: Имя артефакта из которого можно взять собранный сторибук
         type: string
@@ -16,9 +16,9 @@ on:
         type: string
         required: true
     outputs:
-      example-url:
+      playwright-report-url:
         description: Ссылка по которой доступны компоненты example
-        value: ${{ jobs.example.outputs.url }}
+        value: ${{ jobs.playwright-report.outputs.url }}
       storybook-url:
         description: Ссылка по которой доступен сторибук
         value: ${{ jobs.storybook.outputs.url }}
@@ -39,21 +39,22 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  example:
+  playwright-report:
+    if: inputs.playwright-report-artifact-name
     needs: deploy-github-pages
     environment:
-      name: example-${{ github.head_ref }}
-      url: ${{ steps.resolve-example-url.outputs.url }}package.json
+      name: playwright-report-${{ github.head_ref }}
+      url: ${{ steps.resolve-playwright-report-url.outputs.url }}package.json
     outputs:
-      url: ${{ steps.resolve-example-url.outputs.url }}
+      url: ${{ steps.resolve-playwright-report-url.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Resolve example url
-        id: resolve-example-url
+      - name: Resolve playwright report url
+        id: resolve-playwright-report-url
         uses: ./.github/workflows/resolve-github-pages-url
         with:
-          artifact-name: ${{ inputs.example-artifact-name }}
+          artifact-name: ${{ inputs.playwright-report-artifact-name }}
 
   storybook:
     needs: deploy-github-pages
