@@ -38,6 +38,7 @@
     "@playwright/test": "^1.44.1",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.3.3",
+    "@types/jest-image-snapshot": "^6.4.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "dotenv": "^16.4.5",
