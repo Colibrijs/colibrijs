@@ -1,3 +1,4 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { loadSchema } from '@colibrijs/module-utils';
 import { getDefaultValues } from '@colibrijs/schema';
 import type { IElementConstructorOptions, IComponent } from '@colibrijs/types';
@@ -77,6 +78,7 @@ export function ElementAdd({ open, pageId, testId = 'element-add', onClose, onRe
       onClose={onClose}
       onCancel={onClose}
       data-testid={testId}
+      closeIcon={<CloseOutlined data-testid="element-add__close-button" />}
     >
       <Form layout="vertical" onFinish={submitHandler}>
         <Form.Item label="Выберите компонент" required>

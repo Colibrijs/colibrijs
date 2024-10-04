@@ -104,12 +104,17 @@ export function ContentEditor({ content, onChange }: Props) {
         pageId={'3'}
         onClose={closeElementAddForm}
         onReady={saveChanges}
+        testId="content-editor-element-add"
       />
       <Typography.Title level={3}>
         <Flex align="center" justify="space-between">
           <span>Контент</span>
           <Tooltip title="Добавить элемент">
-            <Button icon={<PlusOutlined />} onClick={openElementAddForm} />
+            <Button
+              icon={<PlusOutlined />}
+              onClick={openElementAddForm}
+              data-testid="content-editor__add-element-button"
+            />
           </Tooltip>
         </Flex>
       </Typography.Title>
