@@ -78,6 +78,13 @@ export const HidesOnAdded: Story = {
     await elementAdd.clickOnComponentsSelect();
     await elementAdd.selectComponent('2');
     await elementAdd.clickAdd();
+    const dialog = elementAdd.getDialogElement();
+    await step('Кликаю на кнопку закрытия', async () => {
+      const closeButton = within(dialog).getByTestId('element-add__close-button');
+      await userEvent.click(closeButton);
+    });
+
+    await waitFor(async () => await expect(dialog, 'проверяю что элемент скрыт').not.toBeVisible());
   },
 };
 
