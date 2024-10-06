@@ -88,13 +88,13 @@ export function ContentEditor({ content, onChange }: Props) {
     [content]
   );
 
-  const openElementAddForm = useCallback(() => setIsElementAddOpen(true), []);
-  const closeElementAddForm = useCallback(() => setIsElementAddOpen(false), []);
+  const toggleElementAddForm = useCallback(() => setIsElementAddOpen((prev) => !prev), []);
   const saveChanges = useCallback(
     (element: IElementConstructorOptions) => {
       addElement(element);
+      toggleElementAddForm();
     },
-    [addElement]
+    [addElement, toggleElementAddForm]
   );
 
   return (
@@ -102,7 +102,7 @@ export function ContentEditor({ content, onChange }: Props) {
       <ElementAdd
         open={isElementAddOpen}
         pageId={'3'}
-        onClose={closeElementAddForm}
+        onClose={toggleElementAddForm}
         onReady={saveChanges}
         testId="content-editor-element-add"
       />
@@ -112,7 +112,7 @@ export function ContentEditor({ content, onChange }: Props) {
           <Tooltip title="Добавить элемент">
             <Button
               icon={<PlusOutlined />}
-              onClick={openElementAddForm}
+              onClick={toggleElementAddForm}
               data-testid="content-editor__add-element-button"
             />
           </Tooltip>

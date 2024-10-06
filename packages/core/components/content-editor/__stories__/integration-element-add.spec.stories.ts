@@ -1,7 +1,10 @@
-import { within, expect, screen, userEvent } from '@storybook/test';
+import { textComponent } from '@colibrijs/mocks/components';
+import { within, expect, screen, userEvent, waitFor } from '@storybook/test';
 
 import ContentEditorStoriesMeta from './content-editor.stories';
 import type { Story, StoryMeta } from './content-editor.stories';
+import { withMockedApi } from '../../../hooks/use-api/mocked';
+import { ElementAddTO } from '../../element-add/test-object';
 
 export default {
   ...ContentEditorStoriesMeta,
@@ -12,7 +15,7 @@ export const HiddenByDefault: Story = {
   name: 'Добавление элемента скрыто по умолчанию',
   play: async () => {
     const elementAdd = screen.queryByTestId('content-editor-element-add');
-    expect(elementAdd).toBeNull();
+    await expect(elementAdd).toBeNull();
   },
 };
 
@@ -23,32 +26,59 @@ export const VisibleOnClick: Story = {
     await userEvent.click(addElementButton);
 
     const elementAdd = screen.getByTestId('content-editor-element-add');
-    expect(elementAdd).toBeVisible();
+    await expect(elementAdd).toBeVisible();
   },
 };
 
 export const HidesOnClose: Story = {
   name: 'Когда добавление элемента отменено, интерфейс добавления скрывается',
-  play: async ({ canvasElement, step }) => {
+  play: async ({ step, canvasElement }) => {
     const story = within(canvasElement);
     const addElementButton = story.getByTestId('content-editor__add-element-button');
+
     await step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
+    const elementAdd = new ElementAddTO({
+      canvasElement,
+      step,
+      testId: 'content-editor-element-add',
+    });
+    const dialog = elementAdd.getDialogElement();
 
     await step('Кликаю на кнопку закрытия', async () => {
-      const elementAdd = screen.queryByTestId('content-editor-element-add');
-      expect(elementAdd).toBeVisible();
-      const closeButton = screen.getByTestId('element-add__close-button');
+      const closeButton = within(dialog).getByTestId('element-add__close-button');
       await userEvent.click(closeButton);
     });
 
-    const elementAdd = screen.queryByTestId('content-editor-element-add');
-
-    expect(elementAdd, 'Убеждаюсь что здесь жопа').not.toBeVisible();
+    await waitFor(async () => await expect(dialog, 'проверяю что элемент скрыт').not.toBeVisible());
   },
 };
 
 export const HidesOnAdded: Story = {
   name: 'Когда добавляется новый элемент, интерфейс добавления скрывается',
+  decorators: [
+    withMockedApi((apiClient) => {
+      apiClient.override({
+        components: {
+          get: () => Promise.resolve([textComponent]),
+        },
+      });
+    }),
+  ],
+  play: async ({ step, canvasElement }) => {
+    const story = within(canvasElement);
+    const addElementButton = story.getByTestId('content-editor__add-element-button');
+    const elementAdd = new ElementAddTO({
+      canvasElement,
+      step,
+      testId: 'content-editor-element-add',
+    });
+
+    await step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
+
+    await elementAdd.clickOnComponentsSelect();
+    await elementAdd.selectComponent('2');
+    await elementAdd.clickAdd();
+  },
 };
 
 export const AtEndIfNoSelected: Story = {
