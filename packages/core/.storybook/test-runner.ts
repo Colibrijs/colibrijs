@@ -1,11 +1,17 @@
-import { type TestRunnerConfig, getStoryContext } from '@storybook/test-runner';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
-import fs from 'node:fs/promises';
+import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storybook/test-runner';
+import fs from 'node:fs';
+import fsp from 'node:fs/promises';
 import path from 'node:path';
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
 
 const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/storybook/';
+
+type StoryContext = Awaited<ReturnType<typeof getStoryContext>>;
+type Page = Parameters<TestHook>[0];
+type Story = Parameters<TestHook>[1];
+
+// 21900ms
 
 // проблемы:
 // 1. Вставили 5сек таймаут, нужно понять как дожидаться загрузки страницы - готово
@@ -16,27 +22,19 @@ const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/stor
 // 6. Папки для картинок надо создавать при запуске теста
 // 7. Страницу с reference-сторибуком нужно открывать заранее перед запуском тестов
 // 8. Не обрабатываются ситуации с отсутствием сториса на гитхуб-пегасе
-export default {
-  logLevel: 'verbose',
-  setup() {
-    expect.extend({ toMatchImageSnapshot });
-  },
-
-  async postVisit(page, story) {
+function getScreenshoterConfig(): TestRunnerConfig {
+  async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
-    const { fileName } = context.parameters;
-    const isScreenshotStory = fileName.includes('/screenshot/');
-    if (!isScreenshotStory) return;
 
-    const referencePage = await page.context().newPage();
-    // https://colibrijs.github.io/colibrijs/main/storybook/iframe.html?id=pagetitle-tests-screenshot--screenshot
-    const referencePageUrl = `${REFERENCE_STORYBOOK_URL}iframe.html?id=${story.id}`;
-    await referencePage.goto(referencePageUrl, { waitUntil: 'networkidle' });
+    if (!isScreenshotStory(context)) {
+      return;
+    }
 
     const [referenceScreenshot, actualScreenshot] = await Promise.all([
-      referencePage.screenshot(),
+      getReferencePageScreenshot(page, context),
       page.screenshot(),
     ]);
+
     const reference = PNG.sync.read(referenceScreenshot);
     const actual = PNG.sync.read(actualScreenshot);
     const diff = new PNG({ width: reference.width, height: reference.height });
@@ -55,22 +53,49 @@ export default {
       const referenceDir = path.resolve(outputDir, './reference/');
       const diffDir = path.resolve(outputDir, './diff/');
 
-      await fs.mkdir(outputDir);
-      await Promise.all([fs.mkdir(actualDir), fs.mkdir(referenceDir), fs.mkdir(diffDir)]);
+      await fsp.mkdir(outputDir);
+      await Promise.all([fsp.mkdir(actualDir), fsp.mkdir(referenceDir), fsp.mkdir(diffDir)]);
+
       await Promise.all([
-        fs.writeFile(
-          path.resolve(referenceDir, `./${story.id}.png`),
-          PNG.sync.write(reference),
-          'binary'
-        ),
-        fs.writeFile(
-          path.resolve(actualDir, `./${story.id}.png`),
-          PNG.sync.write(actual),
-          'binary'
-        ),
-        fs.writeFile(path.resolve(diffDir, `./${story.id}.png`), PNG.sync.write(diff), 'binary'),
+        saveScreenshot(path.resolve(referenceDir, `./${story.id}.png`), reference),
+        saveScreenshot(path.resolve(actualDir, `./${story.id}.png`), actual),
+        saveScreenshot(path.resolve(diffDir, `./${story.id}.png`), diff),
       ]);
     }
+
     expect(result).toBe(0);
-  },
-} satisfies TestRunnerConfig;
+  }
+
+  function isScreenshotStory(storyData: StoryContext) {
+    return storyData.parameters.fileName.includes('/screenshot/');
+  }
+
+  async function getReferencePageScreenshot(
+    actualStoryPage: Page,
+    context: StoryContext
+  ): Promise<Buffer> {
+    const referencePage = await actualStoryPage.context().newPage();
+    // https://colibrijs.github.io/colibrijs/main/storybook/iframe.html?id=pagetitle-tests-screenshot--screenshot
+    const referencePageUrl = `${REFERENCE_STORYBOOK_URL}iframe.html?id=${context.id}`;
+    await referencePage.goto(referencePageUrl, { waitUntil: 'networkidle' });
+
+    return referencePage.screenshot();
+  }
+
+  function saveScreenshot(filename: string, image: PNG): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const output = fs.createWriteStream(filename, 'binary');
+      const png = new PNG({ height: image.height, width: image.width });
+
+      image.data.copy(png.data);
+      png.pack().pipe(output);
+
+      output.on('finish', resolve);
+      output.on('error', reject);
+    });
+  }
+
+  return { postVisit };
+}
+
+export default getScreenshoterConfig();
