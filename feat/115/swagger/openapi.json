@@ -444,12 +444,16 @@
           "component": {
             "$ref": "#/components/schemas/ComponentDTO"
           },
+          "pageId": {
+            "type": "string"
+          },
           "props": {
             "type": "object"
           }
         },
         "required": [
           "component",
+          "pageId",
           "props"
         ]
       },
