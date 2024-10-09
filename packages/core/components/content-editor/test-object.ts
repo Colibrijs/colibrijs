@@ -42,6 +42,11 @@ export class ContentEditorTO {
     );
   }
 
+  async addElement(): Promise<void> {
+    const addElementButton = this.root.getByTestId('content-editor__add-element-button');
+    await this.step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
+  }
+
   /** Возвращает html-элемент, который относится к редактору элемента контента */
   getEditorDrawerElement(): Promise<HTMLElement | null> {
     return this.findElement('element-editor-drawer', screen);

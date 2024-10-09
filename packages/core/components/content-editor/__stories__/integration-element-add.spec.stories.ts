@@ -1,10 +1,11 @@
 import { textComponent } from '@colibrijs/mocks/components';
-import { within, expect, screen, userEvent, waitFor, fn } from '@storybook/test';
+import { expect, screen, userEvent, waitFor, fn } from '@storybook/test';
 
 import ContentEditorStoriesMeta from './content-editor.stories';
 import type { Story, StoryMeta } from './content-editor.stories';
 import { withMockedApi } from '../../../hooks/use-api/mocked';
 import { ElementAddTO } from '../../element-add/test-object';
+import { ContentEditorTO } from '../test-object';
 
 export default {
   ...ContentEditorStoriesMeta,
@@ -33,10 +34,9 @@ export const VisibleOnClick: Story = {
 export const HidesOnClose: Story = {
   name: 'Когда добавление элемента отменено, интерфейс добавления скрывается',
   play: async ({ step, canvasElement }) => {
-    const story = within(canvasElement);
-    const addElementButton = story.getByTestId('content-editor__add-element-button');
+    const contentEditor = new ContentEditorTO({ step, canvasElement });
+    await contentEditor.addElement();
 
-    await step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
     const elementAdd = new ElementAddTO({
       canvasElement,
       step,
@@ -44,11 +44,7 @@ export const HidesOnClose: Story = {
     });
     const contentElement = elementAdd.getContentElement();
 
-    await step('Кликаю на кнопку закрытия', async () => {
-      const closeButton = within(contentElement).getByTestId('element-add__close-button');
-      await userEvent.click(closeButton);
-    });
-
+    await elementAdd.clickClose();
     await waitFor(
       async () => await expect(contentElement, 'проверяю что элемент скрыт').not.toBeVisible()
     );
@@ -70,24 +66,19 @@ export const HidesOnAdded: Story = {
     }),
   ],
   play: async ({ step, canvasElement }) => {
-    const story = within(canvasElement);
-    const addElementButton = story.getByTestId('content-editor__add-element-button');
+    const contentEditor = new ContentEditorTO({ step, canvasElement });
     const elementAdd = new ElementAddTO({
       canvasElement,
       step,
       testId: 'content-editor-element-add',
     });
 
-    await step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
-
+    await contentEditor.addElement();
     await elementAdd.clickOnComponentsSelect();
     await elementAdd.selectComponent(textComponent.id);
     await elementAdd.clickAdd();
     const contentElement = elementAdd.getContentElement();
-    await step('Кликаю на кнопку закрытия', async () => {
-      const closeButton = within(contentElement).getByTestId('element-add__close-button');
-      await userEvent.click(closeButton);
-    });
+    await elementAdd.clickClose();
 
     await waitFor(
       async () => await expect(contentElement, 'проверяю что элемент скрыт').not.toBeVisible()
@@ -110,18 +101,18 @@ export const ErrorOnAdd: Story = {
     }),
   ],
   play: async ({ step, canvasElement }) => {
-    const story = within(canvasElement);
-    const addElementButton = story.getByTestId('content-editor__add-element-button');
+    const contentEditor = new ContentEditorTO({ step, canvasElement });
     const elementAdd = new ElementAddTO({
       canvasElement,
       step,
       testId: 'content-editor-element-add',
     });
 
-    await step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
+    await contentEditor.addElement();
 
     await elementAdd.clickOnComponentsSelect();
     await elementAdd.selectComponent(textComponent.id);
+    // TODO: не срабатывает сабмит
     await elementAdd.clickAdd();
 
     await step('проверяю, что появилось уведомление с текстом ошибки', async () => {
