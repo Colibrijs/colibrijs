@@ -109,10 +109,8 @@ export const ErrorOnAdd: Story = {
     });
 
     await contentEditor.addElement();
-
     await elementAdd.clickOnComponentsSelect();
     await elementAdd.selectComponent(textComponent.id);
-    // TODO: не срабатывает сабмит
     await elementAdd.clickAdd();
 
     await step('проверяю, что появилось уведомление с текстом ошибки', async () => {
