@@ -1,5 +1,4 @@
 import { textComponent, textComponentSchema } from '@colibrijs/mocks/components';
-import { examplePage } from '@colibrijs/mocks/pages';
 import { mockLoadSchemaRequest, resetLoadSchemaRequestMock } from '@colibrijs/module-utils/mocked';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
@@ -16,7 +15,6 @@ export default {
   title: 'ElementAdd',
   args: {
     open: true,
-    pageId: examplePage.id,
     onClose: fn(),
     onReady: fn(),
   },

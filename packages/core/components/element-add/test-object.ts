@@ -62,7 +62,7 @@ export class ElementAddTO {
     return this.isVisible(timeout - 50);
   }
 
-  getDialogElement(): HTMLElement {
+  getContentElement(): HTMLElement {
     return this.root.getByRole('dialog');
   }
 

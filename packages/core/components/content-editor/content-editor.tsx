@@ -101,7 +101,6 @@ export function ContentEditor({ content, onChange }: Props) {
     <div className={styles.container} data-testid="content-editor">
       <ElementAdd
         open={isElementAddOpen}
-        pageId={'3'}
         onClose={toggleElementAddForm}
         onReady={saveChanges}
         testId="content-editor-element-add"
