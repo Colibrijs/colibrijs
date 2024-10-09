@@ -45,7 +45,7 @@ export function ContentEditorLayout({ pageRoute }: Props) {
       sidebar={
         isSuccess ? (
           <div data-testid="content-editor-layout__content-editor">
-            <ContentEditor content={content} onChange={setContent} />
+            <ContentEditor content={content} pageId={pageRoute} onChange={setContent} />
           </div>
         ) : (
           <div data-testid="content-editor-layout__content-editor-skeleton">

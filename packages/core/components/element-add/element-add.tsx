@@ -10,12 +10,13 @@ import { COMPONENTS_KEY, useApi } from '../../hooks/use-api';
 
 export interface Props {
   open: boolean;
+  pageId: string;
   testId?: string;
   onClose: () => void;
   onReady: (options: IElementConstructorOptions) => void;
 }
 
-export function ElementAdd({ open, testId = 'element-add', onClose, onReady }: Props) {
+export function ElementAdd({ open, pageId, testId = 'element-add', onClose, onReady }: Props) {
   const api = useApi();
   const [component, setComponent] = useState<IComponent | null>(null);
 
@@ -64,9 +65,10 @@ export function ElementAdd({ open, testId = 'element-add', onClose, onReady }: P
 
     onReady({
       component,
+      pageId,
       props: getDefaultValues(schema),
     });
-  }, [component, schema, onReady]);
+  }, [component, pageId, schema, onReady]);
 
   return (
     <Modal

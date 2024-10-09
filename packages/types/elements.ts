@@ -11,5 +11,5 @@ export interface IElement {
   props: object;
 }
 
-export type IElementConstructorOptions = Omit<IElement, 'id' | 'pageId'>;
+export type IElementConstructorOptions = Omit<IElement, 'id'>;
 export type IElementEditOptions = object;

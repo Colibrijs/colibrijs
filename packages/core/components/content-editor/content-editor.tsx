@@ -21,10 +21,11 @@ import { ElementAdd } from '../element-add';
 
 export interface Props {
   content: IElement[];
+  pageId: string;
   onChange: (content: IElement[]) => void;
 }
 
-export function ContentEditor({ content, onChange }: Props) {
+export function ContentEditor({ content, pageId, onChange }: Props) {
   const api = useApi();
   const queryClient = useQueryClient();
 
@@ -103,6 +104,7 @@ export function ContentEditor({ content, onChange }: Props) {
         open={isElementAddOpen}
         onClose={toggleElementAddForm}
         onReady={saveChanges}
+        pageId={pageId}
         testId="content-editor-element-add"
       />
       <Typography.Title level={3}>

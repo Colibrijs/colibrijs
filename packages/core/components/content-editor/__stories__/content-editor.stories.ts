@@ -1,4 +1,5 @@
 import { exampleElements } from '@colibrijs/mocks/elements';
+import { examplePage } from '@colibrijs/mocks/pages';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
@@ -14,6 +15,7 @@ export default {
   decorators: [SidebarDecorator],
   args: {
     content: exampleElements,
+    pageId: examplePage.id,
     onChange: fn(),
   },
 } satisfies StoryMeta;
