@@ -1,6 +1,8 @@
 import type { StoryObj } from '@storybook/react';
 import { screen, userEvent, within } from '@storybook/test';
 
+import { ElementAddTO } from '../element-add/test-object';
+
 type PlayFunctionContext = Parameters<NonNullable<StoryObj['play']>>[0];
 type StepFn = PlayFunctionContext['step'];
 
@@ -40,6 +42,22 @@ export class ContentEditorTO {
       'Жду пока сработает анимация открытия',
       () => new Promise((resolve) => setTimeout(resolve, 400))
     );
+  }
+
+  getAddElementTO(): ElementAddTO {
+    return new ElementAddTO({
+      canvasElement: this.canvasElement,
+      step: this.step,
+    });
+  }
+
+  async startAddingElement(): Promise<void> {
+    const addElementButton = this.root.getByTestId('content-editor__add-element-button');
+    await this.step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
+  }
+
+  async errorAddElement() {
+    return await screen.findByTestId('component-editor__error');
   }
 
   /** Возвращает html-элемент, который относится к редактору элемента контента */

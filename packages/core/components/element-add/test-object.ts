@@ -62,6 +62,10 @@ export class ElementAddTO {
     return this.isVisible(timeout - 50);
   }
 
+  getContentElement(): HTMLElement {
+    return this.root.getByRole('dialog');
+  }
+
   /** Кликнуть на выбор компонента */
   async clickOnComponentsSelect(): Promise<void> {
     await this.step('Кликаю на select с выбором компонента', async () => {
