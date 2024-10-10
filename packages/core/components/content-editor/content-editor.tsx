@@ -105,7 +105,6 @@ export function ContentEditor({ content, pageId, onChange }: Props) {
         onClose={toggleElementAddForm}
         onReady={saveChanges}
         pageId={pageId}
-        testId="content-editor-element-add"
       />
       <Typography.Title level={3}>
         <Flex align="center" justify="space-between">
