@@ -10,13 +10,31 @@ type Page = Parameters<TestHook>[0];
 type Story = Parameters<TestHook>[1];
 
 // проблемы:
-// 1. Очищать папку со скриншотами перед прогоном тестов
-// 2. Папки для картинок надо создавать при первом сломанном тесте. Сейчас если два теста сломаются,
-//    получим ошибку, так как скриншотер попытается создать уже существующую папку
-// 3. Страницу с reference-сторибуком нужно открывать заранее перед запуском тестов
-// 4. Не обрабатываются ситуации с отсутствием сториса на гитхуб-пегасе
-// 5. Скриншоты не игнорятся гитом
+// 1. Страницу с reference-сторибуком нужно открывать заранее перед запуском тестов
+// 2. Не обрабатываются ситуации с отсутствием сториса на гитхуб-пегасе
 function getScreenshoterConfig(): TestRunnerConfig {
+  let isScreenshotDirsCreated = false;
+  async function setup() {
+    const screenshotDir = path.resolve(__dirname, './screenshots/');
+
+    const isDirectoryExist = await getDirectoryAvailability(screenshotDir);
+    if (isDirectoryExist) {
+      await fs.rm(screenshotDir, { recursive: true });
+    }
+  }
+
+  async function getDirectoryAvailability(dir: string): Promise<boolean> {
+    try {
+      const data = await fs.lstat(dir);
+      if (data.isDirectory()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
 
@@ -37,8 +55,14 @@ function getScreenshoterConfig(): TestRunnerConfig {
       const referenceDir = path.resolve(outputDir, './reference/');
       const diffDir = path.resolve(outputDir, './diff/');
 
-      await fs.mkdir(outputDir);
-      await Promise.all([fs.mkdir(actualDir), fs.mkdir(referenceDir), fs.mkdir(diffDir)]);
+      const isScreenshotDirExists =
+        isScreenshotDirsCreated || (await getDirectoryAvailability(outputDir));
+
+      if (!isScreenshotDirExists) {
+        await fs.mkdir(outputDir);
+        await Promise.all([fs.mkdir(actualDir), fs.mkdir(referenceDir), fs.mkdir(diffDir)]);
+        isScreenshotDirsCreated = true;
+      }
 
       await Promise.all([
         saveScreenshot(path.resolve(referenceDir, `./${story.id}.png`), referenceScreenshot),
@@ -76,7 +100,7 @@ function getScreenshoterConfig(): TestRunnerConfig {
     await fs.writeFile(filename, image, 'binary');
   }
 
-  return { postVisit };
+  return { postVisit, setup };
 }
 
 export default getScreenshoterConfig();

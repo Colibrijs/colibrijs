@@ -1,7 +1,10 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
 export default {
-  stories: ['../components/page-title/__stories__/screenshot/screenshot.stories.ts'],
+  stories: [
+    '../components/page-title/__stories__/screenshot/screenshot.stories.ts',
+    '../components/prop-editor/__stories__/screenshot/screenshot.stories.ts',
+  ],
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-links',
