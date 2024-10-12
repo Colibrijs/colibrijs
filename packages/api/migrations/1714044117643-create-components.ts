@@ -11,7 +11,7 @@ export class CreateComponents1714044117643 implements MigrationInterface {
         "name" varchar NOT NULL,
         "libraryName" varchar NOT NULL,
         "src" varchar NOT NULL
-       )`
+        )`
     );
   }
 

@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "check:types": "tsc --noEmit",
+    "check:editorconfig": "editorconfig-checker",
     "dev:api": "npm run dev -w @colibrijs/api",
     "dev:admin": "npm run dev -w @colibrijs/admin",
     "dev:application": "npm run dev -w @colibrijs/application",
@@ -51,6 +52,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-perf": "^3.3.2",
     "eslint-plugin-storybook": "^0.8.0",
+    "editorconfig-checker": "^6.0.0",
     "gh-pages": "^6.1.1",
     "globals": "^15.6.0",
     "husky": "^9.0.11",
