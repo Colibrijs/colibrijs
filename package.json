@@ -12,7 +12,6 @@
   "scripts": {
     "check:types": "tsc --noEmit",
     "check:editorconfig": "editorconfig-checker",
-    "check:formatting": "prettier --write .",
     "dev:api": "npm run dev -w @colibrijs/api",
     "dev:admin": "npm run dev -w @colibrijs/admin",
     "dev:application": "npm run dev -w @colibrijs/application",
