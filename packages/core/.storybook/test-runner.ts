@@ -86,7 +86,6 @@ function getScreenshoterConfig(): TestRunnerConfig {
     // https://colibrijs.github.io/colibrijs/main/storybook/iframe.html?id=pagetitle-tests-screenshot--screenshot
     const referencePageUrl = `${REFERENCE_STORYBOOK_URL}iframe.html?id=${context.id}`;
     await referencePage.goto(referencePageUrl, { waitUntil: 'networkidle' });
-
     return referencePage.screenshot();
   }
 
