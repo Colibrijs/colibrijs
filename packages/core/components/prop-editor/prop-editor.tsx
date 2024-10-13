@@ -20,7 +20,7 @@ export function PropEditor<T>({
     <>
       {isPrimitive && (
         <PrimitiveEditor
-          name={'loh'}
+          name={name}
           property={property as Property<PrimitiveType>}
           value={value as PrimitiveType}
           testId={testId}
