@@ -9,7 +9,7 @@ export interface Props {
 
 export function PageTitle({ page }: Props) {
   return (
-    <Flex align="baseline" justify="flex-start" data-testid="page-title">
+    <Flex align="baseline" justify="space-between" data-testid="page-title">
       <Typography.Title level={1} data-testid="page-title__name">
         {page.name}
       </Typography.Title>
