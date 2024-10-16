@@ -10,12 +10,6 @@ type StoryContext = Awaited<ReturnType<typeof getStoryContext>>;
 type Page = Parameters<TestHook>[0];
 type Story = Parameters<TestHook>[1];
 
-// проблемы:
-// 1. Страницу с reference-сторибуком нужно открывать заранее перед запуском тестов
-// 2. Не обрабатываются ситуации с отсутствием сториса на гитхуб-пегасе
-// План
-// 1. Нужно чтоб Ivan из report-raw собрал просто report.json
-// 2. Избавиться от Ивана
 export function getScreenshoterConfig(): TestRunnerConfig {
   const settings: Settings = resolveSettings();
 
@@ -44,7 +38,7 @@ export function getScreenshoterConfig(): TestRunnerConfig {
         settings
       );
     }
-    // expect(result.rawMisMatchPercentage).toBe(0);
+    expect(result.rawMisMatchPercentage).toBe(0);
   }
 
   function isScreenshotStory(storyData: StoryContext) {
