@@ -2,13 +2,9 @@
   "name": "@colibrijs/core",
   "private": true,
   "version": "1.0.0",
-  "bin": {
-    "create-report": ".storybook/screenshoter-config/create-report-js.js"
-  },
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "Ivan": "npm exec create-report",
     "test:interactions": "test-storybook --json --outputFile .storybook/report-raw.json",
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook",
     "storybook:serve": "http-server ./storybook-static --port 6006 --silent"
