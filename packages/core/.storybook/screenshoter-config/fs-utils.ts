@@ -1,17 +1,25 @@
+import fss from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import type { ScreenshotType, Settings } from './resolve-settings';
 
-export async function isDirectoryAvailable(directory: string): Promise<boolean> {
+export function isDirectoryAvailable(directory: string): boolean {
   try {
-    const data = await fs.lstat(directory);
-    if (data.isDirectory()) {
-      return true;
-    }
-    return false;
+    const data = fss.lstatSync(directory);
+    return data.isDirectory();
   } catch (error) {
     return false;
+  }
+}
+
+export async function removeDirectory(directory: string): Promise<void> {
+  if (await isDirectoryAvailable(directory)) {
+    try {
+      await fs.rm(directory, { recursive: true });
+    } catch {
+      // ну штош, видимо такой папки
+    }
   }
 }
 

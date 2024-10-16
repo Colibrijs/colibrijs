@@ -1,12 +1,15 @@
 {
   "name": "@colibrijs/core",
   "private": true,
-  "type": "module",
   "version": "1.0.0",
+  "bin": {
+    "create-report": ".storybook/screenshoter-config/create-report-js.js"
+  },
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "test:interactions": "test-storybook",
+    "Ivan": "npm exec create-report",
+    "test:interactions": "test-storybook --json --outputFile .storybook/report-raw.json",
     "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook",
     "storybook:serve": "http-server ./storybook-static --port 6006 --silent"
   },
@@ -36,7 +39,7 @@
     "@storybook/react": "^8.1.10",
     "@storybook/react-webpack5": "^8.1.10",
     "@storybook/test": "^8.1.10",
-    "@storybook/test-runner": "^0.19.0",
+    "@storybook/test-runner": "^0.19.1",
     "prop-types": "^15.8.1",
     "http-server": "^14.1.1",
     "storybook": "^8.1.10"

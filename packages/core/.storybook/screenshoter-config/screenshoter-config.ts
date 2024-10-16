@@ -1,4 +1,5 @@
 import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storybook/test-runner';
+import fss from 'node:fs';
 import fs from 'node:fs/promises';
 import resemble, { type ComparisonResult } from 'resemblejs';
 
@@ -14,12 +15,23 @@ type Story = Parameters<TestHook>[1];
 // проблемы:
 // 1. Страницу с reference-сторибуком нужно открывать заранее перед запуском тестов
 // 2. Не обрабатываются ситуации с отсутствием сториса на гитхуб-пегасе
+// План
+// 1. Убрать errorMessageFormatter - мм, данон
+// 2. Убрать ошибку ENOENT: no such file or directory, lstat 'D:\\colibri\\colibrijs\\packages\\core\\.storybook\\screenshots'", - мм, данон
+// 3. Нужно чтоб Ivan из report-raw собрал просто report.json
+// 4. Избавиться от Ивана
 export function getScreenshoterConfig(): TestRunnerConfig {
   const settings: Settings = resolveSettings();
 
   async function setup() {
-    if (await isDirectoryAvailable(settings.output.directory)) {
-      await fs.rm(settings.output.directory, { recursive: true });
+    console.log('setup');
+    if (isDirectoryAvailable(settings.output.directory)) {
+      console.log('if');
+      try {
+        fss.rmSync(settings.output.directory, { recursive: true });
+      } catch {
+        console.log('gavno');
+      }
     }
   }
 
@@ -47,9 +59,9 @@ export function getScreenshoterConfig(): TestRunnerConfig {
         },
         settings
       );
+      throw new Error('loh');
     }
-
-    expect(result.rawMisMatchPercentage).toBe(0);
+    // expect(result.rawMisMatchPercentage).toBe(0);
   }
 
   function isScreenshotStory(storyData: StoryContext) {
