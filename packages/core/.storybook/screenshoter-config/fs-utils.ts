@@ -1,15 +1,13 @@
+import fss from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import type { ScreenshotType, Settings } from './resolve-settings';
 
-export async function isDirectoryAvailable(directory: string): Promise<boolean> {
+export function isDirectoryAvailable(directory: string): boolean {
   try {
-    const data = await fs.lstat(directory);
-    if (data.isDirectory()) {
-      return true;
-    }
-    return false;
+    const data = fss.lstatSync(directory);
+    return data.isDirectory();
   } catch (error) {
     return false;
   }
@@ -46,16 +44,14 @@ export async function saveScreenshots(
 let isScreenshotDirsCreated = false;
 
 async function createOutputDirectoriesIfNeeded(settings: Settings): Promise<void> {
-  if (isScreenshotDirsCreated) {
+  if (isScreenshotDirsCreated || isDirectoryAvailable(settings.output.directory)) {
     return;
   }
 
-  await fs.mkdir(settings.output.directory);
-  await Promise.all([
-    fs.mkdir(settings.output.actual),
-    fs.mkdir(settings.output.reference),
-    fs.mkdir(settings.output.diff),
-  ]);
+  fss.mkdirSync(settings.output.directory);
+  fss.mkdirSync(settings.output.actual);
+  fss.mkdirSync(settings.output.reference);
+  fss.mkdirSync(settings.output.diff);
 
   isScreenshotDirsCreated = true;
 }

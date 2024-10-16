@@ -1,8 +1,7 @@
 import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storybook/test-runner';
-import fs from 'node:fs/promises';
 import resemble, { type ComparisonResult } from 'resemblejs';
 
-import { isDirectoryAvailable, saveScreenshots } from './fs-utils';
+import { saveScreenshots } from './fs-utils';
 import { resolveSettings, type Settings } from './resolve-settings';
 
 const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/storybook/';
@@ -11,17 +10,8 @@ type StoryContext = Awaited<ReturnType<typeof getStoryContext>>;
 type Page = Parameters<TestHook>[0];
 type Story = Parameters<TestHook>[1];
 
-// проблемы:
-// 1. Страницу с reference-сторибуком нужно открывать заранее перед запуском тестов
-// 2. Не обрабатываются ситуации с отсутствием сториса на гитхуб-пегасе
 export function getScreenshoterConfig(): TestRunnerConfig {
   const settings: Settings = resolveSettings();
-
-  async function setup() {
-    if (await isDirectoryAvailable(settings.output.directory)) {
-      await fs.rm(settings.output.directory, { recursive: true });
-    }
-  }
 
   async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
@@ -48,7 +38,6 @@ export function getScreenshoterConfig(): TestRunnerConfig {
         settings
       );
     }
-
     expect(result.rawMisMatchPercentage).toBe(0);
   }
 
@@ -73,5 +62,5 @@ export function getScreenshoterConfig(): TestRunnerConfig {
     });
   }
 
-  return { postVisit, setup };
+  return { postVisit };
 }
