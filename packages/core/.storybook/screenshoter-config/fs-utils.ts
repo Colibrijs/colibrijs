@@ -13,16 +13,6 @@ export function isDirectoryAvailable(directory: string): boolean {
   }
 }
 
-export async function removeDirectory(directory: string): Promise<void> {
-  if (await isDirectoryAvailable(directory)) {
-    try {
-      await fs.rm(directory, { recursive: true });
-    } catch {
-      // ну штош, видимо такой папки
-    }
-  }
-}
-
 type Screenshots = Record<ScreenshotType, Buffer>;
 
 export async function saveScreenshots(
@@ -54,16 +44,14 @@ export async function saveScreenshots(
 let isScreenshotDirsCreated = false;
 
 async function createOutputDirectoriesIfNeeded(settings: Settings): Promise<void> {
-  if (isScreenshotDirsCreated) {
+  if (isScreenshotDirsCreated || isDirectoryAvailable(settings.output.directory)) {
     return;
   }
 
-  await fs.mkdir(settings.output.directory);
-  await Promise.all([
-    fs.mkdir(settings.output.actual),
-    fs.mkdir(settings.output.reference),
-    fs.mkdir(settings.output.diff),
-  ]);
+  fss.mkdirSync(settings.output.directory);
+  fss.mkdirSync(settings.output.actual);
+  fss.mkdirSync(settings.output.reference);
+  fss.mkdirSync(settings.output.diff);
 
   isScreenshotDirsCreated = true;
 }
