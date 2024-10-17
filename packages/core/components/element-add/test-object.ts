@@ -46,24 +46,15 @@ export class ElementAddTO {
 
   /**
    * Возвращает true, если добавление элемента отображается и false если не отображается
-   * @param timeout - время которое будем ждать возможного появления
    */
-  isVisible(timeout = 1000): boolean {
+  isVisible(): boolean {
     const element = screen.queryByTestId(this.testId);
 
-    if (element) {
-      return true;
-    }
-
-    if (timeout <= 0) {
+    if (!element) {
       return false;
     }
 
-    return this.isVisible(timeout - 50);
-  }
-
-  getContentElement(): HTMLElement {
-    return this.root.getByRole('dialog');
+    return Boolean(within(element).queryByRole('dialog'));
   }
 
   /** Кликнуть на выбор компонента */

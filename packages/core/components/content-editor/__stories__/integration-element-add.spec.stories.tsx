@@ -16,7 +16,7 @@ export const HiddenByDefault: Story = {
   name: 'Добавление элемента скрыто по умолчанию',
   play: async ({ step, canvasElement }) => {
     const contentEditor = new ContentEditorTO({ step, canvasElement });
-    const addElementVisible = contentEditor.getAddElementTO().isVisible();
+    const addElementVisible = await contentEditor.getAddElementTO().isVisible();
 
     await expect(addElementVisible, 'Проверяю что добавление элемента не отображается').toBe(false);
   },
@@ -27,9 +27,9 @@ export const VisibleOnClick: Story = {
   play: async ({ step, canvasElement }) => {
     const contentEditor = new ContentEditorTO({ step, canvasElement });
     await contentEditor.startAddingElement();
-    const addElementVisible = contentEditor.getAddElementTO().isVisible();
+    const addElementVisible = await contentEditor.getAddElementTO().isVisible();
 
-    await expect(addElementVisible, 'Проверяю что добавление элемента отображается').toBe(true);
+    expect(addElementVisible, 'Проверяю что добавление элемента отображается').toBe(true);
   },
 };
 
@@ -42,12 +42,12 @@ export const HidesOnClose: Story = {
     await contentEditor.startAddingElement();
     await addElement.clickClose();
 
-    await waitFor(() =>
+    await waitFor(() => {
       expect(
-        addElement.getContentElement(),
+        addElement.isVisible(),
         'проверяю что интерфейс добавления элемента не отображается'
-      ).not.toBeVisible()
-    );
+      ).toBe(false);
+    });
   },
 };
 
@@ -71,9 +71,12 @@ export const HidesOnAdded: Story = {
     await elementAdd.selectComponent(exampleComponent.id);
     await elementAdd.clickAdd();
 
-    expect(elementAdd.isVisible(), 'проверяю что интерфейс добавления элемента отображается').toBe(
-      true
-    );
+    await waitFor(() => {
+      expect(
+        elementAdd.isVisible(),
+        'проверяю что интерфейс добавления элемента не отображается'
+      ).toBe(false);
+    });
   },
 };
 
