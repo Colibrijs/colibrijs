@@ -56,8 +56,8 @@ export class ContentEditorTO {
     await this.step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
   }
 
-  async errorAddElement() {
-    return await screen.findByTestId('component-editor__error');
+  async getErrorElement() {
+    return await screen.findByTestId('content-editor__error');
   }
 
   /** Возвращает html-элемент, который относится к редактору элемента контента */

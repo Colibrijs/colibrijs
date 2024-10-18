@@ -1,7 +1,6 @@
-import { textComponent } from '@colibrijs/mocks/components';
-import { expect, waitFor, fn } from '@storybook/test';
-
-import { message } from 'antd';
+import { exampleComponent, textComponent } from '@colibrijs/mocks/components';
+import { exampleElement } from '@colibrijs/mocks/elements';
+import { expect, waitFor } from '@storybook/test';
 
 import ContentEditorStoriesMeta from './content-editor.stories';
 import type { Story, StoryMeta } from './content-editor.stories';
@@ -17,7 +16,7 @@ export const HiddenByDefault: Story = {
   name: 'Добавление элемента скрыто по умолчанию',
   play: async ({ step, canvasElement }) => {
     const contentEditor = new ContentEditorTO({ step, canvasElement });
-    const addElementVisible = contentEditor.getAddElementTO().isVisible();
+    const addElementVisible = await contentEditor.getAddElementTO().isVisible();
 
     await expect(addElementVisible, 'Проверяю что добавление элемента не отображается').toBe(false);
   },
@@ -28,8 +27,9 @@ export const VisibleOnClick: Story = {
   play: async ({ step, canvasElement }) => {
     const contentEditor = new ContentEditorTO({ step, canvasElement });
     await contentEditor.startAddingElement();
-    const addElementVisible = contentEditor.getAddElementTO().isVisible();
-    await expect(addElementVisible, 'Проверяю что добавление элемента отображается').toBe(true);
+    const addElementVisible = await contentEditor.getAddElementTO().isVisible();
+
+    expect(addElementVisible, 'Проверяю что добавление элемента отображается').toBe(true);
   },
 };
 
@@ -42,10 +42,12 @@ export const HidesOnClose: Story = {
     await contentEditor.startAddingElement();
     await addElement.clickClose();
 
-    const contentElement = addElement.getContentElement();
-    await waitFor(
-      async () => await expect(contentElement, 'проверяю что элемент скрыт').not.toBeVisible()
-    );
+    await waitFor(() => {
+      expect(
+        addElement.isVisible(),
+        'проверяю что интерфейс добавления элемента не отображается'
+      ).toBe(false);
+    });
   },
 };
 
@@ -54,11 +56,8 @@ export const HidesOnAdded: Story = {
   decorators: [
     withMockedApi((apiClient) => {
       apiClient.override({
-        components: {
-          get: () => Promise.resolve([textComponent]),
-        },
         elements: {
-          post: fn(),
+          post: () => Promise.resolve(exampleElement),
         },
       });
     }),
@@ -69,24 +68,21 @@ export const HidesOnAdded: Story = {
 
     await contentEditor.startAddingElement();
     await elementAdd.clickOnComponentsSelect();
-    await elementAdd.selectComponent(textComponent.id);
+    await elementAdd.selectComponent(exampleComponent.id);
     await elementAdd.clickAdd();
-    const contentElement = elementAdd.getContentElement();
-    await elementAdd.clickClose();
 
-    await waitFor(
-      async () => await expect(contentElement, 'проверяю что элемент скрыт').not.toBeVisible()
-    );
+    await waitFor(() => {
+      expect(
+        elementAdd.isVisible(),
+        'проверяю что интерфейс добавления элемента не отображается'
+      ).toBe(false);
+    });
   },
 };
 
 export const ErrorOnAdd: Story = {
-  name: 'Когда добавляется новый элемент, и происходит ошибка, интерфейс добавления не скрывается',
+  name: 'Если при добавлении элемента происходит ошибка, появляется уведомление с текстом ошибки',
   decorators: [
-    (StoryComponent) => {
-      message.destroy();
-      return <StoryComponent />;
-    },
     withMockedApi((apiClient) => {
       apiClient.override({
         components: {
@@ -107,9 +103,38 @@ export const ErrorOnAdd: Story = {
     await elementAdd.selectComponent(textComponent.id);
     await elementAdd.clickAdd();
 
-    const error = await contentEditor.errorAddElement();
-    await expect(error, 'проверяю, что появилось уведомление с текстом ошибки').toHaveTextContent(
-      'Ошибка добавления'
+    await expect(
+      await contentEditor.getErrorElement(),
+      'проверяю, что появилось уведомление с текстом ошибки'
+    ).toHaveTextContent('Ошибка добавления');
+  },
+};
+
+export const NotHidesOnError: Story = {
+  name: 'Если при добавлении элемента происходит ошибка, интерфейс добавления элемента не скрывается',
+  decorators: [
+    withMockedApi((apiClient) => {
+      apiClient.override({
+        components: {
+          get: () => Promise.resolve([textComponent]),
+        },
+        elements: {
+          post: () => Promise.reject(new Error('Ошибка добавления')),
+        },
+      });
+    }),
+  ],
+  play: async ({ step, canvasElement }) => {
+    const contentEditor = new ContentEditorTO({ step, canvasElement });
+    const elementAdd = contentEditor.getAddElementTO();
+
+    await contentEditor.startAddingElement();
+    await elementAdd.clickOnComponentsSelect();
+    await elementAdd.selectComponent(textComponent.id);
+    await elementAdd.clickAdd();
+
+    expect(elementAdd.isVisible(), 'проверяю что интерфейс добавления элемента отображается').toBe(
+      true
     );
   },
 };

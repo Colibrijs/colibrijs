@@ -1,3 +1,31 @@
+.container {
+  position: relative;
+  min-height: 100vh;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties --
+   *     dvh плохо поддерживается и нужно чтобы был фолбэк на 100vh */
+  min-height: 100dvh;
+  padding-left: 0;
+  transition: padding-left ease 0.3s;
+}
+
+.opened.container {
+  padding-left: 420px;
+}
+
+.toggler {
+  position: absolute;
+  top: 65px;
+  left: 0;
+  border: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  transition: left ease 0.3s;
+}
+
+.opened .toggler {
+  left: 378px;
+}
+
 .container [role="tree"] {
   /* stylelint-disable-next-line declaration-no-important -- нужно перебить стиль antd */
   background-color: transparent !important;
