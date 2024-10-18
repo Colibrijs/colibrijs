@@ -42,17 +42,19 @@ export function PropsEditor<T extends object>({ schema, onChange, value }: Props
   );
 
   return (
-    <Form layout="vertical">
-      {propertiesNames.map((propName) => (
-        <PropEditor
-          property={getProperty(propName)}
-          key={propName.toString()}
-          name={propName.toString()}
-          value={getValue(propName)}
-          testId={`props-editor__${propName.toString()}`}
-          onChange={changeHandler(propName)}
-        />
-      ))}
-    </Form>
+    <div data-testid="props-editor">
+      <Form layout="vertical">
+        {propertiesNames.map((propName) => (
+          <PropEditor
+            property={getProperty(propName)}
+            key={propName.toString()}
+            name={propName.toString()}
+            value={getValue(propName)}
+            testId={`props-editor__${propName.toString()}`}
+            onChange={changeHandler(propName)}
+          />
+        ))}
+      </Form>
+    </div>
   );
 }

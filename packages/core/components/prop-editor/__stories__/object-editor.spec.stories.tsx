@@ -86,7 +86,7 @@ export const ValueChanging: Story = {
       'Убеждаемся, что вызвался onChange со значениями из value, а так же с измененными данными age'
     ).toHaveBeenCalledWith({
       name: 'kek',
-      age: 111,
+      age: 1,
       additionalInformation: {
         isBald: true,
       },

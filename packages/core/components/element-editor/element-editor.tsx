@@ -1,11 +1,13 @@
 import { CheckOutlined } from '@ant-design/icons';
+import { loadSchema } from '@colibrijs/module-utils';
 import type { IElement } from '@colibrijs/types';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { message, Drawer, Input, Space, Button } from 'antd';
-import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { message, Button, Drawer, Skeleton, Space } from 'antd';
+import { useCallback, useMemo, useState } from 'react';
 
 import { ELEMENTS_KEY, useApi } from '../../hooks/use-api';
 import { ElementRemove } from '../element-remove/element-remove';
+import { PropsEditor } from '../props-editor';
 
 export interface Props {
   element: IElement;
@@ -24,19 +26,14 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
     return lastSavedProps !== JSON.stringify(element.props);
   }, [element.props, lastSavedProps]);
 
-  const changeElementHandler = useCallback(
-    (event: ChangeEvent<HTMLTextAreaElement>) => {
-      let newValue = {};
-      try {
-        newValue = JSON.parse(event.target.value);
-      } catch (error) {
-        alert('Ты за базаром-то следи');
-        return;
-      }
-      onEdit(newValue);
-    },
-    [onEdit]
-  );
+  const {
+    data: schema,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: ['schema', element.component.id],
+    queryFn: () => loadSchema(element.component),
+  });
 
   const { mutate: saveChanges, isPending } = useMutation({
     mutationFn: () => api.elements.patch(element.id, element.props),
@@ -50,7 +47,7 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
       setLastSavedProps(JSON.stringify(element.props));
     },
     onError: (error) => {
-      message.error(<span data-testid="element-remove__error">{error.message}</span>);
+      message.error(<span data-testid="element-editor__error">{error.message}</span>);
     },
   });
 
@@ -61,7 +58,6 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
       open={open}
       mask={false}
       title={<span data-testid="element-editor__title">{element.component.name}</span>}
-      data-testid="element-editor"
       extra={
         <Space>
           {showSaveButton && (
@@ -79,12 +75,9 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
       }
       onClose={onClose}
     >
-      <Input.TextArea
-        data-testid="element-editor__textarea"
-        value={JSON.stringify(element.props, null, 2)}
-        onInput={changeElementHandler}
-        autoSize
-      />
+      <Skeleton loading={isLoading}>
+        {isSuccess && <PropsEditor schema={schema} onChange={onEdit} value={element.props} />}
+      </Skeleton>
     </Drawer>
   );
 }

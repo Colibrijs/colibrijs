@@ -1,9 +1,9 @@
-import { exampleElement } from '@colibrijs/mocks/elements';
-import { expect, fn, screen, userEvent, fireEvent } from '@storybook/test';
+import { textElement } from '@colibrijs/mocks/elements';
+import { expect, fn } from '@storybook/test';
 
 import ElementAddStoriesMeta from './element-editor.stories';
 import type { ElementEditorMeta, ElementEditorStory } from './element-editor.stories';
-import { ElementRemoveTO } from '../../element-remove/test-object';
+import { ElementEditorTO } from '../test-object';
 
 export default {
   ...ElementAddStoriesMeta,
@@ -11,46 +11,55 @@ export default {
 } satisfies ElementEditorMeta;
 
 export const OpenProp: ElementEditorStory = {
-  name: 'При передаче open пропса, модалка открыта',
+  name: 'При передаче пропса open со значением true, модалка открыта',
   args: { open: true },
-  play: async () => {
-    const modal = await screen.findByTestId('element-editor');
+  play: async ({ canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
 
-    expect(modal).toBeVisible();
+    expect(await elementEditor.isOpened(), 'Проверяю, что модалка открыта').toBe(true);
   },
 };
 
 export const OnCloseProp: ElementEditorStory = {
   name: 'При клике на крестик, вызывается onClose пропс',
   args: { open: true, onClose: fn() },
-  play: async ({ args }) => {
-    const modal = await screen.findByTestId('element-editor');
-    const closeButton = modal.querySelector('.ant-drawer-close')!;
-    await userEvent.click(closeButton);
+  play: async ({ args, canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+
+    await elementEditor.clickClose();
 
     expect(args.onClose).toHaveBeenCalled();
   },
 };
 
 export const ElementProps: ElementEditorStory = {
-  name: 'element.props выводится в textarea по дефолту',
-  args: { element: exampleElement },
-  play: async ({ args }) => {
-    const textarea: HTMLTextAreaElement = await screen.findByTestId('element-editor__textarea');
-    const elementProps = JSON.stringify(args.element.props, null, 2);
+  name: 'Значения пропсов элемента выводятся в пропс-эдиторе',
+  args: { element: textElement },
+  play: async ({ args, canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    const propsEditor = await elementEditor.getPropsEditorTO();
 
-    expect(textarea).toHaveValue(elementProps);
+    expect(
+      propsEditor.getValue('text'),
+      'Проверяю, что значение редактора равно значению элемента в пропсе'
+      // @ts-expect-error -- не верит что поле text есть в props
+    ).toBe(args.element.props.text);
   },
 };
 
 export const OnEditProp: ElementEditorStory = {
-  name: 'При изменении в textarea, вызывается onEdit пропс с передачей измененного объекта',
-  args: { element: exampleElement, onEdit: fn() },
-  play: async ({ args }) => {
-    const textarea: HTMLTextAreaElement = await screen.findByTestId('element-editor__textarea');
-    fireEvent.input(textarea, { target: { value: '{\n "title": "Заголовок1"\n}' } });
+  name: 'При изменении значений пропсов элемента, вызывается onEdit с новыми пропсами элемента',
+  args: { element: textElement, onEdit: fn() },
+  play: async ({ args, canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    const propsEditor = await elementEditor.getPropsEditorTO();
 
-    expect(args.onEdit).toHaveBeenCalledWith({ title: 'Заголовок1' });
+    await propsEditor.fill('text', 'а');
+
+    expect(
+      args.onEdit,
+      'Проверяю, что пропс onEdit был вызван с новыми пропсами'
+    ).toHaveBeenCalledWith({ text: 'а' });
   },
 };
 
@@ -58,11 +67,14 @@ export const OnRemoveProp: ElementEditorStory = {
   name: 'Клик на мусорку в положительном исходе вызывает onRemove пропс',
   args: { onRemove: fn() },
   play: async ({ args, step }) => {
-    const modal = await screen.findByTestId('element-editor');
-    const elementRemove = new ElementRemoveTO({ canvasElement: modal, step });
+    const elementRemove = new ElementEditorTO({
+      canvasElement: document.body,
+      step,
+    }).getElementRemoveTO();
+
     await elementRemove.clickRemove();
     await elementRemove.confirm();
 
-    expect(args.onRemove).toHaveBeenCalled();
+    expect(args.onRemove, 'Проверяю что пропс onRemove был вызван').toHaveBeenCalled();
   },
 };

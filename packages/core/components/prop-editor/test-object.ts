@@ -74,6 +74,7 @@ export class PropEditorTO {
     } else {
       await this.step('Ввожу значение в инпут', async () => {
         const input = this.getInput();
+        await userEvent.clear(input);
         await userEvent.type(input, value as string);
       });
     }
