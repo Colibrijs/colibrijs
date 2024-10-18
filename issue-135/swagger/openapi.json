@@ -1,0 +1,470 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/pages": {
+      "get": {
+        "operationId": "PagesController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PageDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      },
+      "post": {
+        "operationId": "PagesController_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageConstructorOptions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      }
+    },
+    "/pages/{pageId}": {
+      "get": {
+        "operationId": "PagesController_getById",
+        "parameters": [
+          {
+            "name": "pageId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      },
+      "delete": {
+        "operationId": "PagesController_delete",
+        "parameters": [
+          {
+            "name": "pageId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "pages"
+        ]
+      }
+    },
+    "/components": {
+      "get": {
+        "operationId": "ComponentsController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComponentDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "components"
+        ]
+      },
+      "post": {
+        "operationId": "ComponentsController_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentConstructorOptions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "components"
+        ]
+      }
+    },
+    "/components/{componentId}": {
+      "delete": {
+        "operationId": "ComponentsController_delete",
+        "parameters": [
+          {
+            "name": "componentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "components"
+        ]
+      }
+    },
+    "/elements": {
+      "get": {
+        "operationId": "ElementsController_get",
+        "parameters": [
+          {
+            "name": "route",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ElementDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      },
+      "post": {
+        "operationId": "ElementsController_post",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ElementConstructorOptions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ElementDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      }
+    },
+    "/elements/{elementId}": {
+      "patch": {
+        "operationId": "ElementsController_edit",
+        "parameters": [
+          {
+            "name": "elementId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ElementDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      },
+      "delete": {
+        "operationId": "ElementsController_delete",
+        "parameters": [
+          {
+            "name": "elementId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ElementDTO"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "elements"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Colibrijs API",
+    "description": "",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "PageDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "route"
+        ]
+      },
+      "PageConstructorOptions": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "route"
+        ]
+      },
+      "ComponentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "libraryName": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "libraryName",
+          "src"
+        ]
+      },
+      "ComponentConstructorOptions": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "libraryName": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "libraryName",
+          "src"
+        ]
+      },
+      "ElementDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "component": {
+            "$ref": "#/components/schemas/ComponentDTO"
+          },
+          "pageId": {
+            "type": "string"
+          },
+          "props": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "component",
+          "pageId",
+          "props"
+        ]
+      },
+      "ElementConstructorOptions": {
+        "type": "object",
+        "properties": {
+          "component": {
+            "$ref": "#/components/schemas/ComponentDTO"
+          },
+          "pageId": {
+            "type": "string"
+          },
+          "props": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "component",
+          "pageId",
+          "props"
+        ]
+      },
+      "Object": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "OpenAPI schema",
+    "url": "./openapi.json"
+  }
+}
