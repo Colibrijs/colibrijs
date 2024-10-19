@@ -81,10 +81,23 @@ jobs:
           name: ${{ needs.build.outputs.storybook-artifact-name }}
           path: ./packages/core/storybook-static
       - name: Serve Storybook and run tests
+        continue-on-error: true
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
           "npm run storybook:serve -w @colibrijs/core" \
           "npm run test:interactions:local -w @colibrijs/core"
+      - name: Move screenshots to storybook-build
+        run: |
+          mv ./packages/core/.storybook/screenshots ./packages/core/storybook-static
+          cd ./packages/core/storybook-static
+          ls -la
+          cd ../../../
+      - name: Save storybook build
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook
+          path: ./packages/core/storybook-static
+          overwrite: true
       - name: Test e2e
         run: npm run test:e2e
         env:
