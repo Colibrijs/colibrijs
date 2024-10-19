@@ -1,9 +1,10 @@
-import { exampleElement } from '@colibrijs/mocks/elements';
-import { expect, fn, screen, userEvent, fireEvent } from '@storybook/test';
+import { textElement } from '@colibrijs/mocks/elements';
+import { expect, fn } from '@storybook/test';
 
 import ElementAddStoriesMeta from './element-editor.stories';
 import type { ElementEditorMeta, ElementEditorStory } from './element-editor.stories';
 import { withMockedApi } from '../../../hooks/use-api/mocked';
+import { ElementEditorTO } from '../test-object';
 
 export default {
   ...ElementAddStoriesMeta,
@@ -12,27 +13,28 @@ export default {
 
 export const OpenProp: ElementEditorStory = {
   name: 'Кнопка-галчонок появляется в случае, если изначальные пропсы отличаются от редактированных',
-  args: { open: true, element: exampleElement },
-  play: async ({ step }) => {
-    const textarea = screen.getByTestId('element-editor__textarea');
+  args: { open: true, element: textElement },
+  play: async ({ canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    const propsEditor = await elementEditor.getPropsEditorTO();
 
-    step('Убедимся, что изначально галчонка нет', () => {
-      const saveButton = screen.queryByTestId('element-editor__save');
-      expect(saveButton).toBeNull();
-    });
+    expect(
+      elementEditor.isSaveButtonVisible(),
+      'Убеждаюсь, что изначально кнопки сохранения нет'
+    ).toBe(false);
 
-    step('Введем что-либо в текстарею', () => {
-      fireEvent.input(textarea, { target: { value: '{\n "title": "Заголовок1"\n}' } });
-    });
+    await propsEditor.fill('text', 'Некий заголовок');
 
-    const saveButton = screen.getByTestId('element-editor__save');
-    expect(saveButton, 'Убедимся, что галчонок отныне виден').toBeVisible();
+    expect(
+      elementEditor.isSaveButtonVisible(),
+      'Убеждаюсь, что теперь кнопка сохранения активна'
+    ).toBe(true);
   },
 };
 
 export const SuccessRequest: ElementEditorStory = {
   name: 'Клик по галчонку, в положительном исходе делает запрос на api.elements.patch с идом элемента и новыми пропсами',
-  args: { open: true, element: exampleElement },
+  args: { open: true, element: textElement },
   decorators: [
     withMockedApi((apiClient) => {
       apiClient.override({
@@ -42,27 +44,22 @@ export const SuccessRequest: ElementEditorStory = {
       });
     }),
   ],
-  play: async ({ step, args }) => {
-    const textarea = screen.getByTestId('element-editor__textarea');
+  play: async ({ canvasElement, step, args }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    const propsEditor = await elementEditor.getPropsEditorTO();
 
-    step('Введем что-либо в текстарею', () => {
-      fireEvent.input(textarea, { target: { value: '{\n "title": "Заголовок1"\n}' } });
-    });
-
-    await step('Сохраним изменения', async () => {
-      const saveButton = screen.getByTestId('element-editor__save');
-      await userEvent.click(saveButton);
-    });
+    await propsEditor.fill('text', 'Заголовок1');
+    await elementEditor.clickSave();
 
     expect(args.apiClient.elements.patch).toHaveBeenCalledWith(args.element.id, {
-      title: 'Заголовок1',
+      text: 'Заголовок1',
     });
   },
 };
 
 export const FailRequest: ElementEditorStory = {
-  name: 'Клик по галчонку в случае ошибки выдаст попап с текстом ошибки',
-  args: { open: true, element: exampleElement },
+  name: 'Клик по кнопке "сохранить" в случае ошибки выдаст попап с текстом ошибки',
+  args: { open: true, element: textElement },
   decorators: [
     withMockedApi((apiClient) => {
       apiClient.override({
@@ -74,21 +71,17 @@ export const FailRequest: ElementEditorStory = {
       });
     }),
   ],
-  play: async ({ step }) => {
-    const textarea = screen.getByTestId('element-editor__textarea');
+  play: async ({ canvasElement, step }) => {
+    const elementEditor = new ElementEditorTO({ canvasElement, step });
+    const propsEditor = await elementEditor.getPropsEditorTO();
 
-    step('Введем что-либо в текстарею', () => {
-      fireEvent.input(textarea, { target: { value: '{\n "title": "Заголовок1"\n}' } });
-    });
+    await propsEditor.fill('text', 'Заголовок1');
+    await elementEditor.clickSave();
+    const errorMessage = elementEditor.getErrorMessage();
 
-    await step('Попытаемся сохранить изменения', async () => {
-      const saveButton = screen.getByTestId('element-editor__save');
-      await userEvent.click(saveButton);
-    });
-
-    const errorMessage = await screen.findByTestId('element-remove__error');
-    expect(errorMessage, 'Получаем ошибку с унижениями').toHaveTextContent(
-      'Заплати за интернет, олух!'
-    );
+    expect(
+      errorMessage,
+      'Проверяем что текст ошибки в уведомлении совпадает с тектом ошибки апишки'
+    ).toBe('Заплати за интернет, олух!');
   },
 };
