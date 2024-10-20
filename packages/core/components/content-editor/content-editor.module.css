@@ -1,10 +1,6 @@
 .container {
   position: relative;
-  min-height: 100vh;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties --
-   *     dvh плохо поддерживается и нужно чтобы был фолбэк на 100vh */
-  min-height: 100dvh;
-  padding-left: 0;
+  padding-left: 40px;
   transition: padding-left ease 0.3s;
 }
 
@@ -12,9 +8,16 @@
   padding-left: 420px;
 }
 
+.tree {
+  top: 64px;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties --
+   *     dvh плохо поддерживается и нужно чтобы был фолбэк на 100vh */
+  min-height: calc(100dvh - 64px);
+}
+
 .toggler {
-  position: absolute;
-  top: 65px;
+  position: fixed;
+  top: 131px;
   left: 0;
   border: none;
   border-top-left-radius: 0;

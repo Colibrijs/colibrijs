@@ -83,8 +83,8 @@ export function ContentEditor({ route }: Props) {
       />
       <ConfigProvider theme={darkTheme}>
         <Drawer
+          rootClassName={styles.tree!}
           closable={false}
-          getContainer={false}
           mask={false}
           placement="left"
           open={treeOpened}

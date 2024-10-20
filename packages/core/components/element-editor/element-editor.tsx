@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message, Button, ConfigProvider, Drawer, Skeleton, Space, theme } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 
+import styles from './element-editor.module.css';
+
 import { ELEMENTS_KEY, useApi } from '../../hooks/use-api';
 import { useSchema } from '../../hooks/use-schema';
 import { ElementRemove } from '../element-remove/element-remove';
@@ -51,10 +53,12 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
   return (
     <ConfigProvider theme={darkTheme}>
       <Drawer
+        rootClassName={styles.editor!}
         aria-label="Редактирование элемента"
         open={open}
         mask={false}
         title={<span data-testid="element-editor__title">{element.component.name}</span>}
+        onClose={onClose}
         extra={
           <Space>
             {showSaveButton && (
@@ -70,7 +74,6 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
             <ElementRemove onRemove={onRemove} element={element} />
           </Space>
         }
-        onClose={onClose}
       >
         <Skeleton loading={isLoading}>
           {isSuccess && <PropsEditor schema={schema} onChange={onEdit} value={element.props} />}
