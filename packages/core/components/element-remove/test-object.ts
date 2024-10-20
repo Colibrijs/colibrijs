@@ -22,6 +22,13 @@ export class ElementRemoveTO {
     this.testId = options.testId ?? 'element-remove';
   }
 
+  async isConfirmationVisible(): Promise<boolean> {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const element = within(this.canvasElement).queryByTestId('element-remove__confirm');
+    return Boolean(element);
+  }
+
   async clickRemove(): Promise<void> {
     await this.step('Кликаю на кнопку "Удалить"', () =>
       userEvent.click(within(this.canvasElement).getByTestId(this.testId))

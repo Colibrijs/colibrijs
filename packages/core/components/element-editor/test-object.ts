@@ -25,13 +25,16 @@ export class ElementEditorTO {
     });
 
     return new PropsEditorTO({
-      canvasElement: screen.getByRole('dialog'),
+      canvasElement: screen.getByLabelText('Редактирование элемента'),
       step: this.step,
     });
   }
 
   getElementRemoveTO(): ElementRemoveTO {
-    return new ElementRemoveTO({ canvasElement: screen.getByRole('dialog'), step: this.step });
+    return new ElementRemoveTO({
+      canvasElement: screen.getByLabelText('Редактирование элемента'),
+      step: this.step,
+    });
   }
 
   /** Возвращает информацию о том видна ли кнопка сохранения */
@@ -39,6 +42,13 @@ export class ElementEditorTO {
     const saveButton = screen.queryByTestId('element-editor__save');
 
     return Boolean(saveButton);
+  }
+
+  /** Возвращает заголовок редактируемого элемента */
+  async getTitle(): Promise<string> {
+    const titleElement = await screen.findByTestId('element-editor__title');
+
+    return titleElement.textContent!;
   }
 
   /** Возвращает информацию об ошибке, которая могла возникнуть при сохранении */
@@ -60,7 +70,7 @@ export class ElementEditorTO {
 
   async isOpened(): Promise<boolean> {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    const dialog = screen.queryByRole('dialog');
+    const dialog = screen.queryByLabelText('Редактирование элемента');
 
     return Boolean(dialog);
   }

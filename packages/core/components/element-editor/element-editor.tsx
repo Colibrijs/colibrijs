@@ -1,7 +1,7 @@
 import { CheckOutlined } from '@ant-design/icons';
 import type { IElement } from '@colibrijs/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { message, Button, Drawer, Skeleton, Space } from 'antd';
+import { message, Button, ConfigProvider, Drawer, Skeleton, Space, theme } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ELEMENTS_KEY, useApi } from '../../hooks/use-api';
@@ -18,9 +18,11 @@ export interface Props {
 }
 
 export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Props) {
-  const [lastSavedProps, setLastSavedProps] = useState(JSON.stringify(element.props));
   const api = useApi();
   const queryClient = useQueryClient();
+  const darkTheme = useMemo(() => ({ algorithm: theme.darkAlgorithm }), []);
+
+  const [lastSavedProps, setLastSavedProps] = useState(JSON.stringify(element.props));
 
   const showSaveButton = useMemo(() => {
     return lastSavedProps !== JSON.stringify(element.props);
@@ -47,30 +49,33 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
   const onClick = useCallback(() => saveChanges(), [saveChanges]);
 
   return (
-    <Drawer
-      open={open}
-      mask={false}
-      title={<span data-testid="element-editor__title">{element.component.name}</span>}
-      extra={
-        <Space>
-          {showSaveButton && (
-            <Button
-              loading={isPending}
-              icon={<CheckOutlined />}
-              htmlType="button"
-              data-testid="element-editor__save"
-              shape="circle"
-              onClick={onClick}
-            />
-          )}
-          <ElementRemove onRemove={onRemove} element={element} />
-        </Space>
-      }
-      onClose={onClose}
-    >
-      <Skeleton loading={isLoading}>
-        {isSuccess && <PropsEditor schema={schema} onChange={onEdit} value={element.props} />}
-      </Skeleton>
-    </Drawer>
+    <ConfigProvider theme={darkTheme}>
+      <Drawer
+        aria-label="Редактирование элемента"
+        open={open}
+        mask={false}
+        title={<span data-testid="element-editor__title">{element.component.name}</span>}
+        extra={
+          <Space>
+            {showSaveButton && (
+              <Button
+                loading={isPending}
+                icon={<CheckOutlined />}
+                htmlType="button"
+                data-testid="element-editor__save"
+                shape="circle"
+                onClick={onClick}
+              />
+            )}
+            <ElementRemove onRemove={onRemove} element={element} />
+          </Space>
+        }
+        onClose={onClose}
+      >
+        <Skeleton loading={isLoading}>
+          {isSuccess && <PropsEditor schema={schema} onChange={onEdit} value={element.props} />}
+        </Skeleton>
+      </Drawer>
+    </ConfigProvider>
   );
 }

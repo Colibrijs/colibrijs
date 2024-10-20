@@ -6,19 +6,19 @@ import {
   Button,
   ConfigProvider,
   Drawer,
-  Input,
   Tree,
   type TreeDataNode,
   Tooltip,
 } from 'antd';
 import cn from 'classnames';
-import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import styles from './content-editor.module.css';
 import { useContentEditorLogic, type ContentEditorLogicOptions } from './use-content-editor-logic';
 
 import { Content } from '../content';
 import { ElementAdd } from '../element-add';
+import { ElementEditor } from '../element-editor';
 
 export interface Props {
   route: string;
@@ -51,7 +51,7 @@ export function ContentEditor({ route }: Props) {
     [route, toggleElementAddForm]
   );
 
-  const { addController, editController, selectionController, content } =
+  const { addController, editController, removeController, selectionController, content } =
     useContentEditorLogic(options);
 
   const darkTheme = useMemo(() => ({ algorithm: theme.darkAlgorithm }), []);
@@ -60,19 +60,15 @@ export function ContentEditor({ route }: Props) {
     return content.map(
       (element: IElement): TreeDataNode => ({
         key: element.id,
-        title: <span data-testid={`content-editor__${element.id}`}>{element.component.name}</span>,
+        title: (
+          <span data-testid={`content-editor__element-${element.id}`}>
+            {element.component.name}
+          </span>
+        ),
         children: [],
       })
     );
   }, [content]);
-
-  const changeElementHandler = useCallback(
-    (event: ChangeEvent<HTMLTextAreaElement>) => {
-      const newProps = JSON.parse(event.target.value);
-      editController.changeElement(newProps);
-    },
-    [editController]
-  );
 
   return (
     <div
@@ -103,7 +99,13 @@ export function ContentEditor({ route }: Props) {
             </Tooltip>
           }
         >
-          <Tree treeData={treeData} showLine onSelect={selectionController.selectElement} />
+          <Tree
+            selectedKeys={selectionController.selectedKeys}
+            treeData={treeData}
+            showLine
+            onSelect={selectionController.selectElement}
+            data-testid="content-editor__elements-tree"
+          />
         </Drawer>
         <Button
           className={cn(styles.toggler!)}
@@ -114,28 +116,15 @@ export function ContentEditor({ route }: Props) {
         />
       </ConfigProvider>
       <Content content={content} />
-      <ConfigProvider theme={darkTheme}>
-        <Drawer
-          data-testid="element-editor-drawer"
-          closable={false}
-          open={Boolean(selectionController.selectedElement)}
-          mask={false}
-          placement="right"
-          title={
-            <span data-testid="element-editor-drawer__title">
-              {selectionController.selectedElement?.component.name}
-            </span>
-          }
-        >
-          {selectionController.selectedElement && (
-            <Input.TextArea
-              value={JSON.stringify(selectionController.selectedElement.props, null, 2)}
-              onChange={changeElementHandler}
-              autoSize
-            />
-          )}
-        </Drawer>
-      </ConfigProvider>
+      {selectionController.selectedElement && (
+        <ElementEditor
+          element={selectionController.selectedElement}
+          onEdit={editController.changeElement}
+          onClose={selectionController.unselectElement}
+          onRemove={removeController.remove}
+          open
+        />
+      )}
     </div>
   );
 }
