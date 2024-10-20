@@ -1,5 +1,5 @@
 import { apiClient, NotFoundError } from '@colibrijs/api-client';
-import { Layout, PageTitle, type PageTitleProps } from '@colibrijs/core';
+import { ContentEditor, Layout, type PageTitleProps } from '@colibrijs/core';
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 
 export async function getServerSideProps(
@@ -31,7 +31,7 @@ export async function getServerSideProps(
 export default function PagePage({ page }: PageTitleProps) {
   return (
     <Layout>
-      <PageTitle page={page} />
+      <ContentEditor route={page.route} />
     </Layout>
   );
 }

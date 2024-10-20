@@ -32,12 +32,12 @@ export class ContentEditorTO {
 
   /** Возвращает элемент в дереве, который относится к элементу в контенте */
   getTreeNodeTitle(elementId: string): Promise<HTMLElement> {
-    return this.root.findByTestId(`content-editor__element-${elementId}`);
+    return screen.findByTestId(`content-editor__element-${elementId}`);
   }
 
   /** Возвращает список отрендеренных элементов */
   getElementsIds(): string[] {
-    const elementsTree = this.root.getByTestId('content-editor__elements-tree');
+    const elementsTree = screen.getByTestId('content-editor__elements-tree');
     const elements = elementsTree.querySelectorAll('[data-testid^="content-editor__element-"]');
 
     return Array.from(elements).map((element) => {
@@ -68,7 +68,7 @@ export class ContentEditorTO {
   }
 
   async startAddingElement(): Promise<void> {
-    const addElementButton = this.root.getByTestId('content-editor__add-element-button');
+    const addElementButton = screen.getByTestId('content-editor__add-element-button');
     await this.step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
   }
 
