@@ -31,7 +31,7 @@ export async function getServerSideProps(
 export default function PagePage({ page }: PageTitleProps) {
   return (
     <Layout>
-      <ContentEditor route={page.route} />
+      <ContentEditor page={page} />
     </Layout>
   );
 }

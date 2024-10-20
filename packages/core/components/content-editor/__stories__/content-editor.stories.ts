@@ -15,7 +15,7 @@ export default {
   decorators: [LayoutDecorator],
   title: 'ContentEditor',
   args: {
-    route: examplePage.id,
+    page: examplePage,
   },
 } satisfies StoryMeta;
 
