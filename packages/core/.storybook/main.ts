@@ -1,7 +1,16 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
+import path from 'node:path';
+
+import { isDirectoryAvailable } from './screenshoter-config/fs-utils';
+
+const staticDirs = isDirectoryAvailable(path.resolve(__dirname, './screenshots'))
+  ? [{ from: './screenshots', to: '/screenshots' }]
+  : [];
+
 export default {
   stories: ['../components/**/*.stories.@(ts|tsx)'],
+  staticDirs,
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-links',

@@ -6,8 +6,8 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
-    "test:interactions": "test-storybook --json --outputFile .storybook/report.json",
-    "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && test-storybook",
+    "test:interactions": "test-storybook --json --outputFile .storybook/screenshots/report.json",
+    "test:interactions:local": "wait-storybook --url 'http://localhost:6006/' && npm run test:interactions",
     "storybook:serve": "http-server ./storybook-static --port 6006 --silent"
   },
   "dependencies": {
