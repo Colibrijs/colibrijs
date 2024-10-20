@@ -1,7 +1,9 @@
 import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storybook/test-runner';
+import fs from 'node:fs';
+import path from 'node:path';
 import resemble, { type ComparisonResult } from 'resemblejs';
 
-import { saveScreenshots } from './fs-utils';
+import { isDirectoryAvailable, saveScreenshots } from './fs-utils';
 import { resolveSettings, type Settings } from './resolve-settings';
 
 const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/storybook/';
@@ -12,6 +14,13 @@ type Story = Parameters<TestHook>[1];
 
 export function getScreenshoterConfig(): TestRunnerConfig {
   const settings: Settings = resolveSettings();
+
+  function setup() {
+    const screenshotDirectory = path.resolve(__dirname, '../screenshots');
+    if (!isDirectoryAvailable(screenshotDirectory)) {
+      fs.mkdirSync(screenshotDirectory);
+    }
+  }
 
   async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
@@ -62,5 +71,5 @@ export function getScreenshoterConfig(): TestRunnerConfig {
     });
   }
 
-  return { postVisit };
+  return { postVisit, setup };
 }

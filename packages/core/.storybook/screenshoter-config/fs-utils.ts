@@ -44,11 +44,8 @@ export async function saveScreenshots(
 let isScreenshotDirsCreated = false;
 
 async function createOutputDirectoriesIfNeeded(settings: Settings): Promise<void> {
-  if (isScreenshotDirsCreated || isDirectoryAvailable(settings.output.directory)) {
-    return;
-  }
+  if (isScreenshotDirsCreated) return;
 
-  fss.mkdirSync(settings.output.directory);
   fss.mkdirSync(settings.output.actual);
   fss.mkdirSync(settings.output.reference);
   fss.mkdirSync(settings.output.diff);
