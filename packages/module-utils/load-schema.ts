@@ -12,3 +12,5 @@ export async function loadSchema(component: IComponent): Promise<JsonSchema<obje
 
   return body;
 }
+
+export type SchemaLoader = typeof loadSchema;

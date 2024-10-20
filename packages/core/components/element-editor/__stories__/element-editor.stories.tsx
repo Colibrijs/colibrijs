@@ -1,10 +1,7 @@
-import { textComponentSchema } from '@colibrijs/mocks/components';
 import { exampleElement as mockedElement } from '@colibrijs/mocks/elements';
-import { mockLoadSchemaRequest, resetLoadSchemaRequestMock } from '@colibrijs/module-utils/mocked';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { message } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { withMockedApi, type WithMockedApi } from '../../../hooks/use-api/mocked';
 import { ElementEditor, type Props } from '../element-editor';
@@ -57,24 +54,6 @@ export default {
     onClose: fn(),
   },
   decorators: [
-    (Story) => {
-      // Если убрать, сообщения будут сохраняться между сторисами. Не очень хорошо.
-      // Из-за этого одни тесты, могут повлиять на другие.
-      message.destroy();
-      return <Story />;
-    },
-    (Story) => {
-      useEffect(() => {
-        // После этого, во всех сторисах будет работать только textComponent, даже если выбрать
-        // какой-то другой компонент. Зато тесты будут стабильными и не будут зависеть от гитхаба
-        // с которого загружается схема компонента
-        mockLoadSchemaRequest(textComponentSchema);
-
-        return () => resetLoadSchemaRequestMock();
-      });
-
-      return React.createElement(Story);
-    },
     withMockedApi((apiClient) => {
       apiClient.override({
         elements: {

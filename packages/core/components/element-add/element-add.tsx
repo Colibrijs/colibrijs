@@ -1,5 +1,4 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { loadSchema } from '@colibrijs/module-utils';
 import { getDefaultValues } from '@colibrijs/schema';
 import type { IElementConstructorOptions, IComponent } from '@colibrijs/types';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +6,7 @@ import { Button, Flex, Form, Input, Modal, Select, type SelectProps } from 'antd
 import { useCallback, useMemo, useState } from 'react';
 
 import { COMPONENTS_KEY, useApi } from '../../hooks/use-api';
+import { useSchema } from '../../hooks/use-schema';
 
 export interface Props {
   open: boolean;
@@ -29,13 +29,7 @@ export function ElementAdd({ open, pageId, testId = 'element-add', onClose, onRe
     queryFn: () => api.components.get(),
   });
 
-  const { data: schema } = useQuery({
-    enabled: Boolean(component),
-    queryKey: [COMPONENTS_KEY, 'schema', component?.id],
-    // будет выполняться только если enabled true, а enabled = true, только если указан component
-    // eslint-disable-next-line no-restricted-syntax -- выше описал
-    queryFn: () => loadSchema(component!),
-  });
+  const { data: schema } = useSchema(component);
 
   const componentsOptions: SelectProps<string>['options'] = useMemo(() => {
     if (!isSuccess) return [];
