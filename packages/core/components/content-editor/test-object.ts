@@ -2,6 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { screen, userEvent, within } from '@storybook/test';
 
 import { ElementAddTO } from '../element-add/test-object';
+import { ElementEditorTO } from '../element-editor/test-object';
 
 type PlayFunctionContext = Parameters<NonNullable<StoryObj['play']>>[0];
 type StepFn = PlayFunctionContext['step'];
@@ -31,7 +32,18 @@ export class ContentEditorTO {
 
   /** Возвращает элемент в дереве, который относится к элементу в контенте */
   getTreeNodeTitle(elementId: string): Promise<HTMLElement> {
-    return this.root.findByTestId(`content-editor__${elementId}`);
+    return this.root.findByTestId(`content-editor__element-${elementId}`);
+  }
+
+  /** Возвращает список отрендеренных элементов */
+  getElementsIds(): string[] {
+    const elementsTree = this.root.getByTestId('content-editor__elements-tree');
+    const elements = elementsTree.querySelectorAll('[data-testid^="content-editor__element-"]');
+
+    return Array.from(elements).map((element) => {
+      const [, id] = element.getAttribute('data-testid')!.split('content-editor__element-');
+      return id!;
+    });
   }
 
   /** Выбирает элемент с указанным id */
@@ -51,6 +63,10 @@ export class ContentEditorTO {
     });
   }
 
+  getElementEditorTO(): ElementEditorTO {
+    return new ElementEditorTO({ canvasElement: this.canvasElement, step: this.step });
+  }
+
   async startAddingElement(): Promise<void> {
     const addElementButton = this.root.getByTestId('content-editor__add-element-button');
     await this.step('Кликаю на кнопку "Добавить элемент"', () => userEvent.click(addElementButton));
@@ -58,38 +74,5 @@ export class ContentEditorTO {
 
   async getErrorElement() {
     return await screen.findByTestId('content-editor__error');
-  }
-
-  /** Возвращает html-элемент, который относится к редактору элемента контента */
-  getEditorDrawerElement(): Promise<HTMLElement | null> {
-    return this.findElement('element-editor-drawer', screen);
-  }
-
-  /** Возвращает html-элемент, который относится к названию редактируемого элемента контента */
-  getEditorDrawerTitle(): Promise<HTMLElement | null> {
-    return this.findElement('element-editor-drawer__title', screen);
-  }
-
-  /**
-   * Ведёт себя так же как findQuery,
-   * но если элемент найти не удалось, возвращает null, а не выбрасывает ошибку
-   * @param testId - тестовый id элемента
-   * @param root - где искать, по умолчанию в корне, но если какой-то элемент рендерится в портале,
-   *               можно передать screen
-   * @param timeout - таймаут поиска
-   */
-  private async findElement(
-    testId: string,
-    root = this.root,
-    timeout: number = 1000
-  ): Promise<HTMLElement | null> {
-    const element = root.queryByTestId(testId);
-
-    if (element || timeout <= 0) {
-      return element;
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    return this.findElement(testId, root, timeout - 50);
   }
 }

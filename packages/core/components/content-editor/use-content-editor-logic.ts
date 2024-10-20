@@ -1,6 +1,6 @@
 import type { IElement, IElementConstructorOptions } from '@colibrijs/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useCallback, useEffect, useState, type Key } from 'react';
+import { useCallback, useEffect, useMemo, useState, type Key } from 'react';
 
 import { useApi, ELEMENTS_KEY } from '../../hooks/use-api';
 
@@ -20,11 +20,17 @@ interface ContentEditorLogic {
     /** Выбранный элемент */
     selectedElement: IElement | null;
 
+    /** Массив ключей выбранных элементов */
+    selectedKeys: Key[];
+
     /**
      * Выбрать элемент
      * @param selectedKeys - массив id выбранных элементов
      */
     selectElement: (selectedKeys: Key[]) => void;
+
+    /** Очищает выбранные элементы */
+    unselectElement: () => void;
   };
 
   /** Контроллер добавления элементов */
@@ -40,6 +46,11 @@ interface ContentEditorLogic {
   editController: {
     changeElement: (newElementProps: object) => void;
   };
+
+  removeController: {
+    /** Удаляет указанный элемент из контента */
+    remove: () => void;
+  };
 }
 
 const EMPTY_ARRAY: [] = [];
@@ -51,6 +62,10 @@ export function useContentEditorLogic({
   const api = useApi();
   const [content, setContent] = useState<IElement[]>([]);
   const [selectedElement, setSelectedElement] = useState<IElement | null>(null);
+  const selectedKeys = useMemo(
+    () => (selectedElement ? [selectedElement.id] : []),
+    [selectedElement]
+  );
 
   const { data: loadedContent = EMPTY_ARRAY } = useQuery({
     queryKey: [ELEMENTS_KEY],
@@ -87,6 +102,11 @@ export function useContentEditorLogic({
 
   const selectElement = useCallback(
     (selectedKeys: Key[]) => {
+      if (!selectedKeys.length) {
+        setSelectedElement(null);
+        return;
+      }
+
       const foundElement = content.find((element: IElement) => selectedKeys.includes(element.id));
 
       if (!foundElement) {
@@ -98,10 +118,24 @@ export function useContentEditorLogic({
     [content]
   );
 
+  const unselectElement = useCallback(() => selectElement([]), [selectElement]);
+
+  const remove = useCallback(() => {
+    if (!selectedElement) {
+      throw new Error(
+        'Ни один из элементов не выбран, но при этом нужно что-то удалить. Как такое может быть?'
+      );
+    }
+
+    setContent((currentContent) => currentContent.filter((item) => item !== selectedElement));
+    unselectElement();
+  }, [selectedElement, unselectElement]);
+
   return {
     content,
     addController: { addElement },
     editController: { changeElement },
-    selectionController: { selectedElement, selectElement },
+    selectionController: { selectedElement, selectedKeys, selectElement, unselectElement },
+    removeController: { remove },
   };
 }

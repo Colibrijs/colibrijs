@@ -15,9 +15,11 @@ export const HiddenByDefault: Story = {
   name: 'Редактор элемента спрятан по умолчанию',
   play: async (context) => {
     const contentEditor = new ContentEditorTO(context);
-    const editor = await contentEditor.getEditorDrawerElement();
 
-    expect(editor, 'Убеждаюсь, что редактор скрыт по умолчанию').toBeNull();
+    expect(
+      await contentEditor.getElementEditorTO().isOpened(),
+      'Убеждаюсь, что редактор скрыт по умолчанию'
+    ).toBe(false);
   },
 };
 
@@ -34,10 +36,11 @@ export const VisibleOnSelect: Story = {
   ],
   play: async (context) => {
     const contentEditor = new ContentEditorTO(context);
-    await contentEditor.selectElement(exampleElement.id);
-    const editor = await contentEditor.getEditorDrawerElement();
+    const elementEditor = contentEditor.getElementEditorTO();
 
-    expect(editor, 'Убеждаюсь, что редактор отображается').toBeVisible();
+    await contentEditor.selectElement(exampleElement.id);
+
+    expect(await elementEditor.isOpened(), 'Убеждаюсь, что редактор отображается').toBe(true);
   },
 };
 
@@ -54,9 +57,13 @@ export const Title: Story = {
   ],
   play: async (context) => {
     const contentEditor = new ContentEditorTO(context);
-    await contentEditor.selectElement(exampleElement.id);
-    const editorTitle = await contentEditor.getEditorDrawerTitle();
+    const elementEditor = contentEditor.getElementEditorTO();
 
-    expect(editorTitle).toHaveTextContent(exampleElement.component.name);
+    await contentEditor.selectElement(exampleElement.id);
+    const title = await elementEditor.getTitle();
+
+    expect(title, 'Проверяю, что заголовок выбранного элемента равен названию компонента').toBe(
+      exampleElement.component.name
+    );
   },
 };
