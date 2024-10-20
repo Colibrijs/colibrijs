@@ -1,5 +1,5 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined, PlusOutlined } from '@ant-design/icons';
-import type { IElement } from '@colibrijs/types';
+import type { IElement, IPage } from '@colibrijs/types';
 import {
   message,
   theme,
@@ -21,10 +21,10 @@ import { ElementAdd } from '../element-add';
 import { ElementEditor } from '../element-editor';
 
 export interface Props {
-  route: string;
+  page: IPage;
 }
 
-export function ContentEditor({ route }: Props) {
+export function ContentEditor({ page }: Props) {
   const [treeOpened, setTreeOpened] = useState<boolean>(true);
   const toggleTree = useCallback(() => setTreeOpened((currentlyOpened) => !currentlyOpened), []);
 
@@ -33,7 +33,7 @@ export function ContentEditor({ route }: Props) {
 
   const options: ContentEditorLogicOptions = useMemo(
     () => ({
-      route,
+      route: page.route,
       addControllerOptions: {
         onError: (error) => {
           message.error(<span data-testid="content-editor__error">{error.message}</span>);
@@ -48,7 +48,7 @@ export function ContentEditor({ route }: Props) {
         },
       },
     }),
-    [route, toggleElementAddForm]
+    [page, toggleElementAddForm]
   );
 
   const { addController, editController, removeController, selectionController, content } =
@@ -79,7 +79,7 @@ export function ContentEditor({ route }: Props) {
         open={isElementAddOpen}
         onClose={toggleElementAddForm}
         onReady={addController.addElement}
-        pageId={route}
+        pageId={page.id}
       />
       <ConfigProvider theme={darkTheme}>
         <Drawer
