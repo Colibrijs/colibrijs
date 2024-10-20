@@ -16,7 +16,7 @@ export const HiddenByDefault: Story = {
   name: 'Добавление элемента скрыто по умолчанию',
   play: async ({ step, canvasElement }) => {
     const contentEditor = new ContentEditorTO({ step, canvasElement });
-    const addElementVisible = await contentEditor.getAddElementTO().isVisible();
+    const addElementVisible = contentEditor.getAddElementTO().isVisible();
 
     await expect(addElementVisible, 'Проверяю что добавление элемента не отображается').toBe(false);
   },
@@ -27,7 +27,7 @@ export const VisibleOnClick: Story = {
   play: async ({ step, canvasElement }) => {
     const contentEditor = new ContentEditorTO({ step, canvasElement });
     await contentEditor.startAddingElement();
-    const addElementVisible = await contentEditor.getAddElementTO().isVisible();
+    const addElementVisible = contentEditor.getAddElementTO().isVisible();
 
     expect(addElementVisible, 'Проверяю что добавление элемента отображается').toBe(true);
   },

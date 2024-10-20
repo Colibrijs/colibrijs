@@ -1,11 +1,11 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { loadSchema } from '@colibrijs/module-utils';
 import type { IElement } from '@colibrijs/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message, Button, Drawer, Skeleton, Space } from 'antd';
 import { useCallback, useMemo, useState } from 'react';
 
 import { ELEMENTS_KEY, useApi } from '../../hooks/use-api';
+import { useSchema } from '../../hooks/use-schema';
 import { ElementRemove } from '../element-remove/element-remove';
 import { PropsEditor } from '../props-editor';
 
@@ -26,14 +26,7 @@ export function ElementEditor({ element, onRemove, onEdit, open, onClose }: Prop
     return lastSavedProps !== JSON.stringify(element.props);
   }, [element.props, lastSavedProps]);
 
-  const {
-    data: schema,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    queryKey: ['schema', element.component.id],
-    queryFn: () => loadSchema(element.component),
-  });
+  const { data: schema, isLoading, isSuccess } = useSchema(element.component);
 
   const { mutate: saveChanges, isPending } = useMutation({
     mutationFn: () => api.elements.patch(element.id, element.props),

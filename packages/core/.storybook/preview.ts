@@ -3,14 +3,21 @@ import React from 'react';
 
 import '../global.css';
 import './global-storybook.css';
+
 import { withReactQueryDecorator } from '../components/react-query-provider/mocked';
 import { withMockedApi } from '../hooks/use-api/mocked';
 import { withMockedRouter } from '../hooks/use-router/mocked';
+import { withMockedSchemaLoader } from '../hooks/use-schema/mocked';
 
 window.React = React;
 
 export default {
-  decorators: [withReactQueryDecorator(), withMockedApi(), withMockedRouter()],
+  decorators: [
+    withReactQueryDecorator(),
+    withMockedApi(),
+    withMockedRouter(),
+    withMockedSchemaLoader(),
+  ],
 
   parameters: {
     controls: {
