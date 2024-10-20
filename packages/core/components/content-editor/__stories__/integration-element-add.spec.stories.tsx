@@ -1,6 +1,7 @@
 import { exampleComponent, textComponent } from '@colibrijs/mocks/components';
 import { exampleElement } from '@colibrijs/mocks/elements';
-import { expect, waitFor } from '@storybook/test';
+import { examplePage } from '@colibrijs/mocks/pages';
+import { expect, spyOn, waitFor } from '@storybook/test';
 
 import ContentEditorStoriesMeta from './content-editor.stories';
 import type { Story, StoryMeta } from './content-editor.stories';
@@ -76,6 +77,39 @@ export const HidesOnAdded: Story = {
         elementAdd.isVisible(),
         'проверяю что интерфейс добавления элемента не отображается'
       ).toBe(false);
+    });
+  },
+};
+
+export const AddsWithPageId: Story = {
+  name: 'Элемент добавляется на страницу с id, указанным в пропсе page',
+  decorators: [
+    withMockedApi((apiClient) => {
+      apiClient.override({
+        elements: {
+          get: () => Promise.resolve([]),
+          post: () => Promise.resolve(exampleElement),
+        },
+      });
+    }),
+  ],
+  args: {
+    page: { ...examplePage, id: 'my-page-id' },
+  },
+  play: async ({ args, step, canvasElement }) => {
+    const contentEditor = new ContentEditorTO({ step, canvasElement });
+    const elementAdd = contentEditor.getAddElementTO();
+    const postSpy = spyOn(args.apiClient.elements, 'post').mockResolvedValue(exampleElement);
+
+    await contentEditor.startAddingElement();
+    await elementAdd.clickOnComponentsSelect();
+    await elementAdd.selectComponent(exampleComponent.id);
+    await elementAdd.clickAdd();
+
+    expect(postSpy).toHaveBeenCalledWith({
+      component: exampleComponent,
+      pageId: args.page.id,
+      props: { title: '', text: '' },
     });
   },
 };
