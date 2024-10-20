@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/react';
+import { message } from 'antd';
 import React from 'react';
 
 import '../global.css';
@@ -17,6 +18,10 @@ export default {
     withMockedApi(),
     withMockedRouter(),
     withMockedSchemaLoader(),
+    (Story) => {
+      message.destroy();
+      return React.createElement(Story);
+    },
   ],
 
   parameters: {
