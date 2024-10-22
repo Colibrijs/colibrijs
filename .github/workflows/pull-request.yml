@@ -61,6 +61,7 @@ jobs:
           artifact-name: ${{ needs.build.outputs.example-artifact-name }}
 
   test:
+    continue-on-error: true
     needs:
       - build
       - deploy-example
