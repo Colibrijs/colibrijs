@@ -82,6 +82,7 @@ jobs:
           name: ${{ needs.build.outputs.storybook-artifact-name }}
           path: ./packages/core/storybook-static
       - name: Serve Storybook and run tests
+        id: run_test
         continue-on-error: true
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
@@ -99,6 +100,10 @@ jobs:
           name: storybook
           path: ./packages/core/storybook-static
           overwrite: true
+      - name: Check previous status
+        run: |
+          if [ "${{ steps.run_test.outcome }}" == "failure" ]; then
+            exit 1
       - name: Test e2e
         run: npm run test:e2e
         env:
