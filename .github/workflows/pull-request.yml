@@ -101,11 +101,10 @@ jobs:
           path: ./packages/core/storybook-static
           overwrite: true
       - name: Check previous status
+        if: ${{ steps.run_test.outcome }} == "failure"
         run: |
-          if [ "${{ steps.run_test.outcome }}" = "failure" ]; then
-            echo "Ошибка: видимо упали тесты! Проверь в шаге 'Serve Storybook and run tests'"
-            exit 1
-          fi
+          echo "Ошибка: видимо упали тесты! Проверь в шаге 'Serve Storybook and run tests'"
+          exit 1
       - name: Test e2e
         run: npm run test:e2e
         env:
