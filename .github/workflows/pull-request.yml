@@ -102,7 +102,7 @@ jobs:
           overwrite: true
       - name: Check previous status
         run: |
-          if [ "${{ steps.run_test.outcome }}" == "failure" ]; then
+          if [ "${{ steps.run_test.outcome }}" = "failure" ]; then
             echo "Ошибка: видимо упали тесты! Проверь в шаге 'Serve Storybook and run tests'"
             exit 1
           fi
