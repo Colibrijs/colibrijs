@@ -87,7 +87,8 @@ jobs:
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
           "npm run storybook:serve -w @colibrijs/core" \
-          "npm run test:interactions:local -w @colibrijs/core"
+          "npm run test:interactions:local -w @colibrijs/core" \
+          echo "exit_code=$?" >> $GITHUB_ENV
       - name: Move screenshots to storybook-build
         run: |
           mv ./packages/core/.storybook/screenshots ./packages/core/storybook-static
@@ -103,7 +104,7 @@ jobs:
       - name: Check previous status
         run: |
           if [ "${{ steps.run_test.outcome }}" == "failure" ]; then
-            exit $?
+            exit ${{ env.exit_code }}
           fi
       - name: Test e2e
         run: npm run test:e2e
