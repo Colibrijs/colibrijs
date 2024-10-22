@@ -103,7 +103,8 @@ jobs:
       - name: Check previous status
         run: |
           if [ "${{ steps.run_test.outcome }}" == "failure" ]; then
-            exit 1
+            exit $?
+          fi
       - name: Test e2e
         run: npm run test:e2e
         env:
