@@ -139,7 +139,8 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           REQUESTED_REVIEWER: ${{ github.event.requested_reviewer.login }} # Имя пользователя, кому запросили ревью
         run: |
+          echo "Reviewer is a ${{ github.event.requested_reviewer }} ."
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
           -d "chat_id=${TELEGRAM_CHAT_ID}" \
-          -d "text=Пользователь $GITHUB_ACTOR запросил ревью на Pull Request: *$PR_TITLE* у пользователя @$REQUESTED_REVIEWER.\n\nСсылка: $PR_URL" \
+          -d "text=Пользователь $GITHUB_ACTOR настаивает на ревью Pull Requestа: *$PR_TITLE* у пользователя $REQUESTED_REVIEWER.\n\nСсылка: $PR_URL" \
           -d "parse_mode=Markdown"
