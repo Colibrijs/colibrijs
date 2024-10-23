@@ -10,7 +10,7 @@ const staticDirs = isDirectoryAvailable(path.resolve(__dirname, './screenshots')
 
 export default {
   // stories: ['../components/**/*.stories.@(ts|tsx)'],
-  stories: ['../components/page-title/__stories__/screenshot/*.stories.@(ts|tsx)'],
+  stories: ['../components/page-title/__stories__/**/*.stories.@(ts|tsx)'],
   staticDirs,
   addons: [
     '@storybook/addon-webpack5-compiler-swc',

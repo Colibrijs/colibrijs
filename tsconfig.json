@@ -49,7 +49,8 @@
     "jest.config.js",
     "playwright.config.ts",
     "./packages/**/*",
-    "./packages/core/.storybook/**/*.ts"
+    "./packages/core/.storybook/**/*.ts",
+    "./packages/core/.storybook/**/*.tsx"
   ],
   "exclude": ["node_modules", ".next", "dist"]
 }
