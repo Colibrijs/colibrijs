@@ -129,6 +129,7 @@ jobs:
 
   send_telegram_message:
     runs-on: ubuntu-latest
+    if: github.event.action == 'review_requested'
     steps:
       - name: Send message to Telegram
         env:
