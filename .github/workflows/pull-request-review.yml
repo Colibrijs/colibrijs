@@ -17,5 +17,5 @@ jobs:
         run: |
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
           -d "chat_id=${TELEGRAM_CHAT_ID}" \
-          -d "text=Пользователь $GITHUB_ACTOR оставил ревью на Pull Request: *$PR_TITLE*.\n\nСтатус ревью: $REVIEW_STATE.\n\nКомментарий: $REVIEW_BODY.\n\nСсылка: $PR_URL" \
+          -d "text=Пользователь $GITHUB_ACTOR оставил ревью на Pull Request:\n*$PR_TITLE*.\n\nСтатус ревью: *$REVIEW_STATE*.\n\nКомментарий: $REVIEW_BODY.\n\n[Ссылка]($PR_URL)" \
           -d "parse_mode=Markdown"
