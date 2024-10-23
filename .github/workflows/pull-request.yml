@@ -141,6 +141,6 @@ jobs:
           for reviewer in "${{ github.event.pull_request.requested_reviewers }}"; do
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
-            -d "text=Пользователь $GITHUB_ACTOR запросил ревью у вас: *$PR_TITLE*\n\nСсылка: $PR_URL" \
+            -d "text=Пользователь $GITHUB_ACTOR запросил ревью у вас: *$PR_TITLE*\n\nСсылка: $PR_URL\n\nПарни гоу: ${{ reviewer.login }}" \
             -d "parse_mode=Markdown"
           done
