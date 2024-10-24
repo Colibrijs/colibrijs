@@ -147,7 +147,7 @@ jobs:
           echo "Reviewers: $REQUESTED_REVIEWERS"
           reviewers=$(echo "$REQUESTED_REVIEWERS" | jq -r '.[].login')
           for reviewer in $reviewers; do
-            message="Типок $GITHUB_ACTOR настаивает на ревью в PR: *$PR_TITLE*: $PR_URL.\n чуєшь: $reviewer"
+            message="Типок $GITHUB_ACTOR настаивает на ревью в PR: *$PR_TITLE*: $PR_URL. у : $reviewer"
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "text=$message" \
