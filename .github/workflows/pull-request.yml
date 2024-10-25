@@ -64,7 +64,7 @@ jobs:
     continue-on-error: true
     needs:
       - build
-      # - deploy-example
+      - deploy-example
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.44.1-jammy
