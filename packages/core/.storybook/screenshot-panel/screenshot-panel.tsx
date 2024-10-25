@@ -1,11 +1,11 @@
 import { AddonPanel, Button } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
-import React, { useCallback, useEffect, type ReactElement } from 'react';
+import React, { useCallback, useEffect, type ReactNode } from 'react';
 
 import type { ScreenshotsPanelProps, StoryData, ReportData } from './types';
 
-const ADDON_ID = 'storybook/screenshots';
+const ADDON_ID = '@colibrijs/screenshots';
 const PANEL_ID = `${ADDON_ID}/panel`;
 
 function kebabize(str: string) {
@@ -19,7 +19,7 @@ function kebabize(str: string) {
     .join('');
 }
 
-function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactElement | null {
+function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode | null {
   const [stories, setStories] = React.useState<StoryData[]>([]);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactElement 
     [api]
   );
 
-  if (!active) {
+  if (!active || !stories.length) {
     return null;
   }
 

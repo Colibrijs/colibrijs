@@ -10,9 +10,6 @@ export default {
   component: PageTitle,
   title: 'PageTitle',
   args: { page: examplePage },
-  parameters: {
-    screenshots: [{ src: './screenshot.png', alt: 'First Screenshot' }],
-  },
 } satisfies PageTitleMeta;
 
 export const Default: Story = {};

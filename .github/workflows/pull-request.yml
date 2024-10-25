@@ -61,7 +61,7 @@ jobs:
           artifact-name: ${{ needs.build.outputs.example-artifact-name }}
 
   test:
-    continue-on-error: true
+    if: always()
     needs:
       - build
       - deploy-example
@@ -101,7 +101,7 @@ jobs:
           path: ./packages/core/storybook-static
           overwrite: true
       - name: Check previous status
-        if: ${{ steps.run_test.outcome != 'success' }}
+        if: steps.run_test.outcome != 'success'
         run: |
           echo ${{ steps.run_test.outcome }}
           echo steps.run_test.outcome
