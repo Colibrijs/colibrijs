@@ -25,14 +25,12 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    console.log(url);
 
-    fetch(`${url.origin}/screenshots/report.json`)
+    fetch(`${url.origin}${url.pathname}screenshots/report.json`)
       .then((resonse) => resonse.json())
       .then((data: ReportData) => {
         const failedScreenshots = data.testResults.filter((test) => {
-          const path = new URL(test.name);
-          return path.pathname.includes('/screenshot/');
+          return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
         });
         const storiesData = failedScreenshots.flatMap((story) => {
           return story.assertionResults.map((result) => {
