@@ -25,6 +25,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   useEffect(() => {
     const url = new URL(window.location.href);
+    console.log(url);
 
     fetch(`${url.origin}/screenshots/report.json`)
       .then((resonse) => resonse.json())
