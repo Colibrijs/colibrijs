@@ -19,18 +19,21 @@ function kebabize(str: string) {
     .join('');
 }
 
-function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode | null {
+function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [stories, setStories] = React.useState<StoryData[]>([]);
+  const [error, setError] = React.useState('');
 
   useEffect(() => {
-    fetch('/screenshots/report.json')
+    const url = new URL(window.location.href);
+
+    fetch(`${url.origin}/screenshots/report.json`)
       .then((resonse) => resonse.json())
       .then((data: ReportData) => {
         const failedScreenshots = data.testResults.filter((test) => {
           const path = new URL(test.name);
           return path.pathname.includes('/screenshot/');
         });
-        const storiesData = failedScreenshots.map((story) => {
+        const storiesData = failedScreenshots.flatMap((story) => {
           return story.assertionResults.map((result) => {
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
             const name = result.ancestorTitles[1];
@@ -38,7 +41,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode | n
             return { path, name, id };
           });
         });
-        setStories(storiesData.flat());
+        setStories(storiesData);
+      })
+      .catch((errorData) => {
+        setError(errorData.message);
       });
   }, []);
 
@@ -50,6 +56,15 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode | n
     },
     [api]
   );
+
+  if (error) {
+    return (
+      <div className="screenshot-panel">
+        <p className="screenshot-panel__text">На вот, наверни: </p>
+        <p className="screenshot-panel__text">{error}</p>
+      </div>
+    );
+  }
 
   if (!active || !stories.length) {
     return null;

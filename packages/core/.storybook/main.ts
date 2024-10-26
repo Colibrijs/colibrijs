@@ -1,10 +1,17 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
+import fs from 'node:fs';
 import path from 'node:path';
 
 import { isDirectoryAvailable } from './screenshoter-config/fs-utils';
 
-const staticDirs = isDirectoryAvailable(path.resolve(__dirname, './screenshots'))
+const screenshotDirectory = path.resolve(__dirname, './screenshots');
+
+if (!isDirectoryAvailable(screenshotDirectory)) {
+  fs.mkdirSync(screenshotDirectory);
+}
+
+const staticDirs = isDirectoryAvailable(screenshotDirectory)
   ? [{ from: './screenshots', to: '/screenshots' }]
   : [];
 
