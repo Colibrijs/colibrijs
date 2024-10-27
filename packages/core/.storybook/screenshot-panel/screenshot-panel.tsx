@@ -30,6 +30,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       .then((resonse) => resonse.json())
       .then((data: ReportData) => {
         const failedScreenshots = data.testResults.filter((test) => {
+          if (test.status === 'passed') return false;
           return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
         });
         const storiesData = failedScreenshots.flatMap((story) => {
@@ -65,8 +66,16 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     );
   }
 
-  if (!active || !stories.length) {
+  if (!active) {
     return null;
+  }
+
+  if (!stories.length) {
+    return (
+      <div className="screenshot-panel">
+        <p className="screenshot-panel__success-text">Все скриншотные тесты прошли успешно!</p>
+      </div>
+    );
   }
 
   return (
@@ -76,7 +85,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
         {stories.map((storyData) => (
           <li className="screenshot-panel__item" key={storyData.name}>
             <Button size="medium" onClick={onClick(storyData)}>
-              {storyData.name}
+              {storyData.path}/{storyData.name}
             </Button>
           </li>
         ))}

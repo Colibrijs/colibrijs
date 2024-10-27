@@ -6,6 +6,7 @@ type AssertionResult = {
 
 type TestResults = {
   name: string;
+  status: 'passed' | 'failed';
   assertionResults: AssertionResult[];
 };
 

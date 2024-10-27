@@ -15,3 +15,9 @@
   margin-bottom: 10px;
   list-style-type: none;
 }
+
+.screenshot-panel__success-text {
+  font-weight: 700;
+  font-size: 16px;
+  color: #006d37;
+}
