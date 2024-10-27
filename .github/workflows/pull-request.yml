@@ -81,6 +81,7 @@ jobs:
           name: ${{ needs.build.outputs.storybook-artifact-name }}
           path: ./packages/core/storybook-static
       - name: Serve Storybook and run tests
+        id: run_test
         continue-on-error: true
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
@@ -88,7 +89,7 @@ jobs:
           "npm run test:interactions:local -w @colibrijs/core"
       - name: Move screenshots to storybook-build
         run: |
-          mv ./packages/core/.storybook/screenshots ./packages/core/storybook-static
+          cp -r ./packages/core/.storybook/screenshots ./packages/core/storybook-static
           cd ./packages/core/storybook-static
           ls -la
           cd ../../../
@@ -98,6 +99,11 @@ jobs:
           name: storybook
           path: ./packages/core/storybook-static
           overwrite: true
+      - name: Check previous status
+        if: steps.run_test.outcome != 'success'
+        run: |
+          echo "Ошибка: видимо упали тесты! Проверь в шаге 'Serve Storybook and run tests'"
+          exit 1
       - name: Test e2e
         run: npm run test:e2e
         env:
@@ -114,6 +120,7 @@ jobs:
           artifact-name: playwright-report
 
   deploy:
+    if: always()
     needs:
       - build
       - test

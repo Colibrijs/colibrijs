@@ -20,7 +20,7 @@ export async function saveScreenshots(
   screenshots: Screenshots,
   settings: Settings
 ): Promise<void> {
-  await createOutputDirectoriesIfNeeded(settings);
+  createOutputDirectoriesIfNeeded(settings);
 
   await Promise.all([
     fs.writeFile(
@@ -43,12 +43,12 @@ export async function saveScreenshots(
 
 let isScreenshotDirsCreated = false;
 
-async function createOutputDirectoriesIfNeeded(settings: Settings): Promise<void> {
+function createOutputDirectoriesIfNeeded(settings: Settings): void {
   if (isScreenshotDirsCreated) return;
 
-  fss.mkdirSync(settings.output.actual);
-  fss.mkdirSync(settings.output.reference);
-  fss.mkdirSync(settings.output.diff);
+  if (!isDirectoryAvailable(settings.output.actual)) fss.mkdirSync(settings.output.actual);
+  if (!isDirectoryAvailable(settings.output.reference)) fss.mkdirSync(settings.output.reference);
+  if (!isDirectoryAvailable(settings.output.diff)) fss.mkdirSync(settings.output.diff);
 
   isScreenshotDirsCreated = true;
 }
