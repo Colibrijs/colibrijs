@@ -11,10 +11,11 @@ jobs:
       - name: Prepare environment
         uses: ./.github/workflows/prepare-environment
       - name: Send message to Telegram
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          REQUESTED_REVIEWERS: ${{ toJson(github.event.pull_request.requested_reviewers) }}
-        run: npx exec control-freak request-review -- --author ${{ github.actor }} --reviewer ivan-podgornov
+        run: |
+          npm exec control-freak request-review \
+            -- --author ${{ github.actor }} \
+            --reviewers "$(echo '${{ toJSON(github.event.pull_request.requested_reviewers) }}' | jq -r 'map(.login) | join(",")')" \
+            --title "${{ github.event.pull_request.title }}" \
+            --url ${{ github.event.pull_request.html_url }} \
+            --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
+            --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
