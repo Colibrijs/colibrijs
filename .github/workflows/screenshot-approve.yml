@@ -1,0 +1,4 @@
+on: workflow_dispatch
+
+jobs:
+  echo: echo "Loh cveto4niy"
