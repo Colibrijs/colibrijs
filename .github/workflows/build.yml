@@ -35,6 +35,8 @@ jobs:
         run: npm run storybook:build -w @colibrijs/core
         env:
           # Для ветки main - https://colibrijs.github.io/colibrijs/main/example/
+          BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           EXAMPLE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/example/
           COMMIT_SHA: ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
       - name: Save storybook build

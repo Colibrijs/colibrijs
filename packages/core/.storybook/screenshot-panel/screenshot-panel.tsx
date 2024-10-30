@@ -57,6 +57,27 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     [api]
   );
 
+  const onApprove = useCallback(() => {
+    fetch(
+      'https://api.github.com/repos/colibrijs/colibrijs/actions/workflows/screenshot-approve.yml/dispatches',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.GH_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ref: process.env.BRANCH_NAME,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data, process.env.GH_TOKEN, process.env.BRANCH_NAME);
+        if (!data.ok) setError(`Ошибка аппрува. ${data.status}: ${data.message}`);
+      });
+  }, []);
+
   if (error) {
     return (
       <div className="screenshot-panel">
@@ -80,6 +101,9 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
+      <Button size="medium" onClick={onApprove}>
+        Подтвердить изменения
+      </Button>
       <p className="screenshot-panel__text">Здесь ты можешь наблюдать список упавших тестов: </p>
       <ul className="screenshot-panel__list">
         {stories.map((storyData) => (
