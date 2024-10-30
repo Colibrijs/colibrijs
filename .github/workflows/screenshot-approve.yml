@@ -3,7 +3,8 @@ on: workflow_dispatch
 jobs:
   echo:
     runs-on: ubuntu-latest
-    permissions: write-all
+    concurrency:
+      group: screenshot_approve
     steps:
       - name: Run echo
         run: echo "Loh cveto4niy"
