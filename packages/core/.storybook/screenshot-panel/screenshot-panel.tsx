@@ -71,10 +71,12 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
         }),
       }
     )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data, process.env.GH_TOKEN, process.env.BRANCH_NAME);
-        if (!data.ok) setError(`Ошибка аппрува. ${data.status}: ${data.message}`);
+      .then((response) => {
+        if (!response.ok) throw response.json();
+        return null;
+      })
+      .catch((data) => {
+        setError(`Ошибка аппрува. ${data.status}: ${data.message}`);
       });
   }, []);
 
