@@ -1,0 +1,12 @@
+{
+  "name": "@colibrijs/control-freak",
+  "version": "1.0.0",
+  "private": true,
+  "bin": {
+    "control-freak": "./bin/control-freak.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "ts-node": "*"
+  }
+}
