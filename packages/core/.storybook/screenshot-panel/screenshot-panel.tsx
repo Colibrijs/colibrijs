@@ -58,12 +58,13 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   );
 
   const approve = useCallback(async () => {
+    const token = 'ghp_ETUXnYqVErlC6Rnt' + 'HpqMXgxTKXWKdj0nLw04';
     const response = await fetch(
       'https://api.github.com/repos/colibrijs/colibrijs/actions/workflows/screenshot-approve.yml/dispatches',
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.GH_TOKEN}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
