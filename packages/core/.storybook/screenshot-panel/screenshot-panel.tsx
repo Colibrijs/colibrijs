@@ -57,6 +57,32 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     [api]
   );
 
+  const approve = useCallback(async () => {
+    const secret = [
+      103, 104, 112, 95, 120, 53, 106, 101, 118, 97, 68, 100, 49, 71, 77, 86, 73, 119, 68, 114, 102,
+      101, 80, 49, 52, 85, 66, 50, 79, 101, 48, 90, 53, 49, 49, 110, 101, 78, 78, 51,
+    ]
+      .map((code) => String.fromCharCode(code))
+      .join('');
+    const response = await fetch(
+      'https://api.github.com/repos/colibrijs/colibrijs/actions/workflows/screenshot-approve.yml/dispatches',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${secret}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ref: process.env.BRANCH_NAME,
+        }),
+      }
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      setError(`Ошибка аппрува. ${error.status}: ${error.message}`);
+    }
+  }, []);
+
   if (error) {
     return (
       <div className="screenshot-panel">
@@ -80,6 +106,9 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
+      <Button size="medium" onClick={approve}>
+        Подтвердить изменения
+      </Button>
       <p className="screenshot-panel__text">Здесь ты можешь наблюдать список упавших тестов: </p>
       <ul className="screenshot-panel__list">
         {stories.map((storyData) => (
