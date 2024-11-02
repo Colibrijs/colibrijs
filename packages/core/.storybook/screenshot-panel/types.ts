@@ -11,7 +11,7 @@ type TestResults = {
   approved?: boolean | undefined;
 };
 
-export type ReportData = {
+export type Report = {
   testResults: TestResults[];
 };
 

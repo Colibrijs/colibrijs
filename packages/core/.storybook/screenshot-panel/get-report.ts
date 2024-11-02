@@ -1,10 +1,6 @@
-import type { ReportData } from './types';
+import type { Report } from './types';
 
-type ErrorData = {
-  message: string;
-};
-
-export async function getReportData() {
+export async function getReport() {
   const url = new URL(window.location.href);
   const response = await fetch(`${url.origin}${url.pathname}screenshots/report.json`);
 
@@ -12,6 +8,6 @@ export async function getReportData() {
     throw new Error(`Ошибка получения данных о тестах: ${response.status}: ${response.statusText}`);
   }
 
-  const responseData: ReportData & ErrorData = await response.json();
+  const responseData: Report = await response.json();
   return responseData;
 }

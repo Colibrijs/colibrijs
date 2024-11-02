@@ -3,8 +3,8 @@ import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, type ReactNode } from 'react';
 
-import { getReportData } from './get-report-data';
-import type { ScreenshotsPanelProps, StoryData, ReportData } from './types';
+import { getReport } from './get-report';
+import type { ScreenshotsPanelProps, StoryData, Report } from './types';
 
 const ADDON_ID = '@colibrijs/screenshots';
 const PANEL_ID = `${ADDON_ID}/panel`;
@@ -25,8 +25,8 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [error, setError] = React.useState('');
 
   useEffect(() => {
-    getReportData()
-      .then((data: ReportData) => {
+    getReport()
+      .then((data: Report) => {
         const failedScreenshots = data.testResults.filter((test) => {
           if (test.status === 'passed') return false;
           return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
