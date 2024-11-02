@@ -50,7 +50,8 @@
     "playwright.config.ts",
     "./packages/**/*",
     "./packages/core/.storybook/**/*.ts",
-    "./packages/core/.storybook/**/*.tsx"
+    "./packages/core/.storybook/**/*.tsx",
+    "./packages/core/.storybook/**/*.js"
   ],
   "exclude": ["node_modules", ".next", "dist"]
 }

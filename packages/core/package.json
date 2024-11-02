@@ -1,8 +1,10 @@
 {
   "name": "@colibrijs/core",
   "private": true,
-  "type": "module",
   "version": "1.0.0",
+  "bin": {
+    "screenshot-approve": "./.storybook/screenshot-approve/bin/screenshot-approve.js"
+  },
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
@@ -39,6 +41,8 @@
     "@storybook/react-webpack5": "^8.1.10",
     "@storybook/test": "^8.1.10",
     "@storybook/test-runner": "^0.19.1",
+    "ts-node": "*",
+    "commander": "^12.1.0",
     "prop-types": "^15.8.1",
     "http-server": "^14.1.1",
     "storybook": "^8.1.10"

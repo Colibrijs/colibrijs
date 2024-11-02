@@ -18,7 +18,7 @@ const compat = new FlatCompat({
 const devFiles = [
   'eslint.config.js',
   'playwright.config.ts',
-  'packages/core/.storybook/**/*.{ts,tsx}',
+  'packages/core/.storybook/**/*.{ts,tsx,js}',
   'packages/**/*.stories.{ts,tsx}',
   'packages/**/__tests__/**/*.{ts,tsx}',
   'packages/**/*.test.ts',

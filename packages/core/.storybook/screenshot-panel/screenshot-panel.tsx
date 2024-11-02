@@ -3,6 +3,7 @@ import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, type ReactNode } from 'react';
 
+import { getReportData } from './get-report-data';
 import type { ScreenshotsPanelProps, StoryData, ReportData } from './types';
 
 const ADDON_ID = '@colibrijs/screenshots';
@@ -24,10 +25,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [error, setError] = React.useState('');
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-
-    fetch(`${url.origin}${url.pathname}screenshots/report.json`)
-      .then((resonse) => resonse.json())
+    getReportData()
       .then((data: ReportData) => {
         const failedScreenshots = data.testResults.filter((test) => {
           if (test.status === 'passed') return false;
@@ -38,7 +36,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
             const name = result.ancestorTitles[1];
             const id = kebabize(name);
-            return { path, name, id };
+            return { path, name, id, approved: story.approved };
           });
         });
         setStories(storiesData);
@@ -83,6 +81,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     }
   }, []);
 
+  const getStyles = useCallback((storyData: StoryData) => {
+    return storyData.approved ? { backgroundColor: '#a3efc9' } : {};
+  }, []);
+
   if (error) {
     return (
       <div className="screenshot-panel">
@@ -113,7 +115,12 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       <ul className="screenshot-panel__list">
         {stories.map((storyData) => (
           <li className="screenshot-panel__item" key={storyData.name}>
-            <Button size="medium" onClick={onClick(storyData)}>
+            <Button
+              className="screenshot-panel__button"
+              style={getStyles(storyData)}
+              size="medium"
+              onClick={onClick(storyData)}
+            >
               {storyData.path}/{storyData.name}
             </Button>
           </li>
