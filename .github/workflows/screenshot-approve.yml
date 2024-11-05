@@ -1,10 +1,22 @@
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      pull-request-number:
+        type: string
+        required: true
 
 jobs:
   echo:
     runs-on: ubuntu-latest
     concurrency:
-      group: screenshot_approve
+      group: screenshot-approve
+    permissions:
+      pull-requests: write
     steps:
-      - name: Run echo
-        run: echo "Loh cveto4niy"
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: Подтверждаю изменения в скриншотах
+          comment-tag: screenshot-approve
+          mode: upsert
+          pr-number: ${{ inputs.pull-request-number }}

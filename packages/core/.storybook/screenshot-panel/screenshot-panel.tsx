@@ -72,6 +72,9 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
         },
         body: JSON.stringify({
           ref: process.env.BRANCH_NAME,
+          inputs: {
+            'pull-request-number': process.env.PULL_REQUEST_NUMBER,
+          },
         }),
       }
     );
