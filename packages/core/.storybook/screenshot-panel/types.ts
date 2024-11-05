@@ -8,7 +8,6 @@ type TestResults = {
   name: string;
   status: 'passed' | 'failed';
   assertionResults: AssertionResult[];
-  approved?: boolean | undefined;
 };
 
 export type Report = {
@@ -19,7 +18,6 @@ export type StoryData = {
   path: string;
   name: string;
   id: string;
-  approved?: boolean | undefined;
 };
 
 export type ScreenshotsPanelProps = {

@@ -11,13 +11,9 @@ if (!isDirectoryAvailable(screenshotDirectory)) {
   fs.mkdirSync(screenshotDirectory);
 }
 
-const staticDirs = isDirectoryAvailable(screenshotDirectory)
-  ? [{ from: './screenshots', to: '/screenshots' }]
-  : [];
-
 export default {
   stories: ['../components/**/*.stories.@(ts|tsx)'],
-  staticDirs,
+  staticDirs: [{ from: './screenshots', to: '/screenshots' }],
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-links',

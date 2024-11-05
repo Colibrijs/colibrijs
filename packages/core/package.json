@@ -2,9 +2,6 @@
   "name": "@colibrijs/core",
   "private": true,
   "version": "1.0.0",
-  "bin": {
-    "screenshot-approve": "./.storybook/screenshot-approve/bin/screenshot-approve.js"
-  },
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build",
