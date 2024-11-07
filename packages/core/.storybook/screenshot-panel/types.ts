@@ -10,7 +10,7 @@ type TestResults = {
   assertionResults: AssertionResult[];
 };
 
-export type ReportData = {
+export type Report = {
   testResults: TestResults[];
 };
 

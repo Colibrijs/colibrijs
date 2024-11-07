@@ -3,7 +3,9 @@ import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, type ReactNode } from 'react';
 
-import type { ScreenshotsPanelProps, StoryData, ReportData } from './types';
+import { loadComments, hasApprove, type Comment } from './comments';
+import { getReport } from './get-report';
+import type { ScreenshotsPanelProps, StoryData, Report } from './types';
 
 const ADDON_ID = '@colibrijs/screenshots';
 const PANEL_ID = `${ADDON_ID}/panel`;
@@ -21,14 +23,12 @@ function kebabize(str: string) {
 
 function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [stories, setStories] = React.useState<StoryData[]>([]);
+  const [approved, setApproved] = React.useState(false);
   const [error, setError] = React.useState('');
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-
-    fetch(`${url.origin}${url.pathname}screenshots/report.json`)
-      .then((resonse) => resonse.json())
-      .then((data: ReportData) => {
+    getReport()
+      .then((data: Report) => {
         const failedScreenshots = data.testResults.filter((test) => {
           if (test.status === 'passed') return false;
           return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
@@ -43,10 +43,29 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
         });
         setStories(storiesData);
       })
-      .catch((errorData) => {
-        setError(errorData.message);
+      .catch((error) => {
+        setError(error.message);
       });
   }, []);
+
+  const loadPrComments = useCallback(async (): Promise<Comment[]> => {
+    const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
+
+    if (!pullRequestNumber || isNaN(pullRequestNumber)) {
+      return [];
+    }
+
+    const comments = await loadComments(pullRequestNumber);
+
+    return comments;
+  }, []);
+
+  useEffect(() => {
+    loadPrComments()
+      .then(hasApprove)
+      .then((approved) => setApproved(approved))
+      .catch((error) => setError(error));
+  }, [loadPrComments]);
 
   const onClick = useCallback(
     (storyData: StoryData) => {
@@ -74,6 +93,9 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
         },
         body: JSON.stringify({
           ref: process.env.BRANCH_NAME,
+          inputs: {
+            'pull-request-number': process.env.PULL_REQUEST_NUMBER,
+          },
         }),
       }
     );
@@ -82,6 +104,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       setError(`Ошибка аппрува. ${error.status}: ${error.message}`);
     }
   }, []);
+
+  const getStyles = useCallback(() => {
+    return approved ? { backgroundColor: '#a3efc9' } : {};
+  }, [approved]);
 
   if (error) {
     return (
@@ -106,14 +132,21 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
-      <Button size="medium" onClick={approve}>
-        Подтвердить изменения
-      </Button>
+      {!approved && (
+        <Button size="medium" onClick={approve}>
+          Подтвердить изменения
+        </Button>
+      )}
       <p className="screenshot-panel__text">Здесь ты можешь наблюдать список упавших тестов: </p>
       <ul className="screenshot-panel__list">
         {stories.map((storyData) => (
           <li className="screenshot-panel__item" key={storyData.name}>
-            <Button size="medium" onClick={onClick(storyData)}>
+            <Button
+              className="screenshot-panel__button"
+              style={getStyles()}
+              size="medium"
+              onClick={onClick(storyData)}
+            >
               {storyData.path}/{storyData.name}
             </Button>
           </li>

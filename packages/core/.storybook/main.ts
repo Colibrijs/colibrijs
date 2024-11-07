@@ -11,13 +11,9 @@ if (!isDirectoryAvailable(screenshotDirectory)) {
   fs.mkdirSync(screenshotDirectory);
 }
 
-const staticDirs = isDirectoryAvailable(screenshotDirectory)
-  ? [{ from: './screenshots', to: '/screenshots' }]
-  : [];
-
 export default {
   stories: ['../components/**/*.stories.@(ts|tsx)'],
-  staticDirs,
+  staticDirs: [{ from: './screenshots', to: '/screenshots' }],
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
     '@storybook/addon-links',
@@ -35,6 +31,7 @@ export default {
   env: {
     EXAMPLE_URL: process.env.EXAMPLE_URL || 'https://colibrijs.github.io/colibrijs/main/example/',
     BRANCH_NAME: process.env.BRANCH_NAME || 'main',
+    PULL_REQUEST_NUMBER: process.env.PULL_REQUEST_NUMBER || '',
   },
   framework: {
     name: '@storybook/react-webpack5',
