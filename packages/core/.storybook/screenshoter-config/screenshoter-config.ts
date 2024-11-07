@@ -3,6 +3,7 @@ import resemble, { type ComparisonResult } from 'resemblejs';
 
 import { saveScreenshots } from './fs-utils';
 import { resolveSettings, type Settings } from './resolve-settings';
+import { APPROVE_TEXT, type Comment } from '../screenshot-panel/comments';
 
 const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/storybook/';
 
@@ -16,7 +17,14 @@ export function getScreenshoterConfig(): TestRunnerConfig {
   async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
 
-    if (!isScreenshotStory(context)) {
+    const approved = await page.evaluate((approveText) => {
+      // @ts-expect-error -- всё хорошо. В previw.ts есть код, который сохраняет в window коменты
+      const comments: Comment[] = window.pullRequestComments;
+
+      return comments.some((comment) => comment.body === approveText);
+    }, APPROVE_TEXT);
+
+    if (!isScreenshotStory(context) || approved) {
       return;
     }
 

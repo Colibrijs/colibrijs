@@ -3,8 +3,8 @@ import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, type ReactNode } from 'react';
 
+import { loadComments, hasApprove, type Comment } from './comments';
 import { getReport } from './get-report';
-import { hasApprove } from './has-approve';
 import type { ScreenshotsPanelProps, StoryData, Report } from './types';
 
 const ADDON_ID = '@colibrijs/screenshots';
@@ -48,11 +48,24 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       });
   }, []);
 
+  const loadPrComments = useCallback(async (): Promise<Comment[]> => {
+    const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
+
+    if (!pullRequestNumber || isNaN(pullRequestNumber)) {
+      return [];
+    }
+
+    const comments = await loadComments(pullRequestNumber);
+
+    return comments;
+  }, []);
+
   useEffect(() => {
-    hasApprove({ pullRequestNumber: process.env.PULL_REQUEST_NUMBER! })
+    loadPrComments()
+      .then(hasApprove)
       .then((approved) => setApproved(approved))
       .catch((error) => setError(error));
-  }, []);
+  }, [loadPrComments]);
 
   const onClick = useCallback(
     (storyData: StoryData) => {
