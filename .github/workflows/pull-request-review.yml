@@ -2,11 +2,6 @@ on:
   pull_request:
     types:
       - review_requested
-  pull_request_review:
-    types:
-      - submitted
-      - edited
-      - dismissed
 
 jobs:
   send-message-request-review:
@@ -24,15 +19,3 @@ jobs:
             --url ${{ github.event.pull_request.html_url }} \
             --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
             --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
-  send-message-response-review:
-    if: github.event.review.state == 'approved' || github.event.review.state == 'changes_requested'
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          npm exec control-freak response-review \
-          -- --author ${{ github.actor }} \
-          --reviewers "$(echo '${{ toJSON(github.event.pull_request.requested_reviewers) }}' | jq -r 'map(.login) | join(",")')" \
-          --title "${{ github.event.pull_request.title }}" \
-          --url ${{ github.event.pull_request.html_url }} \
-          --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
-          --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
