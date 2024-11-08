@@ -1,4 +1,4 @@
-export interface Options {
+export interface ReviewOptions {
   author: string;
   reviewers: string;
   title: string;

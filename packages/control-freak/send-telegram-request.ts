@@ -1,4 +1,12 @@
-export async function sendTelegramRequest(url: string, params: URLSearchParams): Promise<void> {
+import type { ReviewOptions } from './types';
+
+export async function sendTelegramRequest(message: string, options: ReviewOptions): Promise<void> {
+  const url = `https://api.telegram.org/bot${options.telegramBotToken}/sendMessage`;
+  const params = new URLSearchParams({
+    chat_id: options.telegramChatId,
+    text: message,
+    parse_mode: 'Markdown',
+  });
   try {
     const response = await fetch(url, {
       method: 'POST',

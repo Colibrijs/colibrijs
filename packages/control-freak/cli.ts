@@ -1,8 +1,8 @@
 import { Command } from 'commander';
 
-import type { Options } from './interfaces';
 import { requestReview } from './request-review';
 import { responseReview } from './response-review';
+import type { Options } from './types';
 
 const controlFreak = new Command();
 
