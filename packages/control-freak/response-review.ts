@@ -1,8 +1,8 @@
 import type { Options } from './interfaces';
 import { sendTelegramRequest } from './send-telegram-request';
 
-export async function requestReview(options: Options): Promise<void> {
-  const message = `Типок ${options.author} настаивает на ревью у : ${options.reviewers}. PR: *${options.title}* - ${options.url}.`;
+export async function responseReview(options: Options): Promise<void> {
+  const message = `Типок ${options.author} ответил на ревью у : ${options.reviewers}. PR: *${options.title}* - ${options.url}.`;
   const url = `https://api.telegram.org/bot${options.telegramBotToken}/sendMessage`;
   const params = new URLSearchParams({
     chat_id: options.telegramChatId,
