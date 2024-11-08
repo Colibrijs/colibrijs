@@ -9,7 +9,7 @@ on:
       - dismissed
 
 jobs:
-  request-review:
+  send-message-request-review:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
             --url ${{ github.event.pull_request.html_url }} \
             --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
             --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
-  response-review:
+  send-message-response-review:
     if: github.event.review.state == 'approved' || github.event.review.state == 'changes_requested'
     runs-on: ubuntu-latest
     steps:

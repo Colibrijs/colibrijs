@@ -1,7 +1,8 @@
 import { Command } from 'commander';
 
-import type { Options } from './request-review';
+import type { Options } from './interfaces';
 import { requestReview } from './request-review';
+import { responseReview } from './response-review';
 
 const controlFreak = new Command();
 
@@ -20,10 +21,13 @@ controlFreak
 controlFreak
   .command('response-review')
   .requiredOption('--author <string>', 'Имя автора пулл реквеста')
-  .requiredOption('--reviewer <string>', 'Имя ревьюера пулл реквеста')
-  .action((options: Options) => {
-    // eslint-disable-next-line no-console -- для эксперимента надо
-    console.log(`${options.reviewers} поревьюил пулл реквест от ${options.author}`);
+  .requiredOption('--reviewers <string>', 'Имя ревьюера пулл реквеста')
+  .requiredOption('--title <string>', 'Заголовок пулл реквеста')
+  .requiredOption('--url <string>', 'Ссылка на пулл реквест')
+  .requiredOption('--telegram-bot-token <string>', 'Токен телеграм бота')
+  .requiredOption('--telegram-chat-id <string>', 'ID чата телеграм')
+  .action(async (options: Options) => {
+    await responseReview(options);
   });
 
 controlFreak.parse();
