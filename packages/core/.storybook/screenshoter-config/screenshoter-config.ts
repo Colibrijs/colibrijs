@@ -2,6 +2,7 @@ import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storyboo
 import resemble, { type ComparisonResult } from 'resemblejs';
 
 import { saveScreenshots } from './fs-utils';
+import { getParsedScreenshots } from './get-approved-screenshots';
 import { resolveSettings, type Settings } from './resolve-settings';
 import { APPROVE_TEXT, type Comment } from '../screenshot-panel/comments';
 
@@ -17,14 +18,16 @@ export function getScreenshoterConfig(): TestRunnerConfig {
   async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
 
-    const approved = await page.evaluate((approveText) => {
-      // @ts-expect-error -- всё хорошо. В previw.ts есть код, который сохраняет в window коменты
+    const isApprovedScreenshot = await page.evaluate(() => {
+      // @ts-expect-error -- всё хорошо. В preview.ts есть код, который сохраняет в window коменты
       const comments: Comment[] = window.pullRequestComments;
-
-      return comments.some((comment) => comment.body === approveText);
+      const approvedScreenshots = getParsedScreenshots(comments);
+      return approvedScreenshots.some(
+        (screenshot) => screenshot.name === story.name && screenshot.path === context.componentId
+      );
     }, APPROVE_TEXT);
 
-    if (!isScreenshotStory(context) || approved) {
+    if (!isScreenshotStory(context) || isApprovedScreenshot) {
       return;
     }
 

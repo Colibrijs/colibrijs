@@ -3,10 +3,10 @@ import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, type ReactNode } from 'react';
 
-import { loadComments } from './comments';
 import { getReport } from './get-report';
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
 import type { ScreenshotsPanelProps, StoryData, Report } from './types';
+import { getApprovedScreenshots } from '../screenshoter-config/get-approved-screenshots';
 
 const ADDON_ID = '@colibrijs/screenshots';
 const PANEL_ID = `${ADDON_ID}/panel`;
@@ -50,28 +50,11 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       });
   }, []);
 
-  const loadPrComments = useCallback(async (): Promise<StoryData[]> => {
-    const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
-
-    if (!pullRequestNumber || isNaN(pullRequestNumber)) {
-      return [];
-    }
-
-    const comments = await loadComments(pullRequestNumber);
-    if (!comments.length) return [];
-    const div = document.createElement('div');
-    div.innerHTML = comments[0]!.body;
-    const pre = div.querySelector('#screenshots-data');
-    const text = pre!.textContent;
-    const approvedScreenshots = JSON.parse(text!);
-    return approvedScreenshots;
-  }, []);
-
   useEffect(() => {
-    loadPrComments()
+    getApprovedScreenshots()
       .then(setApprovedStories)
       .catch((error) => setError(error));
-  }, [loadPrComments]);
+  }, []);
 
   const approve = useCallback(async () => {
     const secret = [
