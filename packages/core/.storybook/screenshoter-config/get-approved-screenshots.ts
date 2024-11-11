@@ -3,12 +3,10 @@ import type { StoryData } from '../screenshot-panel/types';
 
 export function getParsedScreenshots(comments: Comment[]): StoryData[] {
   if (!comments.length) return [];
-  const div = document.createElement('div');
-  div.innerHTML = comments[0]!.body;
-  const pre = div.querySelector('#screenshots-data');
-  const text = pre!.textContent;
-  const approvedScreenshots = JSON.parse(text!);
-  return approvedScreenshots;
+  const body = comments[0]?.body;
+  const match = body!.match(/<pre id="screenshots-data">(.*?)<\/pre>/);
+  const text = match![1];
+  return JSON.parse(text!);
 }
 
 export async function getApprovedScreenshots(): Promise<StoryData[]> {

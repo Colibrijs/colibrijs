@@ -18,6 +18,8 @@ export function getScreenshoterConfig(): TestRunnerConfig {
   async function postVisit(page: Page, story: Story) {
     const context = await getStoryContext(page, story);
 
+    if (!isScreenshotStory(context)) return;
+
     const comments = await page.evaluate(() => {
       // @ts-expect-error -- всё хорошо. В preview.ts есть код, который сохраняет в window коменты
       return window.pullRequestComments;
@@ -27,9 +29,7 @@ export function getScreenshoterConfig(): TestRunnerConfig {
       (screenshot) => screenshot.name === story.name && screenshot.path === context.componentId
     );
 
-    if (!isScreenshotStory(context) || isApprovedScreenshot) {
-      return;
-    }
+    if (isApprovedScreenshot) return;
 
     const [referenceScreenshot, actualScreenshot] = await Promise.all([
       getReferencePageScreenshot(page, context),
