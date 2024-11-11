@@ -22,7 +22,7 @@ jobs:
           message: |
             <details>
               <summary>Подтверждаю изменения в скриншотах</summary>
-              <pre id="screenshots-data">${{ inputs.approved-screenshots }}</div>
+              <pre id="screenshots-data">${{ inputs.approved-screenshots }}</pre>
             </details>
           comment-tag: screenshot-approve
           mode: upsert
