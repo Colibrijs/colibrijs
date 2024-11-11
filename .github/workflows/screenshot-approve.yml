@@ -4,6 +4,9 @@ on:
       pull-request-number:
         type: string
         required: true
+      approved-screenshots:
+        type: string
+        required: true
 
 jobs:
   screenshot-approve:
@@ -16,7 +19,11 @@ jobs:
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v3
         with:
-          message: Подтверждаю изменения в скриншотах
+          message: |
+            <details>
+              <summary>Подтверждаю изменения в скриншотах</summary>
+              <pre id="screenshots-data">${{ inputs.approved-screenshots }}</div>
+            </details>
           comment-tag: screenshot-approve
           mode: upsert
           pr-number: ${{ inputs.pull-request-number }}
