@@ -83,8 +83,11 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     if (!response.ok) {
       const error = await response.json();
       setError(`Ошибка аппрува. ${error.status}: ${error.message}`);
+    } else {
+      setApprovedStories(approvedStories.concat(storiesToApprove));
+      setStoriesToApprove([]);
     }
-  }, [storiesToApprove]);
+  }, [approvedStories, storiesToApprove]);
 
   if (error) {
     return (
