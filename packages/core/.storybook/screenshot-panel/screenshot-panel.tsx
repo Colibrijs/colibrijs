@@ -3,8 +3,9 @@ import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, type ReactNode } from 'react';
 
-import { loadComments, hasApprove, type Comment } from './comments';
+import { loadComments } from './comments';
 import { getReport } from './get-report';
+import { ScreenshotTable } from './screenshot-table/screenshot-table';
 import type { ScreenshotsPanelProps, StoryData, Report } from './types';
 
 const ADDON_ID = '@colibrijs/screenshots';
@@ -23,7 +24,8 @@ function kebabize(str: string) {
 
 function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [stories, setStories] = React.useState<StoryData[]>([]);
-  const [approved, setApproved] = React.useState(false);
+  const [storiesToApprove, setStoriesToApprove] = React.useState<StoryData[]>([]);
+  const [approvedStories, setApprovedStories] = React.useState<StoryData[]>([]);
   const [error, setError] = React.useState('');
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
             const name = result.ancestorTitles[1];
             const id = kebabize(name);
-            return { path, name, id };
+            return { path, name, id, key: path };
           });
         });
         setStories(storiesData);
@@ -48,7 +50,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       });
   }, []);
 
-  const loadPrComments = useCallback(async (): Promise<Comment[]> => {
+  const loadPrComments = useCallback(async (): Promise<StoryData[]> => {
     const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
 
     if (!pullRequestNumber || isNaN(pullRequestNumber)) {
@@ -56,25 +58,20 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     }
 
     const comments = await loadComments(pullRequestNumber);
-
-    return comments;
+    if (!comments.length) return [];
+    const div = document.createElement('div');
+    div.innerHTML = comments[0]!.body;
+    const pre = div.querySelector('#screenshots-data');
+    const text = pre!.textContent;
+    const approvedScreenshots = JSON.parse(text!);
+    return approvedScreenshots;
   }, []);
 
   useEffect(() => {
     loadPrComments()
-      .then(hasApprove)
-      .then((approved) => setApproved(approved))
+      .then(setApprovedStories)
       .catch((error) => setError(error));
   }, [loadPrComments]);
-
-  const onClick = useCallback(
-    (storyData: StoryData) => {
-      return (): void => {
-        api.selectStory(storyData.path, storyData.id);
-      };
-    },
-    [api]
-  );
 
   const approve = useCallback(async () => {
     const secret = [
@@ -95,6 +92,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
           ref: process.env.BRANCH_NAME,
           inputs: {
             'pull-request-number': process.env.PULL_REQUEST_NUMBER,
+            'approved-screenshots': storiesToApprove,
           },
         }),
       }
@@ -103,11 +101,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       const error = await response.json();
       setError(`Ошибка аппрува. ${error.status}: ${error.message}`);
     }
-  }, []);
-
-  const getStyles = useCallback(() => {
-    return approved ? { backgroundColor: '#a3efc9' } : {};
-  }, [approved]);
+  }, [storiesToApprove]);
 
   if (error) {
     return (
@@ -132,26 +126,18 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
-      {!approved && (
+      {!approvedStories.length && (
         <Button size="medium" onClick={approve}>
           Подтвердить изменения
         </Button>
       )}
       <p className="screenshot-panel__text">Здесь ты можешь наблюдать список упавших тестов: </p>
-      <ul className="screenshot-panel__list">
-        {stories.map((storyData) => (
-          <li className="screenshot-panel__item" key={storyData.name}>
-            <Button
-              className="screenshot-panel__button"
-              style={getStyles()}
-              size="medium"
-              onClick={onClick(storyData)}
-            >
-              {storyData.path}/{storyData.name}
-            </Button>
-          </li>
-        ))}
-      </ul>
+      <ScreenshotTable
+        stories={stories}
+        api={api}
+        approvedStories={approvedStories}
+        onChange={setStoriesToApprove}
+      />
     </div>
   );
 }

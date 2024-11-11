@@ -18,10 +18,3 @@ export async function loadComments(pullRequestNumber: number): Promise<Comment[]
 
 export const APPROVE_TEXT =
   'Подтверждаю изменения в скриншотах\n<!-- thollander/actions-comment-pull-request "screenshot-approve" -->';
-
-/**
- * Возвращает информацию о том есть ли апрув изменений вёртски
- */
-export function hasApprove(comments: Comment[]): boolean {
-  return comments.some((comment) => comment.body === APPROVE_TEXT);
-}
