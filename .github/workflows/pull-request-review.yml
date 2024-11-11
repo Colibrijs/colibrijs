@@ -32,11 +32,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare environment
         uses: ./.github/workflows/prepare-environment
-      - run: |
+      - name: Send message to Telegram
+        run: |
           npm exec control-freak response-review -- \
           --author ${{ github.actor }} \
           --reviewers "$(echo '${{ toJSON(github.event.pull_request.requested_reviewers) }}' | jq -r 'map(.login) | join(",")')" \
           --title "${{ github.event.pull_request.title }}" \
           --url ${{ github.event.pull_request.html_url }} \
+          --review-state "${{ github.event.review.state }}" \
           --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
           --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
