@@ -3,6 +3,8 @@ import { Divider, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 import React, { useMemo, useCallback, type ReactNode } from 'react';
 
+import { isApprovedScreenshot } from '../../screenshoter-config/get-approved-screenshots';
+
 import './screenshot-table.css';
 import type { StoryData } from '../types';
 
@@ -31,15 +33,6 @@ interface TableRowSelection<T> {
 }
 
 export function ScreenshotTable({ stories, api, onChange, approvedStories }: Props): ReactNode {
-  const isApprovedStory = useCallback(
-    (story: StoryData) => {
-      return approvedStories.some(
-        (approvedStory) => story.path === approvedStory.path && story.name === approvedStory.name
-      );
-    },
-    [approvedStories]
-  );
-
   const rowSelection: TableRowSelection<StoryData> = useMemo(
     () => ({
       type: 'checkbox',
@@ -47,10 +40,10 @@ export function ScreenshotTable({ stories, api, onChange, approvedStories }: Pro
         onChange(selectedStory);
       },
       getCheckboxProps: (currentStory: StoryData) => ({
-        disabled: isApprovedStory(currentStory),
+        disabled: isApprovedScreenshot(approvedStories, currentStory),
       }),
     }),
-    [isApprovedStory, onChange]
+    [approvedStories, onChange]
   );
 
   const onRow = useCallback(
@@ -63,10 +56,10 @@ export function ScreenshotTable({ stories, api, onChange, approvedStories }: Pro
   const getClasses = useCallback(
     (currentStory: StoryData) => {
       const defaultClass = 'screenshot-table__row';
-      const isApproved = isApprovedStory(currentStory);
+      const isApproved = isApprovedScreenshot(approvedStories, currentStory);
       return isApproved ? `${defaultClass}--approved` + ' ' + defaultClass : defaultClass;
     },
-    [isApprovedStory]
+    [approvedStories]
   );
 
   return (

@@ -2,7 +2,7 @@ import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storyboo
 import resemble, { type ComparisonResult } from 'resemblejs';
 
 import { saveScreenshots } from './fs-utils';
-import { getParsedScreenshots } from './get-approved-screenshots';
+import { getParsedScreenshots, isApprovedScreenshot } from './get-approved-screenshots';
 import { resolveSettings, type Settings } from './resolve-settings';
 import { APPROVE_TEXT } from '../screenshot-panel/comments';
 
@@ -25,11 +25,9 @@ export function getScreenshoterConfig(): TestRunnerConfig {
       return window.pullRequestComments;
     }, APPROVE_TEXT);
     const approvedScreenshots = getParsedScreenshots(comments);
-    const isApprovedScreenshot = approvedScreenshots.some(
-      (screenshot) => screenshot.name === story.name && screenshot.path === context.componentId
-    );
 
-    if (isApprovedScreenshot) return;
+    if (isApprovedScreenshot(approvedScreenshots, { name: story.name, path: context.componentId }))
+      return;
 
     const [referenceScreenshot, actualScreenshot] = await Promise.all([
       getReferencePageScreenshot(page, context),

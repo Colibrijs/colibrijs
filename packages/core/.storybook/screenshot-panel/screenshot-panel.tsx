@@ -75,7 +75,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
           ref: process.env.BRANCH_NAME,
           inputs: {
             'pull-request-number': process.env.PULL_REQUEST_NUMBER,
-            'approved-screenshots': JSON.stringify(storiesToApprove),
+            'approved-screenshots': JSON.stringify(storiesToApprove, null, 2),
           },
         }),
       }
