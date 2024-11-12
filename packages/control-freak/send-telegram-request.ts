@@ -1,12 +1,12 @@
-import type { ResponseReviewOptions, ReviewOptions } from './types';
+import type { TelegramAuhOptions } from './types';
 
 export async function sendTelegramRequest(
   message: string,
-  options: ReviewOptions | ResponseReviewOptions
+  authOptions: TelegramAuhOptions
 ): Promise<void> {
-  const url = `https://api.telegram.org/bot${options.telegramBotToken}/sendMessage`;
+  const url = `https://api.telegram.org/bot${authOptions.telegramBotToken}/sendMessage`;
   const params = new URLSearchParams({
-    chat_id: options.telegramChatId,
+    chat_id: authOptions.telegramChatId,
     text: message,
     parse_mode: 'Markdown',
   });
