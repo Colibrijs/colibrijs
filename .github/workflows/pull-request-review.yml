@@ -35,8 +35,8 @@ jobs:
       - name: Send message to Telegram
         run: |
           npm exec control-freak response-review -- \
-          --author ${{ github.actor }} \
-          --reviewers "$(echo '${{ toJSON(github.event.pull_request.requested_reviewers) }}' | jq -r 'map(.login) | join(",")')" \
+          --author ${{ github.event.pull_request.assignee.login }} \
+          --reviewer "${{ github.event.review.user.login }}" \
           --title "${{ github.event.pull_request.title }}" \
           --url ${{ github.event.pull_request.html_url }} \
           --review-state "${{ github.event.review.state }}" \

@@ -21,7 +21,7 @@ controlFreak
 controlFreak
   .command('response-review')
   .requiredOption('--author <string>', 'Имя автора пулл реквеста')
-  .requiredOption('--reviewers <string>', 'Имя ревьюера пулл реквеста')
+  .requiredOption('--reviewer <string>', 'Имя ревьюера пулл реквеста')
   .requiredOption('--title <string>', 'Заголовок пулл реквеста')
   .requiredOption('--url <string>', 'Ссылка на пулл реквест')
   .requiredOption('--review-state <string>', 'Статус ревью')

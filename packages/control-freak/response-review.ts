@@ -3,13 +3,13 @@ import type { ResponseReviewOptions } from './types';
 
 function getMessage(options: ResponseReviewOptions) {
   if (options.reviewState === 'approved') {
-    return `Уважаемый ${options.author} ваш pull-request одобрен ${options.reviewers}. PR: *${options.title}* - ${options.url}.`;
+    return `Уважаемый ${options.author} ваш pull-request одобрен ${options.reviewer}-ом. PR: *${options.title}* - ${options.url}.`;
   }
   if (options.reviewState === 'changes_requested') {
-    return `Уважаемый ${options.author} ваш pull-request требует изменений ${options.reviewers}. PR: *${options.title}* - ${options.url}.`;
+    return `Уважаемый ${options.author} ваш pull-request требует изменений. Настаивает ${options.reviewer}. PR: *${options.title}* - ${options.url}.`;
   }
   if (options.reviewState === 'commented') {
-    return `Уважаемый ${options.author} ваш pull-request прокомментирован ${options.reviewers}. PR: *${options.title}* - ${options.url}.`;
+    return `Уважаемый ${options.author} ваш pull-request прокомментирован ${options.reviewer}-ом. PR: *${options.title}* - ${options.url}.`;
   }
   throw new Error('Неизвестный статус ревью');
 }

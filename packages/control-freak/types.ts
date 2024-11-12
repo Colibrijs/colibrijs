@@ -7,6 +7,7 @@ export interface ReviewOptions {
   telegramChatId: string;
 }
 
-export interface ResponseReviewOptions extends ReviewOptions {
+export interface ResponseReviewOptions extends Omit<ReviewOptions, 'reviewers'> {
+  reviewer: string;
   reviewState: string;
 }
