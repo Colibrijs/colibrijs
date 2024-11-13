@@ -22,7 +22,10 @@ export function getParsedScreenshots(comments: Comment[]): StoryData[] {
   const { body } = approveComment;
   if (!body) throw new Error(CAN_NOT_FIND_BODY_ERROR);
 
-  const match = body.match(/<pre id="screenshots-data">(.*?)<\/pre>/);
+  const match = body
+    .replace(/\s+/g, ' ')
+    .trim() // удаляем все ненужные символы по типу \n
+    .match(/<pre id="screenshots-data">(.*?)<\/pre>/); // достаем все что находится внутри <pre> тега
   if (!match || !match.length || !match[1]) throw new Error(CAN_NOT_FIND_APPROVED_STORY_ERROR);
 
   const text = match[1];
