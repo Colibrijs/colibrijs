@@ -2,9 +2,15 @@ on:
   pull_request:
     types:
       - review_requested
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
 
 jobs:
-  send-telegram-message:
+  send-message-request-review:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,10 +18,27 @@ jobs:
         uses: ./.github/workflows/prepare-environment
       - name: Send message to Telegram
         run: |
-          npm exec control-freak request-review \
-            -- --author ${{ github.actor }} \
+          npm exec control-freak request-review -- \
+            --author ${{ github.actor }} \
             --reviewers "$(echo '${{ toJSON(github.event.pull_request.requested_reviewers) }}' | jq -r 'map(.login) | join(",")')" \
             --title "${{ github.event.pull_request.title }}" \
             --url ${{ github.event.pull_request.html_url }} \
             --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
             --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
+  send-message-response-review:
+    if: github.event_name == 'pull_request_review'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare environment
+        uses: ./.github/workflows/prepare-environment
+      - name: Send message to Telegram
+        run: |
+          npm exec control-freak response-review -- \
+          --author ${{ github.event.pull_request.assignee.login }} \
+          --reviewer "${{ github.event.review.user.login }}" \
+          --title "${{ github.event.pull_request.title }}" \
+          --url ${{ github.event.pull_request.html_url }} \
+          --review-state "${{ github.event.review.state }}" \
+          --telegram-bot-token ${{ secrets.TELEGRAM_BOT_TOKEN }} \
+          --telegram-chat-id ${{ secrets.TELEGRAM_CHAT_ID }}
