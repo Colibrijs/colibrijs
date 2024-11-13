@@ -4,6 +4,7 @@ on:
       pull-request-number:
         type: string
         required: true
+        description: Номер пулл-реквеста
       approved-screenshots:
         type: string
         required: true
