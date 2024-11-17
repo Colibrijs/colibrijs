@@ -75,7 +75,11 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
           ref: process.env.BRANCH_NAME,
           inputs: {
             'pull-request-number': process.env.PULL_REQUEST_NUMBER,
-            'approved-screenshots': JSON.stringify(storiesToApprove, null, 2),
+            'approved-screenshots': JSON.stringify(
+              [...approvedStories, ...storiesToApprove],
+              null,
+              2
+            ),
           },
         }),
       }
@@ -112,7 +116,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
-      {storiesToApprove.length && (
+      {!!storiesToApprove.length && (
         <Button size="medium" onClick={approve}>
           Подтвердить изменения
         </Button>
