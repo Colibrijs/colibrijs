@@ -1,7 +1,7 @@
 import { AddonPanel, Button } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
-import React, { useCallback, useEffect, type ReactNode } from 'react';
+import React, { useCallback, useEffect, useMemo, type ReactNode } from 'react';
 
 import { getReport } from './get-report';
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
@@ -89,6 +89,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     }
   }, [approvedStories, storiesToApprove]);
 
+  const showApproveButton = useMemo(() => {
+    return approvedStories.length !== stories.length;
+  }, [approvedStories.length, stories.length]);
+
   if (error) {
     return (
       <div className="screenshot-panel">
@@ -112,7 +116,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
-      {!approvedStories.length && (
+      {showApproveButton && (
         <Button size="medium" onClick={approve}>
           Подтвердить изменения
         </Button>
