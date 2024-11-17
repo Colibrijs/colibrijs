@@ -31,10 +31,12 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   useEffect(() => {
     getReport()
       .then((data: Report) => {
+        console.log(data, 'data');
         const failedScreenshots = data.testResults.filter((test) => {
           if (test.status === 'passed') return false;
           return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
         });
+        console.log(failedScreenshots, 'failedScreenshots');
         const storiesData = failedScreenshots.flatMap((story) => {
           return story.assertionResults.map((result) => {
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
@@ -43,6 +45,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
             return { path, name, id, key: path };
           });
         });
+        console.log(storiesData, 'storiesData');
         setStories(storiesData);
       })
       .catch((error) => {
