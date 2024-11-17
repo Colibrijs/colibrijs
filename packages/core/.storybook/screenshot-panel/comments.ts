@@ -11,7 +11,9 @@ export async function loadComments(pullRequestNumber: number): Promise<Comment[]
 
   const url = `https://api.github.com/repos/colibrijs/colibrijs/issues/${pullRequestNumber}/comments`;
   const response = await fetch(url);
+  console.log(11, response);
   responseBody = (await response.json()) as Comment[];
+  console.log(12, responseBody);
 
   return responseBody;
 }

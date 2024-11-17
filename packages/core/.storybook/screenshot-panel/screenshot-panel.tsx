@@ -31,29 +31,43 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   useEffect(() => {
     getReport()
       .then((data: Report) => {
+        console.log(1, data);
         const failedScreenshots = data.testResults.filter((test) => {
           if (test.status === 'passed') return false;
           return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
         });
+        console.log(2, failedScreenshots);
         const storiesData = failedScreenshots.flatMap((story) => {
           return story.assertionResults.map((result) => {
+            console.log(3, result);
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
+            console.log(4, path);
             const name = result.ancestorTitles[1];
+            console.log(5, name);
             const id = kebabize(name);
+            console.log(6, id);
             return { path, name, id, key: path };
           });
         });
+        console.log(7, storiesData);
         setStories(storiesData);
       })
       .catch((error) => {
+        console.log(8, error);
         setError(error.message);
       });
   }, []);
 
   useEffect(() => {
     getApprovedScreenshots()
-      .then(setApprovedStories)
-      .catch((error) => setError(error));
+      .then((data) => {
+        console.log(9, data);
+        setApprovedStories(data);
+      })
+      .catch((error) => {
+        console.dir(10, error);
+        setError(error.message);
+      });
   }, []);
 
   const approve = useCallback(async () => {
