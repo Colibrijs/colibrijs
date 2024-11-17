@@ -1,7 +1,7 @@
 import { AddonPanel, Button } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
-import React, { useCallback, useEffect, useMemo, type ReactNode } from 'react';
+import React, { useCallback, useEffect, type ReactNode } from 'react';
 
 import { getReport } from './get-report';
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
@@ -31,12 +31,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   useEffect(() => {
     getReport()
       .then((data: Report) => {
-        console.log(data, 'data');
         const failedScreenshots = data.testResults.filter((test) => {
           if (test.status === 'passed') return false;
           return test.name.includes('/screenshot/') || test.name.includes('\\screenshot\\');
         });
-        console.log(failedScreenshots, 'failedScreenshots');
         const storiesData = failedScreenshots.flatMap((story) => {
           return story.assertionResults.map((result) => {
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
@@ -45,7 +43,6 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
             return { path, name, id, key: path };
           });
         });
-        console.log(storiesData, 'storiesData');
         setStories(storiesData);
       })
       .catch((error) => {
@@ -92,10 +89,6 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     }
   }, [approvedStories, storiesToApprove]);
 
-  const showApproveButton = useMemo(() => {
-    return approvedStories.length !== stories.length;
-  }, [approvedStories.length, stories.length]);
-
   if (error) {
     return (
       <div className="screenshot-panel">
@@ -119,7 +112,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   return (
     <div className="screenshot-panel">
-      {showApproveButton && (
+      {storiesToApprove.length && (
         <Button size="medium" onClick={approve}>
           Подтвердить изменения
         </Button>

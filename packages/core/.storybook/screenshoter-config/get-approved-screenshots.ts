@@ -39,15 +39,12 @@ export function isApprovedScreenshot(approvedScreenshots: StoryData[], story: St
 
 export async function getApprovedScreenshots(): Promise<StoryData[]> {
   const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
-  console.log(pullRequestNumber, 'pullRequestNumber');
 
   if (!pullRequestNumber || isNaN(pullRequestNumber)) {
     return [];
   }
 
   const comments = await loadComments(pullRequestNumber);
-  console.log(comments, 'comments');
   const result = getParsedScreenshots(comments);
-  console.log(result, 'result');
   return result;
 }
