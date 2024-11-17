@@ -6,7 +6,6 @@ type Story = {
   name: string;
 };
 
-const CAN_NOT_FIND_COMMENT_ERROR = 'Не нашел комментарий с подтверждением изменений скриншотов';
 const CAN_NOT_FIND_BODY_ERROR =
   'Не нашел body внутри комментария с подтверждением изменений скриншотов';
 const CAN_NOT_FIND_APPROVED_STORY_ERROR = 'Не найден комментарий с данными апрувнутых тестов';
@@ -17,7 +16,7 @@ export function getParsedScreenshots(comments: Comment[]): StoryData[] {
   const approveComment = comments.find((comment) =>
     comment.body.includes('Подтверждаю изменения в скриншотах')
   );
-  if (!approveComment) throw new Error(CAN_NOT_FIND_COMMENT_ERROR);
+  if (!approveComment) return [];
 
   const { body } = approveComment;
   if (!body) throw new Error(CAN_NOT_FIND_BODY_ERROR);
@@ -46,6 +45,5 @@ export async function getApprovedScreenshots(): Promise<StoryData[]> {
   }
 
   const comments = await loadComments(pullRequestNumber);
-  console.log(comments, 'comments');
   return getParsedScreenshots(comments);
 }
