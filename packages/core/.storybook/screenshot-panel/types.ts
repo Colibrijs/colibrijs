@@ -15,6 +15,7 @@ export type Report = {
 };
 
 export type StoryData = {
+  key: string;
   path: string;
   name: string;
   id: string;
