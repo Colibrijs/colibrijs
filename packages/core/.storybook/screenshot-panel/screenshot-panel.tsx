@@ -1,7 +1,7 @@
 import { AddonPanel, Button } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
-import React, { useCallback, useEffect, type ReactNode } from 'react';
+import React, { useCallback, useEffect, useState, type ReactNode } from 'react';
 
 import { getReport } from './get-report';
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
@@ -27,6 +27,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [storiesToApprove, setStoriesToApprove] = React.useState<StoryData[]>([]);
   const [approvedStories, setApprovedStories] = React.useState<StoryData[]>([]);
   const [error, setError] = React.useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getReport()
@@ -47,6 +48,9 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       })
       .catch((error) => {
         setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -93,6 +97,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     }
   }, [approvedStories, storiesToApprove]);
 
+  if (!active) {
+    return null;
+  }
+
   if (error) {
     return (
       <div className="screenshot-panel">
@@ -102,8 +110,12 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
     );
   }
 
-  if (!active) {
-    return null;
+  if (loading) {
+    return (
+      <div className="screenshot-panel">
+        <p className="screenshot-panel__loading-text">Идет загрузка данных о сторисах...</p>
+      </div>
+    );
   }
 
   if (!stories.length) {
