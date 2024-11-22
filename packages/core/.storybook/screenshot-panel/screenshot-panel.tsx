@@ -137,6 +137,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       <ScreenshotTable
         stories={stories}
         api={api}
+        storiesToApprove={storiesToApprove}
         approvedStories={approvedStories}
         onChange={setStoriesToApprove}
       />
