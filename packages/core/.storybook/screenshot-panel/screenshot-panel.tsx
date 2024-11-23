@@ -56,7 +56,10 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
 
   useEffect(() => {
     getApprovedScreenshots()
-      .then(setApprovedStories)
+      .then((data) => {
+        console.log(data);
+        setApprovedStories(data);
+      })
       .catch((error) => setError(error.message));
   }, []);
 
