@@ -74,7 +74,7 @@ export function ScreenshotTable({
       <tbody>
         {stories.map((story) => (
           <tr
-            key={story.path}
+            key={story.path + story.name}
             className={classNames(styles.tr, {
               [styles.approved!]: isApprovedScreenshot(approvedStories, story),
             })}
