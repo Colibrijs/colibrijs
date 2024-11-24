@@ -41,7 +41,9 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
             const path = result.ancestorTitles[0].toLowerCase().replaceAll('/', '-');
             const name = result.ancestorTitles[1];
             const id = kebabize(name);
-            return { path, name, id, key: path };
+            const storyId = path + '--' + id;
+            const title = api.getData(storyId).name;
+            return { path, name, id, key: path, title };
           });
         });
         setStories(storiesData);
@@ -52,7 +54,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [api]);
 
   useEffect(() => {
     getApprovedScreenshots()

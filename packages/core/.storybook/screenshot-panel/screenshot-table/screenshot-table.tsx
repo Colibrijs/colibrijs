@@ -68,7 +68,7 @@ export function ScreenshotTable({
         <tr className={styles.tr}>
           <th className={styles.th} />
           <th className={styles.th}>Name</th>
-          <th className={styles.th}>Path</th>
+          <th className={styles.th}>Title</th>
         </tr>
       </thead>
       <tbody>
@@ -90,7 +90,7 @@ export function ScreenshotTable({
             <td className={styles.td}>{story.name}</td>
             <td className={styles.td}>
               <button className={styles.button} onClick={onClick(story)}>
-                {story.path}
+                {story.title}
               </button>
             </td>
           </tr>
