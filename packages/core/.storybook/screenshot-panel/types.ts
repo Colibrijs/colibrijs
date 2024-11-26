@@ -19,6 +19,7 @@ export type StoryData = {
   path: string;
   name: string;
   id: string;
+  title: string;
 };
 
 export type ScreenshotsPanelProps = {

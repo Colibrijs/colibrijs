@@ -1,77 +1,101 @@
 import { type API } from '@storybook/manager-api';
-import { Divider, Table } from 'antd';
-import type { TableColumnsType } from 'antd';
-import React, { useMemo, useCallback, type ReactNode } from 'react';
+import classNames from 'classnames';
+import React, { useCallback, type ReactNode, type ChangeEvent } from 'react';
 
+import styles from './screenshot-table.module.css';
 import { isApprovedScreenshot } from '../../screenshoter-config/get-approved-screenshots';
 
-import './screenshot-table.css';
 import type { StoryData } from '../types';
 
-const columns: TableColumnsType<StoryData> = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Path',
-    dataIndex: 'path',
-  },
-];
-
 type Props = {
+  storiesToApprove: StoryData[];
   approvedStories: StoryData[];
   stories: StoryData[];
   api: API;
   onChange: (storiesToApprove: StoryData[]) => void;
 };
 
-type RowSelectionType = 'checkbox' | 'radio';
-interface TableRowSelection<T> {
-  type?: RowSelectionType;
-  onChange?: (selectedRowKeys: React.Key[], selectedRows: T[]) => void;
-}
-
-export function ScreenshotTable({ stories, api, onChange, approvedStories }: Props): ReactNode {
-  const rowSelection: TableRowSelection<StoryData> = useMemo(
-    () => ({
-      type: 'checkbox',
-      onChange(_, selectedStory) {
-        onChange(selectedStory);
-      },
-      getCheckboxProps: (currentStory: StoryData) => ({
-        disabled: isApprovedScreenshot(approvedStories, currentStory),
-      }),
-    }),
-    [approvedStories, onChange]
-  );
-
-  const onRow = useCallback(
-    (screenshotStory: StoryData) => ({
-      onClick: () => api.selectStory(screenshotStory.path, screenshotStory.id),
-    }),
+export function ScreenshotTable({
+  storiesToApprove,
+  stories,
+  api,
+  onChange,
+  approvedStories,
+}: Props): ReactNode {
+  const onClick = React.useCallback(
+    (screenshotStory: StoryData) => () => api.selectStory(screenshotStory.path, screenshotStory.id),
     [api]
   );
 
-  const getClasses = useCallback(
-    (currentStory: StoryData) => {
-      const defaultClass = 'screenshot-table__row';
-      const isApproved = isApprovedScreenshot(approvedStories, currentStory);
-      return isApproved ? `${defaultClass}--approved` + ' ' + defaultClass : defaultClass;
+  const removeStoryToApprove = useCallback(
+    (story: StoryData) => {
+      const index = storiesToApprove.findIndex(
+        (currentStory) => story.path === currentStory.path && story.name === currentStory.name
+      );
+
+      const cloneArray = [...storiesToApprove];
+      cloneArray.splice(index, 1);
+      onChange(cloneArray);
     },
-    [approvedStories]
+    [onChange, storiesToApprove]
+  );
+
+  const addStoryToApprove = useCallback(
+    (story: StoryData) => {
+      const newStories = [...storiesToApprove, story];
+      onChange(newStories);
+    },
+    [onChange, storiesToApprove]
+  );
+
+  const onCheck = useCallback(
+    (story: StoryData) => {
+      return (event: ChangeEvent<HTMLInputElement>) => {
+        const isChecked = event.target.checked;
+        if (!isChecked) {
+          removeStoryToApprove(story);
+        } else {
+          addStoryToApprove(story);
+        }
+      };
+    },
+    [addStoryToApprove, removeStoryToApprove]
   );
 
   return (
-    <div className="screenshot-table">
-      <Divider />
-      <Table<StoryData>
-        rowSelection={rowSelection}
-        columns={columns}
-        dataSource={stories}
-        onRow={onRow}
-        rowClassName={getClasses}
-      />
-    </div>
+    <table className={styles.panel}>
+      <thead className={styles.thead}>
+        <tr className={styles.tr}>
+          <th className={styles.th} />
+          <th className={styles.th}>Name</th>
+          <th className={styles.th}>Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        {stories.map((story) => (
+          <tr
+            key={story.path + story.name}
+            className={classNames(styles.tr, {
+              [styles.approved!]: isApprovedScreenshot(approvedStories, story),
+            })}
+          >
+            <td className={styles.td}>
+              <input
+                disabled={isApprovedScreenshot(approvedStories, story)}
+                className={styles.checkbox}
+                onChange={onCheck(story)}
+                type="checkbox"
+              />
+            </td>
+            <td className={styles.td}>{story.name}</td>
+            <td className={styles.td}>
+              <button className={styles.button} onClick={onClick(story)}>
+                {story.title}
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
