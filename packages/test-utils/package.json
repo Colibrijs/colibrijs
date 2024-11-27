@@ -1,0 +1,12 @@
+{
+  "name": "@colibrijs/test-utils",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Пакет с утилитами для тестов",
+  "devDependencies": {
+    "transliteration": "^2.3.5"
+  },
+  "peerDependencies": {
+    "react": "^18"
+  }
+}

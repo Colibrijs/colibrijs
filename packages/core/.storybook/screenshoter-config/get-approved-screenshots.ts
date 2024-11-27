@@ -11,7 +11,7 @@ const CAN_NOT_FIND_BODY_ERROR =
 const CAN_NOT_FIND_APPROVED_STORY_ERROR = 'Не найден комментарий с данными апрувнутых тестов';
 
 export function getParsedScreenshots(comments: Comment[]): StoryData[] {
-  if (!comments.length) return [];
+  if (!comments?.length) return [];
 
   const approveComment = comments.find((comment) =>
     comment.body.includes('Подтверждаю изменения в скриншотах')

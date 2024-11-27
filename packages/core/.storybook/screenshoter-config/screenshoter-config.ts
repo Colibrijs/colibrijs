@@ -36,6 +36,7 @@ export function getScreenshoterConfig(): TestRunnerConfig {
 
     const result = await compareImages(referenceScreenshot, actualScreenshot);
 
+    console.log(result.rawMisMatchPercentage);
     if (result.rawMisMatchPercentage) {
       await saveScreenshots(
         story.id,

@@ -12,7 +12,8 @@ if (!isDirectoryAvailable(screenshotDirectory)) {
 }
 
 export default {
-  stories: ['../components/**/*.stories.@(ts|tsx)'],
+  stories: ['../components/page-title/__stories__/screenshot/*.stories.@(ts|tsx)'],
+  // stories: ['../components/**/*.stories.@(ts|tsx)'],
   staticDirs: [{ from: './screenshots', to: '/screenshots' }],
   addons: [
     '@storybook/addon-webpack5-compiler-swc',
