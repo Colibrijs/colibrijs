@@ -22,7 +22,6 @@ function ScreenshotsDecorator({ title, name, children }: ScreenshotsDecoratorPro
   const storyName = useMemo(() => {
     const formattedTitle = title.replaceAll('/', '_');
     const transliteratedName = getTransliteratedStoryName(name);
-    console.log(`${formattedTitle}--${transliteratedName}`, 'storyName');
 
     return `${formattedTitle}--${transliteratedName}`;
   }, [title, name]);

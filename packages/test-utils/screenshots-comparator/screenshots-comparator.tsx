@@ -33,16 +33,11 @@ export function ScreenshotsComparator({
     const domain = repositorySrc
       .replace('github.com', `${githubUserName}.github.io/`)
       .replace(`/${githubUserName}/`, '');
-    console.log(
-      `${domain}${currentBranch}/storybook/screenshots/reference/${storyName}.png`,
-      'referenceImage'
-    );
     return `${domain}${currentBranch}/storybook/screenshots/reference/${storyName}.png`;
   }, [currentBranch, githubUserName, repositorySrc, storyName]);
 
   /** Картинка с которой сравниваем */
   const currentImage = useMemo(() => {
-    console.log(referenceImage.replace('reference', 'actual'), 'currentImage');
     return referenceImage.replace('reference', 'actual');
   }, [referenceImage]);
 
