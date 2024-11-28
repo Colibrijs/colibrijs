@@ -29,16 +29,22 @@ export function ScreenshotsComparator({
   /** Картинка которую сравниваем (та, что в main) */
   const referenceImage = useMemo(() => {
     // пример правильной ссылки:
+    // https://colibrijs.github.io/colibrijs/issue-168/storybook/screenshots/actual/pagetitle-tests-screenshod--screenshotz.png
     const domain = repositorySrc
       .replace('github.com', `${githubUserName}.github.io/`)
       .replace(`/${githubUserName}/`, '');
-    return `${domain}${currentBranch}/reference/chrome_laptop_${storyName}.png`;
+    console.log(
+      `${domain}${currentBranch}/storybook/screenshots/reference/${storyName}.png`,
+      'referenceImage'
+    );
+    return `${domain}${currentBranch}/storybook/screenshots/reference/${storyName}.png`;
   }, [currentBranch, githubUserName, repositorySrc, storyName]);
 
-  // /** Картинка с которой сравниваем */
-  // const currentImage = useMemo(() => {
-  //   return referenceImage.replace('reference', 'current');
-  // }, [referenceImage]);
+  /** Картинка с которой сравниваем */
+  const currentImage = useMemo(() => {
+    console.log(referenceImage.replace('reference', 'actual'), 'currentImage');
+    return referenceImage.replace('reference', 'actual');
+  }, [referenceImage]);
 
   const imageStyles = useMemo(() => {
     return isComparing
@@ -96,7 +102,7 @@ export function ScreenshotsComparator({
           <div>
             <img className={styles.image} style={imageStyles} src={referenceImage} />
             <div ref={line} style={lineStyles} className={styles.line} onMouseDown={onMouseDown} />
-            <img className={styles.image} src="referenceImage" />
+            <img className={styles.image} src={currentImage} />
           </div>
         )}
       </div>

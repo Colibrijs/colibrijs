@@ -15,15 +15,16 @@ function getTransliteratedStoryName(text: string): string {
 }
 
 function ScreenshotsDecorator({ title, name, children }: ScreenshotsDecoratorProps) {
-  const currentBranch = process.env.REACT_APP_BRANCH_REF ?? 'main';
+  const currentBranch = process.env.REACT_APP_BRANCH_REF ?? 'issue-168'; // переименовать на main
   const repositorySrc =
-    process.env.REACT_APP_REPOSITORY_SRC ?? 'https://github.com/vivasoft-pro/sdating_front_vue/';
+    process.env.REACT_APP_REPOSITORY_SRC ?? 'https://github.com/colibrijs/colibrijs/';
 
   const storyName = useMemo(() => {
     const formattedTitle = title.replaceAll('/', '_');
     const transliteratedName = getTransliteratedStoryName(name);
+    console.log(`${formattedTitle}--${transliteratedName}`, 'storyName');
 
-    return `${formattedTitle}_${transliteratedName}`;
+    return `${formattedTitle}--${transliteratedName}`;
   }, [title, name]);
 
   return (
