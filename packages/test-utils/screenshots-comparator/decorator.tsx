@@ -41,7 +41,7 @@ function ScreenshotsDecorator({ title, name, children }: ScreenshotsDecoratorPro
 export function withScreenshotsDecorator() {
   function Decorator(Story: ComponentType) {
     return (
-      <ScreenshotsDecorator title="title" name="name">
+      <ScreenshotsDecorator title="pagetitle-tests-screenshod" name="screenshotz">
         <Story />
       </ScreenshotsDecorator>
     );
