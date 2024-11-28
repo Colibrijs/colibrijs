@@ -4,10 +4,10 @@ import PageTitleStoriesMeta, { type PageTitleMeta, type Story } from '../page-ti
 
 export default {
   ...PageTitleStoriesMeta,
-  title: 'PageTitle/tests/screenshod',
+  title: 'PageTitle/tests/screenshot',
   decorators: [withScreenshotsDecorator()],
 } satisfies PageTitleMeta;
 
-export const Screenshotz: Story = {
+export const Screenshot: Story = {
   name: 'Заголовок с названием страницы и кнопка удаления страницы выровнены вертикально по центру',
 };
