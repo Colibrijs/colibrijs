@@ -5,11 +5,11 @@ import styles from './screenshots-comparator.module.css';
 interface Props {
   repositorySrc: string;
   currentBranch: string;
-  storyName: string;
+  storyId: string;
   children: ReactNode;
 }
 
-export function ScreenshotsComparator({ repositorySrc, currentBranch, storyName }: Props) {
+export function ScreenshotsComparator({ repositorySrc, currentBranch, storyId }: Props) {
   const [linePosition, setLinePosition] = useState(-1);
   const line = useRef<HTMLDivElement | null>(null);
   const wrapper = useRef<HTMLDivElement | null>(null);
@@ -27,8 +27,8 @@ export function ScreenshotsComparator({ repositorySrc, currentBranch, storyName 
     const domain = repositorySrc
       .replace('github.com', `${githubUserName}.github.io/`)
       .replace(`/${githubUserName}/`, '');
-    return `${domain}${currentBranch}/storybook/screenshots/reference/${storyName}.png`;
-  }, [currentBranch, githubUserName, repositorySrc, storyName]);
+    return `${domain}${currentBranch}/storybook/screenshots/reference/${storyId}.png`;
+  }, [currentBranch, githubUserName, repositorySrc, storyId]);
 
   /** Картинка с которой сравниваем */
   const currentImage = useMemo(() => {

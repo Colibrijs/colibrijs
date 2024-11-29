@@ -24,6 +24,8 @@ function kebabize(str: string) {
     .join('');
 }
 
+const failedStories: StoryData[] = [];
+
 function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [stories, setStories] = React.useState<StoryData[]>([]);
   const [storiesToApprove, setStoriesToApprove] = React.useState<StoryData[]>([]);
@@ -49,6 +51,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
           });
         });
         setStories(storiesData);
+        failedStories.push(...storiesData);
       })
       .catch((error) => {
         setError(error.message);
@@ -166,14 +169,26 @@ export function registerScreenshotsAddon(): void {
       render: () => {
         const [globals, updateGlobals] = useGlobals();
 
+        updateGlobals({ screenshotsComparatorActive: false });
+
+        const currentStory = api.getCurrentStoryData();
+        if (!currentStory) return;
+
+        const isFailedStory = failedStories.some((story) => {
+          const storyId = story.path + '--' + story.id;
+          return currentStory.id === storyId;
+        });
+
         const onClick = useCallback(() => {
           updateGlobals({ screenshotsComparatorActive: !globals.screenshotsComparatorActive });
         }, [globals.screenshotsComparatorActive, updateGlobals]);
 
+        if (!isFailedStory) return;
+
         return (
           <IconButton
             active={!!globals.screenshotsComparatorActive}
-            title="Compare"
+            title="Compare screenshots"
             onClick={onClick}
           >
             <PhotoDragIcon />
