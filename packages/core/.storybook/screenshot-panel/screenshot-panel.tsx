@@ -167,9 +167,8 @@ export function registerScreenshotsAddon(): void {
       type: types.TOOL,
       title: 'Compare sheet',
       render: () => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks -- так надо
         const [globals, updateGlobals] = useGlobals();
-
-        updateGlobals({ screenshotsComparatorActive: false });
 
         const currentStory = api.getCurrentStoryData();
         if (!currentStory) return;
@@ -179,11 +178,17 @@ export function registerScreenshotsAddon(): void {
           return currentStory.id === storyId;
         });
 
-        const onClick = useCallback(() => {
+        function onClick() {
           updateGlobals({ screenshotsComparatorActive: !globals.screenshotsComparatorActive });
-        }, [globals.screenshotsComparatorActive, updateGlobals]);
+        }
 
-        if (!isFailedStory) return;
+        if (!isFailedStory) {
+          // сбасывать только в случае, если сейчас true, иначе в бесконечный ререндер уходит
+          if (globals.screenshotsComparatorActive) {
+            updateGlobals({ screenshotsComparatorActive: false });
+          }
+          return;
+        }
 
         return (
           <IconButton
