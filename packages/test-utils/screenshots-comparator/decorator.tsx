@@ -1,3 +1,4 @@
+import type { Decorator, StoryContext } from '@storybook/react';
 import { type ComponentType, type ReactNode, useMemo } from 'react';
 import { transliterate as tr } from 'transliteration';
 
@@ -37,15 +38,23 @@ function ScreenshotsDecorator({ title, name, children }: ScreenshotsDecoratorPro
   );
 }
 
-export function withScreenshotsDecorator() {
-  function Decorator(Story: ComponentType) {
-    return (
-      <ScreenshotsDecorator title="pagetitle-tests-screenshot" name="screenshot">
-        <Story />
-      </ScreenshotsDecorator>
-    );
+export function withScreenshotsDecorator(): Decorator {
+  function StoryDecorator(Story: ComponentType, { globals }: StoryContext) {
+    const isComparingScreenshots = useMemo(() => {
+      return globals.screenshotsComparatorActive;
+    }, [globals.screenshotsComparatorActive]);
+
+    if (isComparingScreenshots) {
+      return (
+        <ScreenshotsDecorator title="pagetitle-tests-screenshot" name="screenshot">
+          <Story />
+        </ScreenshotsDecorator>
+      );
+    }
+
+    return <Story />;
   }
 
-  Decorator.displayName = 'Kekich';
-  return Decorator;
+  StoryDecorator.displayName = 'StoryDecorator';
+  return StoryDecorator;
 }

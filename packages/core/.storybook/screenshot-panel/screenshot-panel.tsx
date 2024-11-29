@@ -1,5 +1,6 @@
-import { AddonPanel, Button } from '@storybook/components';
-import { addons, types } from '@storybook/manager-api';
+import { AddonPanel, Button, IconButton } from '@storybook/components';
+import { PhotoDragIcon } from '@storybook/icons';
+import { addons, types, useGlobals } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, useState, type ReactNode } from 'react';
 
@@ -10,6 +11,7 @@ import { getApprovedScreenshots } from '../screenshoter-config/get-approved-scre
 
 const ADDON_ID = '@colibrijs/screenshots';
 const PANEL_ID = `${ADDON_ID}/panel`;
+const SCREENSHOTS_DIFF_TOOL_ID = `${ADDON_ID}/screenshots-diff-tool`;
 
 function kebabize(str: string) {
   return str
@@ -157,6 +159,27 @@ export function registerScreenshotsAddon(): void {
           <ScreenshotsPanel active={!!active} api={api} />
         </AddonPanel>
       ),
+    });
+    addons.add(SCREENSHOTS_DIFF_TOOL_ID, {
+      type: types.TOOL,
+      title: 'Compare sheet',
+      render: () => {
+        const [globals, updateGlobals] = useGlobals();
+
+        const onClick = useCallback(() => {
+          updateGlobals({ screenshotsComparatorActive: !globals.screenshotsComparatorActive });
+        }, [globals.screenshotsComparatorActive, updateGlobals]);
+
+        return (
+          <IconButton
+            active={!!globals.screenshotsComparatorActive}
+            title="Compare"
+            onClick={onClick}
+          >
+            <PhotoDragIcon />
+          </IconButton>
+        );
+      },
     });
   });
 }

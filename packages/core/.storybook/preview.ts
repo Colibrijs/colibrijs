@@ -1,3 +1,4 @@
+import { withScreenshotsDecorator } from '@colibrijs/test-utils';
 import type { Preview } from '@storybook/react';
 import { message } from 'antd';
 import React from 'react';
@@ -19,6 +20,7 @@ export default {
     withMockedApi(),
     withMockedRouter(),
     withMockedSchemaLoader(),
+    withScreenshotsDecorator(),
     (Story) => {
       message.destroy();
       return React.createElement(Story);
@@ -55,4 +57,10 @@ export default {
       return { comments };
     },
   ],
+
+  globalTypes: {
+    screenshotsComparatorActive: {
+      defaultValue: false,
+    },
+  },
 } satisfies Preview;

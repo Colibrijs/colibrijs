@@ -9,13 +9,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function ScreenshotsComparator({
-  repositorySrc,
-  currentBranch,
-  storyName,
-  children,
-}: Props) {
-  const [isComparing, setIsComparing] = useState(false);
+export function ScreenshotsComparator({ repositorySrc, currentBranch, storyName }: Props) {
   const [linePosition, setLinePosition] = useState(-1);
   const line = useRef<HTMLDivElement | null>(null);
   const wrapper = useRef<HTMLDivElement | null>(null);
@@ -42,28 +36,17 @@ export function ScreenshotsComparator({
   }, [referenceImage]);
 
   const imageStyles = useMemo(() => {
-    return isComparing
-      ? {
-          clipPath: `inset(0 0 0 ${linePosition}px)`,
-          zIndex: 1,
-        }
-      : {};
-  }, [isComparing, linePosition]);
+    return {
+      clipPath: `inset(0 0 0 ${linePosition}px)`,
+      zIndex: 1,
+    };
+  }, [linePosition]);
 
   const lineStyles = useMemo(() => {
     return {
       left: linePosition !== -1 ? `${linePosition}px` : '50%',
-      display: isComparing ? 'block' : 'none',
     };
-  }, [isComparing, linePosition]);
-
-  const changeComparingState = useCallback(() => {
-    setIsComparing(!isComparing);
-    if (isComparing) return;
-    if (line.current) {
-      setLinePosition(line.current.offsetLeft);
-    }
-  }, [isComparing]);
+  }, [linePosition]);
 
   const onMouseDown = useCallback(() => {
     if (!line.current || !wrapper.current) return;
@@ -88,18 +71,12 @@ export function ScreenshotsComparator({
 
   return (
     <div>
-      <button className={styles.button} onClick={changeComparingState}>
-        click
-      </button>
       <div ref={wrapper} className={styles.imagesWrapper}>
-        {!isComparing && children}
-        {isComparing && (
-          <div>
-            <img className={styles.image} style={imageStyles} src={referenceImage} />
-            <div ref={line} style={lineStyles} className={styles.line} onMouseDown={onMouseDown} />
-            <img className={styles.image} src={currentImage} />
-          </div>
-        )}
+        <div>
+          <img className={styles.image} style={imageStyles} src={referenceImage} />
+          <div ref={line} style={lineStyles} className={styles.line} onMouseDown={onMouseDown} />
+          <img className={styles.image} src={currentImage} />
+        </div>
       </div>
     </div>
   );
