@@ -23,7 +23,6 @@ const devFiles = [
   'packages/**/__tests__/**/*.{ts,tsx}',
   'packages/**/*.test.ts',
   'packages/**/*.spec.ts',
-  'packages/test-utils/**/*.{ts,tsx}',
   'packages/**/{test-object,mocked,fixture}.{ts,tsx}',
 ];
 

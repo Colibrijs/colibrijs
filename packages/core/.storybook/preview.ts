@@ -1,4 +1,3 @@
-import { withScreenshotsDecorator } from '@colibrijs/test-utils';
 import type { Preview } from '@storybook/react';
 import { message } from 'antd';
 import React from 'react';
@@ -6,6 +5,7 @@ import React from 'react';
 import '../global.css';
 import './global-storybook.css';
 import { loadComments } from './screenshot-panel/comments';
+import { withScreenshotsDecorator } from './screenshots-comparator/decorator';
 
 import { withReactQueryDecorator } from '../components/react-query-provider/mocked';
 import { withMockedApi } from '../hooks/use-api/mocked';

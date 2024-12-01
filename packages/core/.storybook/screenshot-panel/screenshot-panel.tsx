@@ -1,9 +1,11 @@
-import { AddonPanel, Button, IconButton } from '@storybook/components';
-import { PhotoDragIcon } from '@storybook/icons';
-import { addons, types, useGlobals } from '@storybook/manager-api';
+import { Button } from '@storybook/components';
+import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, useState, type ReactNode } from 'react';
 
+import { CompareButton } from './addons/compare-button';
+
+import { Panel } from './addons/panel';
 import { getReport } from './get-report';
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
 import type { ScreenshotsPanelProps, StoryData, Report } from './types';
@@ -26,7 +28,7 @@ function kebabize(str: string) {
 
 const failedStories: StoryData[] = [];
 
-function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
+export function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [stories, setStories] = React.useState<StoryData[]>([]);
   const [storiesToApprove, setStoriesToApprove] = React.useState<StoryData[]>([]);
   const [approvedStories, setApprovedStories] = React.useState<StoryData[]>([]);
@@ -157,49 +159,12 @@ export function registerScreenshotsAddon(): void {
     addons.add(PANEL_ID, {
       type: types.PANEL,
       title: 'Screenshots',
-      render: ({ active }) => (
-        <AddonPanel active={!!active}>
-          <ScreenshotsPanel active={!!active} api={api} />
-        </AddonPanel>
-      ),
+      render: ({ active }) => <Panel active={!!active} api={api} />,
     });
     addons.add(SCREENSHOTS_DIFF_TOOL_ID, {
       type: types.TOOL,
       title: 'Compare sheet',
-      render: () => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks -- так надо
-        const [globals, updateGlobals] = useGlobals();
-
-        const currentStory = api.getCurrentStoryData();
-        if (!currentStory) return;
-
-        const isFailedStory = failedStories.some((story) => {
-          const storyId = story.path + '--' + story.id;
-          return currentStory.id === storyId;
-        });
-
-        function onClick() {
-          updateGlobals({ screenshotsComparatorActive: !globals.screenshotsComparatorActive });
-        }
-
-        if (!isFailedStory) {
-          // сбасывать только в случае, если сейчас true, иначе в бесконечный ререндер уходит
-          if (globals.screenshotsComparatorActive) {
-            updateGlobals({ screenshotsComparatorActive: false });
-          }
-          return;
-        }
-
-        return (
-          <IconButton
-            active={!!globals.screenshotsComparatorActive}
-            title="Compare screenshots"
-            onClick={onClick}
-          >
-            <PhotoDragIcon />
-          </IconButton>
-        );
-      },
+      render: () => <CompareButton failedStories={failedStories} api={api} />,
     });
   });
 }
