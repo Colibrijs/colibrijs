@@ -3,12 +3,12 @@ import { type ComponentType, type ReactNode, useMemo } from 'react';
 
 import { ScreenshotsComparator } from './screenshots-comparator';
 
-interface ScreenshotsDecoratorProps {
+interface Props {
   storyId: string;
   children: ReactNode;
 }
 
-function ScreenshotsDecorator({ storyId, children }: ScreenshotsDecoratorProps) {
+function ScreenshotsDecorator({ storyId, children }: Props) {
   const currentBranch = process.env.REACT_APP_BRANCH_REF ?? 'main';
   const repositorySrc =
     process.env.REACT_APP_REPOSITORY_SRC ?? 'https://github.com/colibrijs/colibrijs/';

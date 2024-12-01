@@ -28,7 +28,7 @@ export function CompareButton({ failedStories, api }: Props) {
   });
 
   if (!isFailedStory) {
-    // сбасывать только в случае, если сейчас true, иначе в бесконечный ререндер уходит
+    // сбрасывать только в случае, если сейчас true, иначе в бесконечный ререндер уходит
     if (globals.screenshotsComparatorActive) {
       updateGlobals({ screenshotsComparatorActive: false });
     }
