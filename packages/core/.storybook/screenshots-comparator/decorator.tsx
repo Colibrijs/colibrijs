@@ -9,7 +9,7 @@ interface ScreenshotsDecoratorProps {
 }
 
 function ScreenshotsDecorator({ storyId, children }: ScreenshotsDecoratorProps) {
-  const currentBranch = process.env.REACT_APP_BRANCH_REF ?? 'issue-168'; // переименовать на main
+  const currentBranch = process.env.REACT_APP_BRANCH_REF ?? 'main';
   const repositorySrc =
     process.env.REACT_APP_REPOSITORY_SRC ?? 'https://github.com/colibrijs/colibrijs/';
 
