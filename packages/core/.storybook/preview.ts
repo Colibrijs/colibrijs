@@ -5,6 +5,7 @@ import React from 'react';
 import '../global.css';
 import './global-storybook.css';
 import { loadComments } from './screenshot-panel/comments';
+import { withScreenshotsDecorator } from './screenshots-comparator/decorator';
 
 import { withReactQueryDecorator } from '../components/react-query-provider/mocked';
 import { withMockedApi } from '../hooks/use-api/mocked';
@@ -19,6 +20,7 @@ export default {
     withMockedApi(),
     withMockedRouter(),
     withMockedSchemaLoader(),
+    withScreenshotsDecorator(),
     (Story) => {
       message.destroy();
       return React.createElement(Story);
@@ -55,4 +57,10 @@ export default {
       return { comments };
     },
   ],
+
+  globalTypes: {
+    screenshotsComparatorActive: {
+      defaultValue: false,
+    },
+  },
 } satisfies Preview;

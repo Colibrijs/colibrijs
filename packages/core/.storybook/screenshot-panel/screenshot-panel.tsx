@@ -1,8 +1,11 @@
-import { AddonPanel, Button } from '@storybook/components';
+import { Button } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { useCallback, useEffect, useState, type ReactNode } from 'react';
 
+import { CompareButton } from './addons/compare-button';
+
+import { Panel } from './addons/panel';
 import { getReport } from './get-report';
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
 import type { ScreenshotsPanelProps, StoryData, Report } from './types';
@@ -10,6 +13,7 @@ import { getApprovedScreenshots } from '../screenshoter-config/get-approved-scre
 
 const ADDON_ID = '@colibrijs/screenshots';
 const PANEL_ID = `${ADDON_ID}/panel`;
+const SCREENSHOTS_DIFF_TOOL_ID = `${ADDON_ID}/screenshots-diff-tool`;
 
 function kebabize(str: string) {
   return str
@@ -22,7 +26,9 @@ function kebabize(str: string) {
     .join('');
 }
 
-function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
+const failedStories: StoryData[] = [];
+
+export function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
   const [stories, setStories] = React.useState<StoryData[]>([]);
   const [storiesToApprove, setStoriesToApprove] = React.useState<StoryData[]>([]);
   const [approvedStories, setApprovedStories] = React.useState<StoryData[]>([]);
@@ -47,6 +53,7 @@ function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
           });
         });
         setStories(storiesData);
+        failedStories.push(...storiesData);
       })
       .catch((error) => {
         setError(error.message);
@@ -152,11 +159,12 @@ export function registerScreenshotsAddon(): void {
     addons.add(PANEL_ID, {
       type: types.PANEL,
       title: 'Screenshots',
-      render: ({ active }) => (
-        <AddonPanel active={!!active}>
-          <ScreenshotsPanel active={!!active} api={api} />
-        </AddonPanel>
-      ),
+      render: ({ active }) => <Panel active={!!active} api={api} />,
+    });
+    addons.add(SCREENSHOTS_DIFF_TOOL_ID, {
+      type: types.TOOL,
+      title: 'Compare sheet',
+      render: () => <CompareButton failedStories={failedStories} api={api} />,
     });
   });
 }
