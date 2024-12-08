@@ -1,46 +1,21 @@
 import type { Decorator, StoryContext } from '@storybook/react';
-import { type ComponentType, type ReactNode, useMemo } from 'react';
+import type { ComponentType } from 'react';
 
 import { ScreenshotsComparator } from './screenshots-comparator';
 
-interface Props {
-  storyId: string;
-  children: ReactNode;
-}
-
-function ScreenshotsDecorator({ storyId, children }: Props) {
-  const currentBranch = process.env.REACT_APP_BRANCH_REF ?? 'main';
-  const repositorySrc =
-    process.env.REACT_APP_REPOSITORY_SRC ?? 'https://github.com/colibrijs/colibrijs/';
-
-  return (
-    <ScreenshotsComparator
-      currentBranch={currentBranch}
-      repositorySrc={repositorySrc}
-      storyId={storyId}
-    >
-      {children}
-    </ScreenshotsComparator>
-  );
-}
-
 export function withScreenshotsDecorator(): Decorator {
-  function StoryDecorator(Story: ComponentType, { globals, id }: StoryContext) {
-    const isComparingScreenshots = useMemo(() => {
-      return globals.screenshotsComparatorActive;
-    }, [globals.screenshotsComparatorActive]);
-
-    if (isComparingScreenshots) {
+  function ScreenshotsDecorator(Story: ComponentType, { globals, id }: StoryContext) {
+    if (globals.screenshotsComparatorActive) {
       return (
-        <ScreenshotsDecorator storyId={id}>
+        <ScreenshotsComparator storybookUrl={process.env.STORYBOOK_URL!} storyId={id}>
           <Story />
-        </ScreenshotsDecorator>
+        </ScreenshotsComparator>
       );
     }
 
     return <Story />;
   }
 
-  StoryDecorator.displayName = 'StoryDecorator';
-  return StoryDecorator;
+  ScreenshotsDecorator.displayName = 'ScreenshotsDecorator';
+  return ScreenshotsDecorator;
 }

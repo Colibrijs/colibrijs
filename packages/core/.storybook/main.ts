@@ -29,6 +29,7 @@ export default {
     },
   ],
   env: {
+    STORYBOOK_URL: process.env.STORYBOOK_URL || 'http://localhost:6006/',
     EXAMPLE_URL: process.env.EXAMPLE_URL || 'https://colibrijs.github.io/colibrijs/main/example/',
     BRANCH_NAME: process.env.BRANCH_NAME || 'main',
     PULL_REQUEST_NUMBER: process.env.PULL_REQUEST_NUMBER || '',

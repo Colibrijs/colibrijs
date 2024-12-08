@@ -3,37 +3,21 @@ import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
 import styles from './screenshots-comparator.module.css';
 
 interface Props {
-  repositorySrc: string;
-  currentBranch: string;
+  storybookUrl: string;
   storyId: string;
   children: ReactNode;
 }
 
-export function ScreenshotsComparator({ repositorySrc, currentBranch, storyId }: Props) {
+export function ScreenshotsComparator({ storybookUrl, storyId }: Props) {
   const [linePosition, setLinePosition] = useState(-1);
   const line = useRef<HTMLDivElement | null>(null);
   const wrapper = useRef<HTMLDivElement | null>(null);
 
-  /** Определяем имя пользователя по ссылке на репозиторий */
-  const githubUserName = useMemo(() => {
-    const url = new URL(repositorySrc);
-    return url.pathname.slice(1, url.pathname.indexOf('/', 1));
-  }, [repositorySrc]);
-
-  /** Картинка которую сравниваем (та, что в main) */
-  const referenceImage = useMemo(() => {
-    // пример правильной ссылки:
-    // https://colibrijs.github.io/colibrijs/issue-168/storybook/screenshots/actual/pagetitle-tests-screenshod--screenshotz.png
-    const domain = repositorySrc
-      .replace('github.com', `${githubUserName}.github.io/`)
-      .replace(`/${githubUserName}/`, '');
-    return `${domain}${currentBranch}/storybook/screenshots/reference/${storyId}.png`;
-  }, [currentBranch, githubUserName, repositorySrc, storyId]);
-
-  /** Картинка с которой сравниваем */
-  const currentImage = useMemo(() => {
-    return referenceImage.replace('reference', 'actual');
-  }, [referenceImage]);
+  // Картинка которую сравниваем (та, что в main)
+  // пример правильной ссылки:
+  // https://colibrijs.github.io/colibrijs/issue-168/storybook/screenshots/reference/pagetitle-tests-screenshod--screenshotz.png
+  const referenceImage = `${storybookUrl}screenshots/reference/${storyId}.png`;
+  const actualImage = referenceImage.replace('reference', 'actual');
 
   const imageStyles = useMemo(() => {
     return {
@@ -50,12 +34,12 @@ export function ScreenshotsComparator({ repositorySrc, currentBranch, storyId }:
 
   const onMouseDown = useCallback(() => {
     if (!line.current || !wrapper.current) return;
+
     const wrapperLeftOffset = wrapper.current.offsetLeft;
     const maxWidth = wrapper.current.offsetWidth - line.current.offsetWidth;
 
     function mouseMove(event: MouseEvent) {
-      const { clientX } = event;
-      const currentCalculatedPosition = clientX - wrapperLeftOffset;
+      const currentCalculatedPosition = event.clientX - wrapperLeftOffset;
       const newLinePosition = Math.min(maxWidth, Math.max(currentCalculatedPosition, 0));
       setLinePosition(newLinePosition);
     }
@@ -75,7 +59,7 @@ export function ScreenshotsComparator({ repositorySrc, currentBranch, storyId }:
         <div>
           <img className={styles.image} style={imageStyles} src={referenceImage} />
           <div ref={line} style={lineStyles} className={styles.line} onMouseDown={onMouseDown} />
-          <img className={styles.image} src={currentImage} />
+          <img className={styles.image} src={actualImage} />
         </div>
       </div>
     </div>
