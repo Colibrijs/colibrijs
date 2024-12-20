@@ -1,5 +1,5 @@
-import { loadComments, type Comment } from '../screenshot-panel/comments';
-import type { StoryData } from '../screenshot-panel/types';
+import { loadComments, type Comment } from './comments';
+import type { StoryData } from './types';
 
 type Story = {
   path: string;

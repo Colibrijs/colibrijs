@@ -1,3 +1,3 @@
-import { registerScreenshotsAddon } from './screenshot-panel/screenshot-panel';
+import { screenshotsAddon } from './addon/addon';
 
-registerScreenshotsAddon();
+screenshotsAddon();

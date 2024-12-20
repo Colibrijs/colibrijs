@@ -1,3 +1,3 @@
-import { getScreenshoterConfig } from './screenshoter-config';
+import { getScreenshoterConfig } from './addon/test-runner-config';
 
 export default getScreenshoterConfig();

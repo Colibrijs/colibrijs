@@ -3,7 +3,7 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { isDirectoryAvailable } from './screenshoter-config/fs-utils';
+import { isDirectoryAvailable } from './addon/test-runner-config/fs-utils';
 
 const screenshotDirectory = path.resolve(__dirname, './screenshots');
 

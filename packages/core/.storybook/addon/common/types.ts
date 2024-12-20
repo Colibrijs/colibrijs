@@ -1,5 +1,3 @@
-import { type API } from '@storybook/manager-api';
-
 type AssertionResult = {
   ancestorTitles: [string, string];
 };
@@ -20,9 +18,4 @@ export type StoryData = {
   name: string;
   id: string;
   title: string;
-};
-
-export type ScreenshotsPanelProps = {
-  active: boolean;
-  api: API;
 };

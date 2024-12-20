@@ -4,8 +4,8 @@ import React from 'react';
 
 import '../global.css';
 import './global-storybook.css';
-import { loadComments } from './screenshot-panel/comments';
-import { withScreenshotsDecorator } from './screenshots-comparator/decorator';
+import { loadComments } from './addon/common/comments';
+import { withScreenshotsDecorator } from './addon/screenshots-comparator/decorator';
 
 import { withReactQueryDecorator } from '../components/react-query-provider/mocked';
 import { withMockedApi } from '../hooks/use-api/mocked';

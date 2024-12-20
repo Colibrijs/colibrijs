@@ -2,10 +2,11 @@ import { type TestRunnerConfig, type TestHook, getStoryContext } from '@storyboo
 import resemble, { type ComparisonResult } from 'resemblejs';
 
 import { saveScreenshots } from './fs-utils';
-import { getParsedScreenshots, isApprovedScreenshot } from './get-approved-screenshots';
 import { resolveSettings, type Settings } from './resolve-settings';
-import { APPROVE_TEXT } from '../screenshot-panel/comments';
+import { APPROVE_TEXT } from '../common/comments';
+import { getParsedScreenshots, isApprovedScreenshot } from '../common/get-approved-screenshots';
 
+// TODO: Убрать хардкод
 const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/storybook/';
 
 type StoryContext = Awaited<ReturnType<typeof getStoryContext>>;
