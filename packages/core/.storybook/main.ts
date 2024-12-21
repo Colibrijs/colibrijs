@@ -7,7 +7,18 @@ export default {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@colibrijs/sauron-eye-addon',
+    {
+      name: '@colibrijs/sauron-eye-addon',
+      options: {
+        githubToken: '',
+        pullRequestNumber: 0,
+        reportLocation: '',
+        repositoryOwner: '',
+        repositoryName: '',
+        screenshotsLocation: '',
+        storybookUrl: '',
+      },
+    },
     {
       name: '@storybook/addon-styling',
       options: {

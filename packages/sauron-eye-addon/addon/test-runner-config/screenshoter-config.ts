@@ -6,9 +6,6 @@ import { resolveSettings, type Settings } from './resolve-settings';
 import { APPROVE_TEXT } from '../common/comments';
 import { getParsedScreenshots, isApprovedScreenshot } from '../common/get-approved-screenshots';
 
-// TODO: Убрать хардкод
-const REFERENCE_STORYBOOK_URL = 'https://colibrijs.github.io/colibrijs/main/storybook/';
-
 type StoryContext = Awaited<ReturnType<typeof getStoryContext>>;
 type Page = Parameters<TestHook>[0];
 type Story = Parameters<TestHook>[1];
@@ -26,8 +23,7 @@ export function getScreenshoterConfig(): TestRunnerConfig {
       return window.pullRequestComments;
     }, APPROVE_TEXT);
 
-    // TODO: Разобраться что оно такое
-    const approvedScreenshots = getParsedScreenshots(comments ?? []);
+    const approvedScreenshots = getParsedScreenshots(comments);
 
     if (isApprovedScreenshot(approvedScreenshots, { name: story.name, path: context.componentId }))
       return;
@@ -63,7 +59,7 @@ export function getScreenshoterConfig(): TestRunnerConfig {
   ): Promise<Buffer> {
     const referencePage = await actualStoryPage.context().newPage();
     // https://colibrijs.github.io/colibrijs/main/storybook/iframe.html?id=pagetitle-tests-screenshot--screenshot
-    const referencePageUrl = `${REFERENCE_STORYBOOK_URL}iframe.html?id=${context.id}`;
+    const referencePageUrl = `${process.env.STORYBOOK_URL}iframe.html?id=${context.id}`;
     await referencePage.goto(referencePageUrl, { waitUntil: 'networkidle' });
     return referencePage.screenshot();
   }

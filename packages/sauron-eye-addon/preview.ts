@@ -17,6 +17,8 @@ export default {
       const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
 
       if (!pullRequestNumber || isNaN(pullRequestNumber)) {
+        // @ts-expect-error -- всё хорошо, это нужно чтобы в тесте потом обратиться к этому значению
+        window.pullRequestComments = [];
         return { comments: [] };
       }
 

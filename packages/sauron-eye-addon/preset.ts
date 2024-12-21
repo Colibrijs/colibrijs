@@ -19,6 +19,7 @@ export default {
     },
   ],
   env: {
+    GH_TOKEN: process.env.GH_TOKEN || '',
     STORYBOOK_URL: process.env.STORYBOOK_URL || 'http://localhost:6006/',
     PULL_REQUEST_NUMBER: process.env.PULL_REQUEST_NUMBER || '',
   },
