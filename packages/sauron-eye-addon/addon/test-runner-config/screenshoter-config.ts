@@ -25,7 +25,9 @@ export function getScreenshoterConfig(): TestRunnerConfig {
       // @ts-expect-error -- всё хорошо. В preview.ts есть код, который сохраняет в window коменты
       return window.pullRequestComments;
     }, APPROVE_TEXT);
-    const approvedScreenshots = getParsedScreenshots(comments);
+
+    // TODO: Разобраться что оно такое
+    const approvedScreenshots = getParsedScreenshots(comments ?? []);
 
     if (isApprovedScreenshot(approvedScreenshots, { name: story.name, path: context.componentId }))
       return;

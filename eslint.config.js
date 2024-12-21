@@ -19,6 +19,7 @@ const devFiles = [
   'eslint.config.js',
   'playwright.config.ts',
   'packages/core/.storybook/**/*.{ts,tsx,js}',
+  'packages/sauron-eye-addon/**/*.{ts,tsx}',
   'packages/**/*.stories.{ts,tsx}',
   'packages/**/__tests__/**/*.{ts,tsx}',
   'packages/**/*.test.ts',
@@ -123,6 +124,7 @@ export default [
       'packages/core/.storybook/preview.ts',
       'packages/core/.storybook/test-runner.ts',
       'packages/example/components/*/index.ts',
+      'packages/sauron-eye-addon/*.ts',
       'packages/{admin,application}/pages/**/*.tsx',
     ],
     rules: {

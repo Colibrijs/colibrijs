@@ -71,7 +71,9 @@ export function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactN
     return (
       <div className="screenshot-panel">
         <p className="screenshot-panel__text">На вот, наверни: </p>
-        <p className="screenshot-panel__text">{failedStoriesError || error}</p>
+        <pre className="screenshot-panel__text">
+          {JSON.stringify(failedStoriesError || error, null, 2)}
+        </pre>
       </div>
     );
   }

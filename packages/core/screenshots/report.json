@@ -1,0 +1,1950 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 1,
+  "numPassedTestSuites": 49,
+  "numPassedTests": 107,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 50,
+  "numTotalTests": 108,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1734799356944,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementEditor", "Default"],
+          "duration": 3982,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799372473,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-editor/__stories__/element-editor.stories.tsx",
+      "startTime": 1734799360825,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentsList", "Default"],
+          "duration": 3212,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentsList Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        },
+        {
+          "ancestorTitles": ["ComponentsList", "Empty"],
+          "duration": 600,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentsList Empty smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        },
+        {
+          "ancestorTitles": ["ComponentsList", "Loading"],
+          "duration": 373,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentsList Loading smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799376811,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/components-list/__stories__/components-list.stories.ts",
+      "startTime": 1734799361133,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropEditor/tests/string-editor", "StringEditorValue"],
+          "duration": 2659,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/string-editor StringEditorValue play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/string-editor", "StringEditorChange"],
+          "duration": 594,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/string-editor StringEditorChange play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/string-editor", "StringEditorName"],
+          "duration": 251,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/string-editor StringEditorName play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/string-editor", "StringEditorDescription"],
+          "duration": 464,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/string-editor StringEditorDescription play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799377159,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/prop-editor/__stories__/string-editor.spec.stories.tsx",
+      "startTime": 1734799361147,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentAdd/tests/api", "RequestParameters"],
+          "duration": 6366,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd/tests/api RequestParameters play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ComponentAdd/tests/api", "RequestError"],
+          "duration": 657,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd/tests/api RequestError play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799379647,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/component-add/__stories__/api.spec.stories.ts",
+      "startTime": 1734799360990,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageAdd/tests/api", "RequestParameters"],
+          "duration": 3206,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAdd/tests/api RequestParameters play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PageAdd/tests/api", "RequestError"],
+          "duration": 309,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAdd/tests/api RequestError play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799380380,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-add/__stories__/api.spec.stories.ts",
+      "startTime": 1734799372526,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageTitle/tests/screenshot", "Screenshot"],
+          "duration": 12717,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageTitle/tests/screenshot Screenshot smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 1,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799385628,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-title/__stories__/screenshot/screenshot.stories.ts",
+      "startTime": 1734799360827,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageRemove/tests/api", "RequestParameters"],
+          "duration": 3420,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageRemove/tests/api RequestParameters play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PageRemove/tests/api", "RequestError"],
+          "duration": 416,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageRemove/tests/api RequestError play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PageRemove/tests/api", "RequestSuccess"],
+          "duration": 697,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageRemove/tests/api RequestSuccess play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799385894,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-remove/__stories__/api.spec.stories.ts",
+      "startTime": 1734799377256,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PagesList/tests/screenshot", "Screenshot"],
+          "duration": 13959,
+          "failureDetails": [
+            {
+              "matcherResult": {
+                "actual": 0.21744791666666666,
+                "expected": 0,
+                "message": "\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m0.21744791666666666\u001b[39m",
+                "name": "toBe",
+                "pass": false
+              }
+            }
+          ],
+          "failureMessages": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m0.21744791666666666\u001b[39m\n    at toBe (/Users/ivanpodgornov/Documents/colibrijs/packages/sauron-eye-addon/addon/test-runner-config/screenshoter-config.ts:53:42)"
+          ],
+          "fullName": "PagesList/tests/screenshot Screenshot smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "failed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799386335,
+      "message": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[22m\u001b[1mPagesList/tests/screenshot › Screenshot › smoke-test\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\n    Expected: \u001b[32m0\u001b[39m\n    Received: \u001b[31m0.21744791666666666\u001b[39m\n\u001b[2m\u001b[22m\n\u001b[2m    \u001b[0m \u001b[90m 51 |\u001b[39m       )\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 52 |\u001b[39m     }\u001b[22m\n\u001b[2m    \u001b[31m\u001b[1m>\u001b[22m\u001b[2m\u001b[39m\u001b[90m 53 |\u001b[39m     expect(result\u001b[33m.\u001b[39mrawMisMatchPercentage)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[2m\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 54 |\u001b[39m   }\u001b[22m\n\u001b[2m     \u001b[90m 55 |\u001b[39m\u001b[22m\n\u001b[2m     \u001b[90m 56 |\u001b[39m   \u001b[36mfunction\u001b[39m isScreenshotStory(storyData\u001b[33m:\u001b[39m \u001b[33mStoryContext\u001b[39m) {\u001b[0m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat toBe (\u001b[22m\u001b[2mpackages/sauron-eye-addon/addon/test-runner-config/screenshoter-config.ts\u001b[2m:53:42)\u001b[22m\u001b[2m\u001b[22m\n",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/pages-list/__stories__/screenshot/screenshot.stories.ts",
+      "startTime": 1734799360827,
+      "status": "failed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "HiddenByDefault"],
+          "duration": 2888,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add HiddenByDefault play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "VisibleOnClick"],
+          "duration": 1652,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add VisibleOnClick play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "HidesOnClose"],
+          "duration": 1481,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add HidesOnClose play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "HidesOnAdded"],
+          "duration": 1642,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add HidesOnAdded play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "AddsWithPageId"],
+          "duration": 1293,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add AddsWithPageId play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "ErrorOnAdd"],
+          "duration": 1836,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add ErrorOnAdd play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "NotHidesOnError"],
+          "duration": 1840,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add NotHidesOnError play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "AtEndIfNoSelected"],
+          "duration": 381,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add AtEndIfNoSelected smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-add", "AfterIfSelected"],
+          "duration": 440,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-add AfterIfSelected smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799387344,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content-editor/__stories__/integration-element-add.spec.stories.tsx",
+      "startTime": 1734799360891,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementAdd/tests/components-select", "ComponentsFromApi"],
+          "duration": 3530,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/components-select ComponentsFromApi play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementAdd/tests/components-select", "NullByDefault"],
+          "duration": 583,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/components-select NullByDefault play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementAdd/tests/components-select", "ComponentsSelectable"],
+          "duration": 1039,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/components-select ComponentsSelectable play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementAdd/tests/components-select", "DefaultPropsForComponent"],
+          "duration": 755,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/components-select DefaultPropsForComponent play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799387732,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-add/__stories__/components-select.spec.stories.ts",
+      "startTime": 1734799376836,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PagesList/tests/integration-page-add", "IntegrationPageAdd"],
+          "duration": 5401,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PagesList/tests/integration-page-add IntegrationPageAdd play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799389175,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/pages-list/__stories__/integration-page-add.spec.stories.tsx",
+      "startTime": 1734799380396,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementEditor/tests/Props", "OpenProp"],
+          "duration": 3216,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Props OpenProp play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementEditor/tests/Props", "OnCloseProp"],
+          "duration": 512,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Props OnCloseProp play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementEditor/tests/Props", "ElementProps"],
+          "duration": 563,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Props ElementProps play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementEditor/tests/Props", "OnEditProp"],
+          "duration": 565,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Props OnEditProp play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementEditor/tests/Props", "OnRemoveProp"],
+          "duration": 594,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Props OnRemoveProp play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799389234,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-editor/__stories__/props.spec.stories.tsx",
+      "startTime": 1734799379664,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentsList/tests/api", "ResponseData"],
+          "duration": 3556,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentsList/tests/api ResponseData play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799394099,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/components-list/__stories__/api.spec.stories.ts",
+      "startTime": 1734799386381,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropEditor/tests/object-editor", "ObjectMainName"],
+          "duration": 2781,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/object-editor ObjectMainName play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/object-editor", "NestedObjectsName"],
+          "duration": 483,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/object-editor NestedObjectsName play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/object-editor", "ValueChanging"],
+          "duration": 652,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/object-editor ValueChanging play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/object-editor", "CorrectDefaultValues"],
+          "duration": 132,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/object-editor CorrectDefaultValues play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799394972,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/prop-editor/__stories__/object-editor.spec.stories.tsx",
+      "startTime": 1734799385672,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-editor", "HiddenByDefault"],
+          "duration": 4814,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-editor HiddenByDefault play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-editor", "VisibleOnSelect"],
+          "duration": 2038,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-editor VisibleOnSelect play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-editor", "Title"],
+          "duration": 1289,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-editor Title play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799397677,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content-editor/__stories__/integration-element-editor.spec.stories.ts",
+      "startTime": 1734799385907,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageAdd/tests/validation", "NameRequired"],
+          "duration": 3589,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAdd/tests/validation NameRequired play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PageAdd/tests/validation", "RouteRequired"],
+          "duration": 658,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAdd/tests/validation RouteRequired play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799398873,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-add/__stories__/validation.spec.stories.ts",
+      "startTime": 1734799389196,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropEditor/tests/number-editor", "NumberEditorValue"],
+          "duration": 3305,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/number-editor NumberEditorValue play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/number-editor", "NumberEditorChange"],
+          "duration": 668,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/number-editor NumberEditorChange play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/number-editor", "NumberEditorName"],
+          "duration": 237,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/number-editor NumberEditorName play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/number-editor", "NumberEditorDescription"],
+          "duration": 468,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/number-editor NumberEditorDescription play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799399401,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/prop-editor/__stories__/number-editor.spec.stories.tsx",
+      "startTime": 1734799389249,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementRemove/tests/api", "RequestParameters"],
+          "duration": 3055,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementRemove/tests/api RequestParameters play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementRemove/tests/api", "RequestError"],
+          "duration": 833,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementRemove/tests/api RequestError play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementRemove/tests/api", "RequestSuccess"],
+          "duration": 701,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementRemove/tests/api RequestSuccess play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799399650,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-remove/__stories__/api.spec.stories.ts",
+      "startTime": 1734799387372,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementAdd/tests/visibility", "HiddenWhenOpenIsFalse"],
+          "duration": 1443,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/visibility HiddenWhenOpenIsFalse play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementAdd/tests/visibility", "VisibleWhenOpenIsTrue"],
+          "duration": 781,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/visibility VisibleWhenOpenIsTrue play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799401895,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-add/__stories__/visibility.spec.stories.ts",
+      "startTime": 1734799394116,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-remove", "HidesOnRemove"],
+          "duration": 6994,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-remove HidesOnRemove play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ContentEditor/tests/integration-element-remove", "RemovesOnRemove"],
+          "duration": 1848,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/integration-element-remove RemovesOnRemove play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799403947,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content-editor/__stories__/integration-element-remove.spec.stories.ts",
+      "startTime": 1734799387745,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentAdd/tests/validation", "NameRequired"],
+          "duration": 2180,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd/tests/validation NameRequired play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ComponentAdd/tests/validation", "LibraryNameRequired"],
+          "duration": 734,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd/tests/validation LibraryNameRequired play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ComponentAdd/tests/validation", "SrcRequired"],
+          "duration": 612,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd/tests/validation SrcRequired play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ComponentAdd/tests/validation", "SrcTypeUrl"],
+          "duration": 1290,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd/tests/validation SrcTypeUrl play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799404094,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/component-add/__stories__/validation.spec.stories.ts",
+      "startTime": 1734799394983,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementAdd/tests/on-close", "CallsOnClose"],
+          "duration": 5676,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/on-close CallsOnClose play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799408038,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-add/__stories__/on-close.spec.stories.ts",
+      "startTime": 1734799398893,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementEditor/tests/Common", "OpenProp"],
+          "duration": 4290,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Common OpenProp play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementEditor/tests/Common", "SuccessRequest"],
+          "duration": 2158,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Common SuccessRequest play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementEditor/tests/Common", "FailRequest"],
+          "duration": 1243,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementEditor/tests/Common FailRequest play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799409514,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-editor/__stories__/common.spec.stories.tsx",
+      "startTime": 1734799397707,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ContentEditor/tests/tree-content", "Title"],
+          "duration": 3839,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor/tests/tree-content Title play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799409613,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content-editor/__stories__/tree-content.spec.stories.ts",
+      "startTime": 1734799399423,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageAddModal/tests/integration-page-add", "IntegrationPageAdd"],
+          "duration": 4454,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAddModal/tests/integration-page-add IntegrationPageAdd play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799409759,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-add-modal/__stories__/page-add-integration.spec.stories.ts",
+      "startTime": 1734799399661,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Content/tests/render-microfrontends", "Order"],
+          "duration": 2760,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Content/tests/render-microfrontends Order play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["Content/tests/render-microfrontends", "RenderWithProps"],
+          "duration": 188,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Content/tests/render-microfrontends RenderWithProps play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799412961,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content/__stories__/render-microfrontends.spec.stories.ts",
+      "startTime": 1734799401911,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ContentEditor", "Default"],
+          "duration": 4378,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ContentEditor Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799414867,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content-editor/__stories__/content-editor.stories.ts",
+      "startTime": 1734799403974,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentRemove/tests/api", "RequestParameters"],
+          "duration": 4672,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentRemove/tests/api RequestParameters play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ComponentRemove/tests/api", "RequestError"],
+          "duration": 815,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentRemove/tests/api RequestError play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ComponentRemove/tests/api", "RequestSuccess"],
+          "duration": 455,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentRemove/tests/api RequestSuccess play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799415840,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/component-remove/__stories__/api.spec.stories.ts",
+      "startTime": 1734799404114,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageAdd/tests/callbacks", "RouteRequired"],
+          "duration": 5975,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAdd/tests/callbacks RouteRequired play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799422700,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-add/__stories__/callbacks.spec.stories.ts",
+      "startTime": 1734799409632,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropsEditor", "Default"],
+          "duration": 5031,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropsEditor Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799423003,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/props-editor/__stories__/props-editor.stories.tsx",
+      "startTime": 1734799409529,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageAddModal", "Default"],
+          "duration": 4748,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAddModal Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        },
+        {
+          "ancestorTitles": ["PageAddModal", "Opened"],
+          "duration": 1070,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAddModal Opened smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799423093,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-add-modal/__stories__/page-add-modal.stories.tsx",
+      "startTime": 1734799409774,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropEditor/tests/boolean-editor", "BooleanEditorValue"],
+          "duration": 3942,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/boolean-editor BooleanEditorValue play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/boolean-editor", "BooleanEditorChange"],
+          "duration": 597,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/boolean-editor BooleanEditorChange play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/boolean-editor", "BooleanEditorName"],
+          "duration": 325,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/boolean-editor BooleanEditorName play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor/tests/boolean-editor", "BooleanEditorDescription"],
+          "duration": 282,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor/tests/boolean-editor BooleanEditorDescription play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799423962,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/prop-editor/__stories__/boolean-editor.spec.stories.tsx",
+      "startTime": 1734799408056,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageAdd", "Default"],
+          "duration": 3956,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageAdd Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799430395,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-add/__stories__/page-add.stories.ts",
+      "startTime": 1734799415865,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropEditor", "Default"],
+          "duration": 3666,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        },
+        {
+          "ancestorTitles": ["PropEditor", "ObjectExampleStory"],
+          "duration": 540,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropEditor ObjectExampleStory smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799431298,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/prop-editor/__stories__/prop-editor.stories.tsx",
+      "startTime": 1734799413012,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Layout", "Default"],
+          "duration": 2852,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Layout Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        },
+        {
+          "ancestorTitles": ["Layout", "Sidebar"],
+          "duration": 730,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Layout Sidebar smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799436805,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/layout/__stories__/layout.stories.tsx",
+      "startTime": 1734799423982,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentRemove/tests/callbacks", "RequestParameters"],
+          "duration": 4831,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentRemove/tests/callbacks RequestParameters play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799437839,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/component-remove/__stories__/callbacks.spec.stories.ts",
+      "startTime": 1734799422720,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PagesList/tests/content", "TitleText"],
+          "duration": 9044,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PagesList/tests/content TitleText play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PagesList/tests/content", "TitleHref"],
+          "duration": 850,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PagesList/tests/content TitleHref play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799438740,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/pages-list/__stories__/content.spec.stories.ts",
+      "startTime": 1734799414889,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PropsEditor/tests/common", "ChangeEvent"],
+          "duration": 4878,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropsEditor/tests/common ChangeEvent play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropsEditor/tests/common", "LabelFields"],
+          "duration": 866,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropsEditor/tests/common LabelFields play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropsEditor/tests/common", "DefaultValues"],
+          "duration": 571,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropsEditor/tests/common DefaultValues play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["PropsEditor/tests/common", "Description"],
+          "duration": 1132,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PropsEditor/tests/common Description play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799440875,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/props-editor/__stories__/common.test.stories.tsx",
+      "startTime": 1734799423024,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementAdd/tests/on-ready", "CallsWithSelectedComponent"],
+          "duration": 7663,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/on-ready CallsWithSelectedComponent play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementAdd/tests/on-ready", "CallsWithDefaultProps"],
+          "duration": 2063,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/on-ready CallsWithDefaultProps play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["ElementAdd/tests/on-ready", "CallsWithPageId"],
+          "duration": 1667,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd/tests/on-ready CallsWithPageId play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799443797,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-add/__stories__/on-ready.spec.stories.ts",
+      "startTime": 1734799423116,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentAdd", "Default"],
+          "duration": 1857,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentAdd Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799444163,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/component-add/__stories__/component-add.stories.ts",
+      "startTime": 1734799430416,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Microfrontend/tests/remote", "RenderProps"],
+          "duration": 1745,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Microfrontend/tests/remote RenderProps play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        },
+        {
+          "ancestorTitles": ["Microfrontend/tests/remote", "Styles"],
+          "duration": 59,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Microfrontend/tests/remote Styles play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799444309,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/microfrontend/__stories__/microfrontend.test.stories.tsx",
+      "startTime": 1734799431315,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Microfrontend", "Default"],
+          "duration": 617,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Microfrontend Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799447292,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/microfrontend/__stories__/microfrontend.stories.ts",
+      "startTime": 1734799436819,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ComponentRemove", "Default"],
+          "duration": 2556,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ComponentRemove Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799448452,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/component-remove/__stories__/component-remove.stories.ts",
+      "startTime": 1734799437862,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageTitle/tests/content", "TitleText"],
+          "duration": 2143,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageTitle/tests/content TitleText play-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "play-test"
+        }
+      ],
+      "endTime": 1734799449258,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-title/__stories__/content.spec.stories.ts",
+      "startTime": 1734799440914,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementAdd", "Default"],
+          "duration": 3005,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementAdd Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799449320,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-add/__stories__/element-add.stories.ts",
+      "startTime": 1734799438904,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Content", "Default"],
+          "duration": 439,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "Content Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799450701,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/content/__stories__/content.stories.ts",
+      "startTime": 1734799447310,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageRemove", "Default"],
+          "duration": 1214,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageRemove Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799450941,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-remove/__stories__/page-remove.stories.ts",
+      "startTime": 1734799444179,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["ElementRemove", "Default"],
+          "duration": 1309,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "ElementRemove Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799451342,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/element-remove/__stories__/element-remove.stories.ts",
+      "startTime": 1734799444327,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PagesList", "Default"],
+          "duration": 602,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PagesList Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799451733,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/pages-list/__stories__/pages-list.stories.tsx",
+      "startTime": 1734799443839,
+      "status": "passed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["PageTitle", "Default"],
+          "duration": 346,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "PageTitle Default smoke-test",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "smoke-test"
+        }
+      ],
+      "endTime": 1734799452361,
+      "message": "",
+      "name": "/Users/ivanpodgornov/Documents/colibrijs/packages/core/components/page-title/__stories__/page-title.stories.ts",
+      "startTime": 1734799448478,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false
+}

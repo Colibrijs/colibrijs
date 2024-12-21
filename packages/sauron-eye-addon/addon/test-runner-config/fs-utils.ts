@@ -41,14 +41,8 @@ export async function saveScreenshots(
   ]);
 }
 
-let isScreenshotDirsCreated = false;
-
 function createOutputDirectoriesIfNeeded(settings: Settings): void {
-  if (isScreenshotDirsCreated) return;
-
   if (!isDirectoryAvailable(settings.output.actual)) fss.mkdirSync(settings.output.actual);
   if (!isDirectoryAvailable(settings.output.reference)) fss.mkdirSync(settings.output.reference);
   if (!isDirectoryAvailable(settings.output.diff)) fss.mkdirSync(settings.output.diff);
-
-  isScreenshotDirsCreated = true;
 }

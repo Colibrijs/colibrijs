@@ -39,7 +39,7 @@ export function PagesList() {
   return (
     <div className={styles.root} data-testid="pages-list">
       <Typography.Title level={3}>
-        <Flex align="center" justify="space-between">
+        <Flex align="center" justify="flex-start">
           <span>Страницы</span>
           <Tooltip title="Добавить страницу">
             <Button icon={<PlusOutlined />} onClick={startAdding} data-testid="pages-list__add" />
