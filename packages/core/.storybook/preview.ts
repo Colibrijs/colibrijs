@@ -5,6 +5,7 @@ import React from 'react';
 import '../global.css';
 import './global-storybook.css';
 
+import { sauronEyeConfig } from './sauron-eye-config';
 import { withReactQueryDecorator } from '../components/react-query-provider/mocked';
 import { withMockedApi } from '../hooks/use-api/mocked';
 import { withMockedRouter } from '../hooks/use-router/mocked';
@@ -31,5 +32,9 @@ export default {
         date: /Date$/i,
       },
     },
+  },
+
+  globals: {
+    sauronEye: sauronEyeConfig,
   },
 } satisfies Preview;

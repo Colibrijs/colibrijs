@@ -7,18 +7,7 @@ export default {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    {
-      name: '@colibrijs/sauron-eye-addon',
-      options: {
-        githubToken: '',
-        pullRequestNumber: 0,
-        reportLocation: '',
-        repositoryOwner: '',
-        repositoryName: '',
-        screenshotsLocation: '',
-        storybookUrl: '',
-      },
-    },
+    '@colibrijs/sauron-eye-addon',
     {
       name: '@storybook/addon-styling',
       options: {
@@ -31,6 +20,12 @@ export default {
   env: {
     EXAMPLE_URL: process.env.EXAMPLE_URL || 'https://colibrijs.github.io/colibrijs/main/example/',
     BRANCH_NAME: process.env.BRANCH_NAME || 'main',
+    GH_TOKEN: process.env.GH_TOKEN || '',
+    PULL_REQUEST_NUMBER: process.env.PULL_REQUEST_NUMBER || '',
+    REPOSITORY_OWNER: process.env.REPOSITORY_OWNER || '',
+    REPOSITORY_NAME: process.env.REPOSITORY_NAME || '',
+    REFERENCE_STORYBOOK_URL: process.env.REFERENCE_STORYBOOK_URL || 'http://localhost:6006/',
+    TESTING_STORYBOOK_URL: process.env.TESTING_STORYBOOK_URL || 'http://localhost:6006/',
   },
   framework: {
     name: '@storybook/react-webpack5',

@@ -1,15 +1,17 @@
+import type { SauronEyeConfig } from './types';
+
 export interface Comment {
   body: string;
 }
 
 let responseBody: null | Comment[] = null;
 
-export async function loadComments(pullRequestNumber: number): Promise<Comment[]> {
+export async function loadComments(config: SauronEyeConfig): Promise<Comment[]> {
   if (responseBody !== null) {
     return responseBody;
   }
 
-  const url = `https://api.github.com/repos/colibrijs/colibrijs/issues/${pullRequestNumber}/comments`;
+  const url = `https://api.github.com/repos/${config.repositoryOwner}/${config.repositoryName}/issues/${config.pullRequestNumber}/comments`;
   const response = await fetch(url);
   responseBody = (await response.json()) as Comment[];
 

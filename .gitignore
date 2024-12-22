@@ -19,7 +19,7 @@ packages/admin/.next/
 
 # Core
 packages/core/storybook-static/
-packages/core/.storybook/screenshots/
+packages/core/screenshots/
 
 # Example
 packages/example/dist/

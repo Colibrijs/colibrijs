@@ -5,12 +5,13 @@ import { saveScreenshots } from './fs-utils';
 import { resolveSettings, type Settings } from './resolve-settings';
 import { APPROVE_TEXT } from '../common/comments';
 import { getParsedScreenshots, isApprovedScreenshot } from '../common/get-approved-screenshots';
+import type { SauronEyeConfig } from '../common/types';
 
 type StoryContext = Awaited<ReturnType<typeof getStoryContext>>;
 type Page = Parameters<TestHook>[0];
 type Story = Parameters<TestHook>[1];
 
-export function getScreenshoterConfig(): TestRunnerConfig {
+export function getScreenshoterConfig(config: SauronEyeConfig): TestRunnerConfig {
   const settings: Settings = resolveSettings();
 
   async function postVisit(page: Page, story: Story) {
@@ -59,7 +60,7 @@ export function getScreenshoterConfig(): TestRunnerConfig {
   ): Promise<Buffer> {
     const referencePage = await actualStoryPage.context().newPage();
     // https://colibrijs.github.io/colibrijs/main/storybook/iframe.html?id=pagetitle-tests-screenshot--screenshot
-    const referencePageUrl = `${process.env.STORYBOOK_URL}iframe.html?id=${context.id}`;
+    const referencePageUrl = `${config.referenceStorybookUrl}iframe.html?id=${context.id}`;
     await referencePage.goto(referencePageUrl, { waitUntil: 'networkidle' });
     return referencePage.screenshot();
   }

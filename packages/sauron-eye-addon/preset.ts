@@ -9,18 +9,14 @@ const screenshotDirectory = path.resolve(process.cwd(), './screenshots');
 
 if (!isDirectoryAvailable(screenshotDirectory)) {
   fs.mkdirSync(screenshotDirectory);
+  fs.writeFileSync(path.resolve(screenshotDirectory, './file.txt'), 'гыы', 'utf-8');
 }
 
 export default {
   staticDirs: [
     {
-      from: path.resolve(process.cwd(), './screenshots'),
+      from: screenshotDirectory,
       to: '/screenshots',
     },
   ],
-  env: {
-    GH_TOKEN: process.env.GH_TOKEN || '',
-    STORYBOOK_URL: process.env.STORYBOOK_URL || 'http://localhost:6006/',
-    PULL_REQUEST_NUMBER: process.env.PULL_REQUEST_NUMBER || '',
-  },
 } satisfies Partial<StorybookConfig>;

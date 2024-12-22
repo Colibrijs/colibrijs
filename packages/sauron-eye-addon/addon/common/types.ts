@@ -19,3 +19,13 @@ export type StoryData = {
   id: string;
   title: string;
 };
+
+export type SauronEyeConfig = {
+  branchName: string;
+  githubToken: string;
+  pullRequestNumber: string;
+  repositoryOwner: string;
+  repositoryName: string;
+  referenceStorybookUrl: string;
+  testingStorybookUrl: string;
+};

@@ -25,7 +25,7 @@ type StoriesQuery =
   | {
       status: 'error';
       stories: StoryData[];
-      error: null;
+      error: Error;
       isLoading: false;
     }
   | {

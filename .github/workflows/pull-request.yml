@@ -73,22 +73,34 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare environment
         uses: ./.github/workflows/prepare-environment
+      - name: Save metadata about deployment
+        uses: ./.github/workflows/deployment-metadata
+        id: metadata
       - name: Test unit
         run: npm run test:unit
       - name: Download storybook
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.storybook-artifact-name }}
-          path: ./packages/core/storybook-static
+          path: ./packages/core
       - name: Serve Storybook and run tests
         id: run_test
         continue-on-error: true
         env:
+          # Для ветки main - https://colibrijs.github.io/colibrijs/main/example/
+          BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PULL_REQUEST_NUMBER: ${{ github.event_name == 'pull_request' && github.event.number || '' }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          REFERENCE_STORYBOOK_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/main/storybook/
+          TESTING_STORYBOOK_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/storybook/
+          EXAMPLE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/example/
+          COMMIT_SHA: ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
           "npm run storybook:serve -w @colibrijs/core" \
-          "npm run test:interactions:local -w @colibrijs/core"
+          "npm run test:interactions -w @colibrijs/core"
       - name: Move screenshots to storybook-build
         run: |
           cp -r ./packages/core/screenshots ./packages/core/storybook-static

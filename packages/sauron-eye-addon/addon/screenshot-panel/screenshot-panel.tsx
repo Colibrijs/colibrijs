@@ -1,11 +1,11 @@
 import { AddonPanel, Button } from '@storybook/components';
-import { type API } from '@storybook/manager-api';
+import { useGlobals, type API } from '@storybook/manager-api';
 import './screenshot-panel.css';
 import React, { type ReactNode } from 'react';
 
 import { ScreenshotTable } from './screenshot-table/screenshot-table';
 import { getApprovedScreenshots } from '../common/get-approved-screenshots';
-import type { StoryData } from '../common/types';
+import type { SauronEyeConfig, StoryData } from '../common/types';
 import { useFailedStories } from '../common/use-failed-stories';
 
 export type ScreenshotsPanelProps = {
@@ -14,30 +14,38 @@ export type ScreenshotsPanelProps = {
 };
 
 export function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactNode {
+  const [globals] = useGlobals();
+  const config: SauronEyeConfig = globals.sauronEye;
+
   const { status, stories, error: failedStoriesError } = useFailedStories(api);
   const [storiesToApprove, setStoriesToApprove] = React.useState<StoryData[]>([]);
   const [approvedStories, setApprovedStories] = React.useState<StoryData[]>([]);
   const [error, setError] = React.useState('');
 
   React.useEffect(() => {
-    getApprovedScreenshots()
+    getApprovedScreenshots(config)
       .then(setApprovedStories)
       .catch((error) => setError(error.message));
-  }, []);
+  }, [config]);
 
   const approve = React.useCallback(async () => {
+    const token = config.githubToken
+      .split(',')
+      .map((code) => String.fromCharCode(Number(code)))
+      .join('');
+
     const response = await fetch(
-      'https://api.github.com/repos/colibrijs/colibrijs/actions/workflows/screenshot-approve.yml/dispatches',
+      `https://api.github.com/repos/${config.repositoryOwner}/${config.repositoryName}/actions/workflows/screenshot-approve.yml/dispatches`,
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.GH_TOKEN}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ref: process.env.BRANCH_NAME,
+          ref: config.branchName,
           inputs: {
-            'pull-request-number': process.env.PULL_REQUEST_NUMBER,
+            'pull-request-number': config.pullRequestNumber,
             'approved-screenshots': JSON.stringify(
               [...approvedStories, ...storiesToApprove],
               null,
@@ -54,7 +62,7 @@ export function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactN
       setApprovedStories(approvedStories.concat(storiesToApprove));
       setStoriesToApprove([]);
     }
-  }, [approvedStories, storiesToApprove]);
+  }, [config, approvedStories, storiesToApprove]);
 
   if (!active) {
     return null;
@@ -63,10 +71,8 @@ export function ScreenshotsPanel({ active, api }: ScreenshotsPanelProps): ReactN
   if (status === 'error' || error) {
     return (
       <div className="screenshot-panel">
-        <p className="screenshot-panel__text">На вот, наверни: </p>
-        <pre className="screenshot-panel__text">
-          {JSON.stringify(failedStoriesError || error, null, 2)}
-        </pre>
+        <p className="screenshot-panel__text">Произошло неладное: </p>
+        <pre className="screenshot-panel__text">{failedStoriesError?.message || error}</pre>
       </div>
     );
   }
