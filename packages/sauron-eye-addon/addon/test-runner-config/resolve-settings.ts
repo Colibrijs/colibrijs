@@ -7,7 +7,7 @@ export interface Settings {
 }
 
 export function resolveSettings(): Settings {
-  const outputDirectory = path.resolve(__dirname, '../screenshots');
+  const outputDirectory = path.resolve(process.cwd(), './screenshots');
 
   return {
     output: {

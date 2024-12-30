@@ -2,32 +2,31 @@ import { IconButton } from '@storybook/components';
 import { PhotoDragIcon } from '@storybook/icons';
 import { useGlobals } from '@storybook/manager-api';
 import type { API } from '@storybook/manager-api';
-// @ts-expect-error: React is required for JSX but not explicitly used
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import type { StoryData } from '../types';
+import { useFailedStories } from '../common/use-failed-stories';
 
 interface Props {
-  failedStories: StoryData[];
   api: API;
 }
 
-export function CompareButton({ failedStories, api }: Props) {
+export function CompareButton({ api }: Props) {
   const [globals, updateGlobals] = useGlobals();
+  const { stories } = useFailedStories(api);
 
-  const onClick = useCallback(() => {
+  const onClick = React.useCallback(() => {
     updateGlobals({ screenshotsComparatorActive: !globals.screenshotsComparatorActive });
   }, [globals.screenshotsComparatorActive, updateGlobals]);
 
   const currentStory = api.getCurrentStoryData();
   if (!currentStory) return;
 
-  const isFailedStory = failedStories.some((story) => {
+  const isCurrentStoryFailed = stories.some((story) => {
     const storyId = story.path + '--' + story.id;
     return currentStory.id === storyId;
   });
 
-  if (!isFailedStory) {
+  if (!isCurrentStoryFailed) {
     // сбрасывать только в случае, если сейчас true, иначе в бесконечный ререндер уходит
     if (globals.screenshotsComparatorActive) {
       updateGlobals({ screenshotsComparatorActive: false });

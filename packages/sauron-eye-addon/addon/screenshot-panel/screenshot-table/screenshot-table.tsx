@@ -1,11 +1,10 @@
 import { type API } from '@storybook/manager-api';
 import classNames from 'classnames';
-import React, { useCallback, type ReactNode, type ChangeEvent } from 'react';
+import React, { type ReactNode, type ChangeEvent } from 'react';
 
 import styles from './screenshot-table.module.css';
-import { isApprovedScreenshot } from '../../screenshoter-config/get-approved-screenshots';
-
-import type { StoryData } from '../types';
+import { isApprovedScreenshot } from '../../common/get-approved-screenshots';
+import type { StoryData } from '../../common/types';
 
 type Props = {
   storiesToApprove: StoryData[];
@@ -27,7 +26,7 @@ export function ScreenshotTable({
     [api]
   );
 
-  const removeStoryToApprove = useCallback(
+  const removeStoryToApprove = React.useCallback(
     (story: StoryData) => {
       const index = storiesToApprove.findIndex(
         (currentStory) => story.path === currentStory.path && story.name === currentStory.name
@@ -40,7 +39,7 @@ export function ScreenshotTable({
     [onChange, storiesToApprove]
   );
 
-  const addStoryToApprove = useCallback(
+  const addStoryToApprove = React.useCallback(
     (story: StoryData) => {
       const newStories = [...storiesToApprove, story];
       onChange(newStories);
@@ -48,7 +47,7 @@ export function ScreenshotTable({
     [onChange, storiesToApprove]
   );
 
-  const onCheck = useCallback(
+  const onCheck = React.useCallback(
     (story: StoryData) => {
       return (event: ChangeEvent<HTMLInputElement>) => {
         const isChecked = event.target.checked;

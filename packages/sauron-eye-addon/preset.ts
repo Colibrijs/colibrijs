@@ -1,0 +1,22 @@
+import type { StorybookConfig } from '@storybook/react-webpack5';
+
+import fs from 'node:fs';
+import path from 'node:path';
+
+import { isDirectoryAvailable } from './addon/test-runner-config';
+
+const screenshotDirectory = path.resolve(process.cwd(), './screenshots');
+
+if (!isDirectoryAvailable(screenshotDirectory)) {
+  fs.mkdirSync(screenshotDirectory);
+  fs.writeFileSync(path.resolve(screenshotDirectory, './file.txt'), 'гыы', 'utf-8');
+}
+
+export default {
+  staticDirs: [
+    {
+      from: screenshotDirectory,
+      to: '/screenshots',
+    },
+  ],
+} satisfies Partial<StorybookConfig>;

@@ -1,5 +1,3 @@
-import { type API } from '@storybook/manager-api';
-
 type AssertionResult = {
   ancestorTitles: [string, string];
 };
@@ -22,7 +20,12 @@ export type StoryData = {
   title: string;
 };
 
-export type ScreenshotsPanelProps = {
-  active: boolean;
-  api: API;
+export type SauronEyeConfig = {
+  branchName: string;
+  githubToken: string;
+  pullRequestNumber: string;
+  repositoryOwner: string;
+  repositoryName: string;
+  referenceStorybookUrl: string;
+  testingStorybookUrl: string;
 };

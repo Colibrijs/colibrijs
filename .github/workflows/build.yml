@@ -38,15 +38,21 @@ jobs:
         env:
           # Для ветки main - https://colibrijs.github.io/colibrijs/main/example/
           BRANCH_NAME: ${{ steps.metadata.outputs.branch }}
-          STORYBOOK_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/storybook/
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PULL_REQUEST_NUMBER: ${{ github.event_name == 'pull_request' && github.event.number || '' }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          REFERENCE_STORYBOOK_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/main/storybook/
+          TESTING_STORYBOOK_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/storybook/
           EXAMPLE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ steps.metadata.outputs.branch }}/example/
           COMMIT_SHA: ${{ github.sha }} # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
-          PULL_REQUEST_NUMBER: ${{ github.event_name == 'pull_request' && github.event.number || '' }}
       - name: Save storybook build
         uses: actions/upload-artifact@v4
         with:
           name: storybook
-          path: ./packages/core/storybook-static
+          path: |
+            ./packages/core/storybook-static
+            ./packages/core/screenshots
       # -- Swagger --
       - name: Build swagger
         run: npm run generate-swagger -w @colibrijs/api

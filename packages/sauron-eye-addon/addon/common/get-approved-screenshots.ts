@@ -1,5 +1,5 @@
-import { loadComments, type Comment } from '../screenshot-panel/comments';
-import type { StoryData } from '../screenshot-panel/types';
+import { loadComments, type Comment } from './comments';
+import type { SauronEyeConfig, StoryData } from './types';
 
 type Story = {
   path: string;
@@ -37,14 +37,14 @@ export function isApprovedScreenshot(approvedScreenshots: StoryData[], story: St
   );
 }
 
-export async function getApprovedScreenshots(): Promise<StoryData[]> {
-  const pullRequestNumber = Number(process.env.PULL_REQUEST_NUMBER);
+export async function getApprovedScreenshots(config: SauronEyeConfig): Promise<StoryData[]> {
+  const pullRequestNumber = Number(config.pullRequestNumber);
 
   if (!pullRequestNumber || isNaN(pullRequestNumber)) {
     return [];
   }
 
-  const comments = await loadComments(pullRequestNumber);
+  const comments = await loadComments(config);
   const result = getParsedScreenshots(comments);
   return result;
 }

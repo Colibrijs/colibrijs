@@ -51,7 +51,8 @@
     "./packages/**/*",
     "./packages/core/.storybook/**/*.ts",
     "./packages/core/.storybook/**/*.tsx",
-    "./packages/core/.storybook/**/*.js"
+    "./packages/core/.storybook/**/*.js",
+    "./packages/sauron-eye-addon/.storybook/*.ts"
   ],
   "exclude": ["node_modules", ".next", "dist"]
 }

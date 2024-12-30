@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 
 import styles from './screenshots-comparator.module.css';
 
@@ -9,9 +9,9 @@ interface Props {
 }
 
 export function ScreenshotsComparator({ storybookUrl, storyId }: Props) {
-  const [linePosition, setLinePosition] = useState(-1);
-  const line = useRef<HTMLDivElement | null>(null);
-  const wrapper = useRef<HTMLDivElement | null>(null);
+  const [linePosition, setLinePosition] = React.useState(-1);
+  const line = React.useRef<HTMLDivElement | null>(null);
+  const wrapper = React.useRef<HTMLDivElement | null>(null);
 
   // Картинка которую сравниваем (та, что в main)
   // пример правильной ссылки:
@@ -19,20 +19,20 @@ export function ScreenshotsComparator({ storybookUrl, storyId }: Props) {
   const referenceImage = `${storybookUrl}screenshots/reference/${storyId}.png`;
   const actualImage = referenceImage.replace('reference', 'actual');
 
-  const imageStyles = useMemo(() => {
+  const imageStyles = React.useMemo(() => {
     return {
       clipPath: `inset(0 0 0 ${linePosition}px)`,
       zIndex: 1,
     };
   }, [linePosition]);
 
-  const lineStyles = useMemo(() => {
+  const lineStyles = React.useMemo(() => {
     return {
       left: linePosition !== -1 ? `${linePosition}px` : '50%',
     };
   }, [linePosition]);
 
-  const onMouseDown = useCallback(() => {
+  const onMouseDown = React.useCallback(() => {
     if (!line.current || !wrapper.current) return;
 
     const wrapperLeftOffset = wrapper.current.offsetLeft;

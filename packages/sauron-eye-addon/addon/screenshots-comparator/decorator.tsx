@@ -7,7 +7,7 @@ export function withScreenshotsDecorator(): Decorator {
   function ScreenshotsDecorator(Story: ComponentType, { globals, id }: StoryContext) {
     if (globals.screenshotsComparatorActive) {
       return (
-        <ScreenshotsComparator storybookUrl={process.env.STORYBOOK_URL!} storyId={id}>
+        <ScreenshotsComparator storybookUrl={globals.sauronEye.testingStorybookUrl} storyId={id}>
           <Story />
         </ScreenshotsComparator>
       );
