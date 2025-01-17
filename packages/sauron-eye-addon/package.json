@@ -1,6 +1,6 @@
 {
   "name": "@colibrijs/sauron-eye-addon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "exports": {
     ".": "./index.ts",
     "./preset": "./preset.ts",
@@ -8,6 +8,16 @@
     "./package.json": "./package.json",
     "./preview": "./preview.ts",
     "./test-runner-config": "./addon/test-runner-config/index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "src/index.ts"
+      ],
+      "test-runner-config": [
+        "addon/test-runner-config/index.ts"
+      ]
+    }
   },
   "dependencies": {
     "@storybook/components": "^8.1.0",
