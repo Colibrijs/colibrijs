@@ -101,12 +101,14 @@ jobs:
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
           "npm run storybook:serve -w @colibrijs/core" \
           "npm run test:interactions -w @colibrijs/core"
-      - name: Move screenshots to storybook-build
+      - name: Move screenshots to storybook-build if it exists
         run: |
-          cp -r ./packages/core/screenshots ./packages/core/storybook-static
-          cd ./packages/core/storybook-static
-          ls -la
-          cd ../../../
+          if [ -d "./packages/core/screenshots" ]; then
+            cp -r ./packages/core/screenshots ./packages/core/storybook-static
+            cd ./packages/core/storybook-static
+            ls -la
+            cd ../../../
+          fi
       - name: Save storybook build
         uses: actions/upload-artifact@v4
         with:
