@@ -88,7 +88,7 @@ jobs:
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
           "npm run storybook:serve -w @colibrijs/core" \
-          "npm run test:interactions:local -w @colibrijs/core"
+          "npm run test:interactions -w @colibrijs/core"
       - name: Move screenshots to storybook-build
         run: |
           cp -r ./packages/core/screenshots ./packages/core/storybook-static
