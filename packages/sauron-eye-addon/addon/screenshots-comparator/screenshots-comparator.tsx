@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 
-import styles from './screenshots-comparator.module.css';
+import './screenshots-comparator.css';
 
 interface Props {
   storybookUrl: string;
@@ -55,11 +55,16 @@ export function ScreenshotsComparator({ storybookUrl, storyId }: Props) {
 
   return (
     <div>
-      <div ref={wrapper} className={styles.imagesWrapper}>
+      <div ref={wrapper} className="screenshots-comparator__images-wrapper">
         <div>
-          <img className={styles.image} style={imageStyles} src={referenceImage} />
-          <div ref={line} style={lineStyles} className={styles.line} onMouseDown={onMouseDown} />
-          <img className={styles.image} src={actualImage} />
+          <img className="screenshots-comparator__image" style={imageStyles} src={referenceImage} />
+          <div
+            ref={line}
+            style={lineStyles}
+            className="screenshots-comparator__line"
+            onMouseDown={onMouseDown}
+          />
+          <img className="screenshots-comparator__image" src={actualImage} />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-.panel {
+.screenshot-table__panel {
   width: 100%;
   overflow: hidden;
   border-spacing: 0;
@@ -8,36 +8,36 @@
   border-radius: 10px;
 }
 
-.tr {
+.screenshot-table__tr {
   gap: 0;
 }
 
-.thead {
+.screenshot-table__thead {
   background-color: rgb(203, 209, 213);
 }
 
-.approved {
+.screenshot-table__approved {
   background-color: rgba(132, 225, 132, 0.6);
 }
 
-.th,
-.td {
+.screenshot-table__th,
+.screenshot-table__td {
   height: 40px;
   padding: 10px 5px;
   border: 1px solid #000000;
 }
 
-.td:nth-child(2) {
+.screenshot-table__td:nth-child(2) {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.td:last-child {
+.screenshot-table__td:last-child {
   padding: 0;
 }
 
-.button {
+.screenshot-table__button {
   display: block;
   width: 100%;
   height: 100%;
@@ -51,7 +51,7 @@
   cursor: pointer;
 }
 
-.checkbox {
+.screenshot-table__checkbox {
   width: 20px;
   height: 20px;
   margin: 0;

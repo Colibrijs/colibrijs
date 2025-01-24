@@ -2,7 +2,7 @@ import { type API } from '@storybook/manager-api';
 import classNames from 'classnames';
 import React, { type ReactNode, type ChangeEvent } from 'react';
 
-import styles from './screenshot-table.module.css';
+import './screenshot-table.css';
 import { isApprovedScreenshot } from '../../common/get-approved-screenshots';
 import type { StoryData } from '../../common/types';
 
@@ -62,33 +62,33 @@ export function ScreenshotTable({
   );
 
   return (
-    <table className={styles.panel}>
-      <thead className={styles.thead}>
-        <tr className={styles.tr}>
-          <th className={styles.th} />
-          <th className={styles.th}>Name</th>
-          <th className={styles.th}>Title</th>
+    <table className="screenshot-table__panel">
+      <thead className="screenshot-table__thead">
+        <tr className="screenshot-table__tr">
+          <th className="screenshot-table__th" />
+          <th className="screenshot-table__th">Name</th>
+          <th className="screenshot-table__th">Title</th>
         </tr>
       </thead>
       <tbody>
         {stories.map((story) => (
           <tr
             key={story.path + story.name}
-            className={classNames(styles.tr, {
-              [styles.approved!]: isApprovedScreenshot(approvedStories, story),
+            className={classNames('screenshot-table__tr', {
+              'screenshot-table__approved': isApprovedScreenshot(approvedStories, story),
             })}
           >
-            <td className={styles.td}>
+            <td className="screenshot-table__td">
               <input
                 disabled={isApprovedScreenshot(approvedStories, story)}
-                className={styles.checkbox}
+                className="screenshot-table__checkbox"
                 onChange={onCheck(story)}
                 type="checkbox"
               />
             </td>
-            <td className={styles.td}>{story.name}</td>
-            <td className={styles.td}>
-              <button className={styles.button} onClick={onClick(story)}>
+            <td className="screenshot-table__td">{story.name}</td>
+            <td className="screenshot-table__td">
+              <button className="screenshot-table__button" onClick={onClick(story)}>
                 {story.title}
               </button>
             </td>
