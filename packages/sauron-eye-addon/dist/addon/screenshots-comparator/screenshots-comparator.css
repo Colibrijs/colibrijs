@@ -1,0 +1,36 @@
+.screenshots-comparator__images-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.screenshots-comparator__button {
+  display: block;
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+
+.screenshots-comparator__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+.screenshots-comparator__line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 10;
+  width: 3px;
+  height: 100%;
+  background: rgba(139, 0, 0, 1);
+  cursor: col-resize;
+  user-select: none;
+}

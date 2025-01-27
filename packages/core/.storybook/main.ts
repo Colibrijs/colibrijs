@@ -7,7 +7,7 @@ export default {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@colibrijs/sauron-eye-addon',
+    '../../sauron-eye-addon/dist',
     {
       name: '@storybook/addon-styling',
       options: {

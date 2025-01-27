@@ -1,0 +1,39 @@
+.screenshot-panel {
+  padding: 10px;
+}
+
+.screenshot-panel__text,
+.screenshot-panel__loading-text {
+  margin-top: 30px;
+  font-weight: 700;
+}
+
+@keyframes screenshot-loading-text {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.screenshot-panel__loading-text {
+  animation: screenshot-loading-text 0.4s linear;
+}
+
+.screenshot-panel__list {
+  margin: 0;
+  padding: 0;
+}
+
+.screenshot-panel__item {
+  margin-bottom: 10px;
+  list-style-type: none;
+}
+
+.screenshot-panel__success-text {
+  font-weight: 700;
+  font-size: 16px;
+  color: #006d37;
+}

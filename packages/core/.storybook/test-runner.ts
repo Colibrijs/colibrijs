@@ -1,4 +1,5 @@
+import { getScreenshoterConfig } from '@colibrijs/sauron-eye-addon/test-runner-config';
+
 import { sauronEyeConfig } from './sauron-eye-config';
-import { getScreenshoterConfig } from '../../sauron-eye-addon/addon/test-runner-config';
 
 export default getScreenshoterConfig(sauronEyeConfig);
